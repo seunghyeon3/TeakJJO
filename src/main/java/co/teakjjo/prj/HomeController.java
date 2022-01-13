@@ -37,7 +37,7 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:home.do";
 	}
-	@RequestMapping("/emailForm.do")
+	@RequestMapping("/writeEmail.do")
 	public String emailForm() {
 		return "mail/writeEmail";
 	}

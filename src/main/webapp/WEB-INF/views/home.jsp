@@ -91,9 +91,23 @@
 		
 		<c:if test="${memberinfo ne null }">
 			
-			<a class="nav-link" href="emailForm.do" id="messagesDropdown" style="display: inline-block;"> <i class="fas fa-envelope fa-fw"></i>
-			</a> <!-- Dropdown - Messages -->
+			<!-- Dropdown - Messages -->
+			<a class="nav-link" href="javascript:void(0);" id="messagesDropdown" style="display: inline-block;"
+			onclick="document.getElementById('light2').style.display='block';">
+			<i class="fas fa-envelope fa-fw"></i></a> 
 			
+			<div id="light2" class="white_content text-left" style="height: 300px;">
+				<form action="writeEmail.do" method="post">
+					<label>메일 쓰기 </label>
+					<label>발송자</label>
+					<input type="text" name="username" value="${memberinfo.member_Id }">
+					<label>비밀번호</label>
+					<input type="password" id="password" name="pswd">
+					<button type="submit" class="btn btn-primary">확인</button>
+						<button type="button" class="btn btn-primary" onclick="document.getElementById('light2').style.display='none';">취소</button>
+					<div id="fade2" class="black_overlay"></div>
+				</form>
+			</div>
 		</c:if>
 
 		<!-- Topbar Navbar -->
