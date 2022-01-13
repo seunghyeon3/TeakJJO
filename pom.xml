@@ -44,20 +44,13 @@
 		</dependency>
 
 		<dependency>
-<<<<<<< HEAD
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
-		</dependency>
 
-=======
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.1</version>
 		</dependency>
 
 
->>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
