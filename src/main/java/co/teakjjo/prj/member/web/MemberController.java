@@ -1,0 +1,273 @@
+package co.teakjjo.prj.member.web;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import co.teakjjo.prj.member.service.MemberService;
+import co.teakjjo.prj.member.service.MemberVO;
+
+@Controller
+public class MemberController {
+
+	@Autowired
+	private MemberService memberDao;
+
+	@RequestMapping("/changeAuthor.do")
+	public String changeAuthor(HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
+		memberDao.updateAuthor(vo.getMember_Name());
+		return "redirect:home.do";
+	}
+
+	@RequestMapping(value = "/memberRegister.do", produces = "application/json; charset=utf8")
+	public String memberRegister(MemberVO vo, HttpSession session) {
+		// 기자, 회원일때 넣는 데이터가 다름, db를 쪼갈라야함.
+		memberDao.insertMember(vo);
+		session.setAttribute("memberinfo", vo);
+		return "redirect:home.do";
+	}
+
+	@RequestMapping("/geturi.do")
+	@ResponseBody
+	public String getKakaoAuthUrl(HttpServletRequest request) throws Exception {
+		String reqUrl = "https://kauth.kakao.com/oauth/authorize" + "?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0"
+				+ "&redirect_uri=http://localhost/prj/dologin.do" + "&response_type=code";
+		return reqUrl;
+	}
+
+	// 카카오 연동정보 조회
+	@RequestMapping(value = "/dologin.do", produces = "application/json; charset=utf8")
+	public String oauthKakao(@RequestParam(value = "code", required = false) String code, HttpSession session)
+			throws Exception {
+		System.out.println("#########" + code);
+		String access_Token = getAccessToken(code);
+		System.out.println("###access_Token#### : " + access_Token);
+
+		HashMap<String, Object> userInfo = getUserInfo(access_Token);
+		System.out.println("###access_Token#### : " + access_Token);
+		System.out.println("###userInfo#### : " + userInfo.get("email"));
+		System.out.println("###nickname#### : " + userInfo.get("nickname"));
+		System.out.println(userInfo);
+
+		if (memberDao.idCheck(userInfo.get("email").toString())) {
+			session.setAttribute("memberinfo", memberDao.getMember(userInfo.get("email").toString()));
+			memberDao.getMember(userInfo.get("email").toString());
+			return "redirect:home.do"; // 본인 원하는 경로 설정
+		} else {
+			session.setAttribute("userInfo", userInfo);
+			return "member/signup"; // 본인 원하는 경로 설정
+		}
+	}
+
+	// 토큰발급
+	public String getAccessToken(String authorize_code) {
+		String access_Token = "";
+		String refresh_Token = "";
+		String reqURL = "https://kauth.kakao.com/oauth/token";
+
+		try {
+			URL url = new URL(reqURL);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			// URL연결은 입출력에 사용 될 수 있고, POST 혹은 PUT 요청을 하려면 setDoOutput을 true로 설정해야함.
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+
+			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0"); // 본인이 발급받은 key
+			sb.append("&redirect_uri=http://localhost/prj/dologin.do"); // 본인이 설정해 놓은 경로
+			sb.append("&code=" + authorize_code);
+			bw.write(sb.toString());
+			bw.flush();
+
+			// 결과 코드가 200이라면 성공
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = "";
+			String result = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+
+			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+			JSONParser parser = new JSONParser();
+			JSONObject obj = (JSONObject) parser.parse(result);
+
+			access_Token = (String) obj.get("access_token");
+
+			refresh_Token = (String) obj.get("refresh_token");
+
+			System.out.println("access_token : " + access_Token);
+			System.out.println("refresh_token : " + refresh_Token);
+
+			br.close();
+			bw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return access_Token;
+	}
+
+	// 유저정보조회
+	public HashMap<String, Object> getUserInfo(String access_Token) {
+
+		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+		HashMap<String, Object> userInfo = new HashMap<String, Object>();
+		String reqURL = "https://kapi.kakao.com/v2/user/me";
+		try {
+			URL url = new URL(reqURL);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+
+			// 요청에 필요한 Header에 포함될 내용
+			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			String line = "";
+			String result = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+
+			@SuppressWarnings("deprecation")
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+
+			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+
+			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+			String email = kakao_account.getAsJsonObject().get("email").getAsString();
+
+			userInfo.put("accessToken", access_Token);
+			userInfo.put("nickname", nickname);
+			userInfo.put("email", email);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return userInfo;
+	}
+
+	/*
+	 * @RequestMapping("/email.do") public String email(@RequestParam("password")
+	 * String password,
+	 * 
+	 * @RequestParam("recipient") String recipient, @RequestParam("subject") String
+	 * subject,
+	 * 
+	 * @RequestParam("body") String body, HttpServletRequest request, ModelMap mo) {
+	 * 
+	 * // recipient : 받는 사람 // subject : 제목 // body : 내용 try { String host =
+	 * "smtp.naver.com"; int port = 587; final String username = "cumulus90"; // 메일
+	 * 내용 // 메일을 발송할 이메일 주소를 기재해 줍니다. Properties props = System.getProperties();
+	 * props.put("mail.smtp.host", host); props.put("mail.smtp.port", port);
+	 * props.put("mail.smtp.auth", "true"); props.put("mail.smtp.ssl.enable",
+	 * "true"); props.put("mail.smtp.ssl.trust", host);
+	 * 
+	 * Session session = Session.getDefaultInstance(props, new
+	 * javax.mail.Authenticator() { String un = username; String pw = password;
+	 * 
+	 * protected PasswordAuthentication getPasswordAuthentication() { return new
+	 * PasswordAuthentication(un, pw); } }); session.setDebug(true); // for debug
+	 * Message mimeMessage = new MimeMessage(session); mimeMessage.setFrom(new
+	 * InternetAddress(recipient));
+	 * mimeMessage.setRecipient(Message.RecipientType.TO, new
+	 * InternetAddress(recipient)); mimeMessage.setSubject(subject);
+	 * mimeMessage.setText(body); Transport.send(mimeMessage);
+	 * 
+	 * return "redirect:home.do"; } catch (Exception e) { e.printStackTrace(); }
+	 * return null;
+	 * 
+	 * }
+	 */
+	
+	@RequestMapping("/email.do")
+	public String email(HttpServletRequest request, ModelMap mo) {
+		try {
+		
+		String host = "smtp.naver.com";
+		final String username = "cumulus90";
+		//네이버 이메일 주소중 @ naver.com앞주소만 기재합니다.
+		final String password = "natural@me12";
+		//네이버 이메일 비밀번호를 기재합니다.
+		int port=465;
+		// 메일 내용
+		String recipient = "cumulus90@naver.com";
+		//메일을 발송할 이메일 주소를 기재해 줍니다.
+		String subject = "네이버를 사용한 발송 테스트입니다.";
+		String body = "내용 무";
+		Properties props = System.getProperties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.port", port);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust", host);
+		props.put("mail.debug","true");
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			String un=username; String pw=password;
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(un, pw); 
+				} 
+			});
+		session.setDebug(true);
+		//for debug
+		Message mimeMessage = new MimeMessage(session);
+		mimeMessage.setFrom(new InternetAddress("cumulus90@naver.com"));
+		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+		mimeMessage.setSubject(subject); mimeMessage.setText(body);
+		Transport.send(mimeMessage);
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:home.do";
+	}
+
+}

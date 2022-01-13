@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.teakjjo.prj.foodtruck.service.FoodMapper">
+	<select id="foodSelectList" resultType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO"
+	 parameterType="co.teakjjo.prj.foodtruck.service.FoodtruckVO" >
+		SELECT FOODTRUCK_RSR , BOOKMARK_DATE FROM FOODBOOKMARK WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<insert id="foodInsert" parameterType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
+		<!-- INSERT INTO FOODBOOKMARK (BOOKMARK_ID,FOODTRUCK_ID,MEMBER_ID,FOODTRUCK_RSR,BOOKMARK_DATE)
+		VALUES (#{bookmarkId},#{foodtruckId},#{memberId},#{foodtruckRSR},#{bookmarkDate}) -->
+	</insert>
+	
+	<delete id="foodDelete" parameterType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
+		DELETE FROM FOODBOOKMARK WHERE BOOKMARK_ID = #{bookmarkId}
+	</delete>
+	
+</mapper>
