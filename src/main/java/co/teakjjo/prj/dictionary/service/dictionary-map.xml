@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="co.teakjjo.prj.dictionary.service.DictionaryMapper">
+
+	<select id="dictionarySelectList" parameterType="String"
+		resultType="co.teakjjo.prj.dictionary.service.DictionaryVO">
+		SELECT * FROM DICTIONARY WHERE MEMBER_ID = #{member_id} ORDER BY 3 DESC
+	</select>
+	
+	<insert id="dictionaryInsert" parameterType="co.teakjjo.prj.dictionary.service.DictionaryVO">
+	<selectKey keyProperty="dictionary_no" resultType="int" order="BEFORE" >
+			SELECT NVL(MAX(DICTIONARY_NO)+1,1) AS DICTIONARY_NO FROM DICTIONARY WHERE MEMBER_ID = #{member_id}
+		</selectKey>
+	INSERT INTO DICTIONARY(MEMBER_ID,DICTIONARY_DATA,DICTIONARY_NO)
+		VALUES(#{member_id},#{dictionary_data},#{dictionary_no})
+	</insert>
+	<delete id="dictionaryDelete" parameterType="co.teakjjo.prj.dictionary.service.DictionaryVO">
+		DELETE FROM DICTIONARY WHERE MEMBER_ID = #{member_id} AND DICTIONARY_NO= #{dictionary_no}
+	</delete>
+</mapper>
