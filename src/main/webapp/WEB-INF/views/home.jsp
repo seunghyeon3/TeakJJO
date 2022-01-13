@@ -217,17 +217,30 @@
 			} else if (keyword == '영화') {
 				window.location = "movieMain.do"
 
+<<<<<<< HEAD
 			}else if (keyword == '푸드트럭') {
 
+=======
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 			} else if (keyword == '사전') {
 				window.location = "dictionaryMain.do";
 
 			} else if (keyword == '번역') {
 				window.location = "papagoMain.do"
 			} else if (keyword == '푸드트럭') {
+<<<<<<< HEAD
 
 			} else if (keyword == '부동산') {
 
+=======
+				window.location = "foodtruck.do"
+			} else if (keyword == '부동산') {
+
+			} else if (keyword == '뉴스') {
+				window.location = "newsMain.do"
+			} else if (keyword == '뉴스등록') {
+				window.location = "newsInsertForm.do"
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 			} else {
 				window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 부동산 중 하나 검색 해주세요.');
 				$('#keyword').val('').focus();

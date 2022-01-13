@@ -19,7 +19,11 @@ input{
 	<br>
 	<br>
 	<div class="text text-center" style="border: 1px dotted pink;">
+<<<<<<< HEAD
 	<form action="memberRegister.do" onsubmit="FormCheck()" method="post" accept-charset="utf-8">
+=======
+	<form action="memberRegister.do" onsubmit="return FormCheck()" method="post" accept-charset="utf-8">
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 		<label> ID </label><br>
 		<input type="text" id="member_Id" name="member_Id" value="${userInfo.email }" readonly="readonly"><br>
 		<label> 비밀번호 </label><br>
@@ -78,6 +82,10 @@ input{
 				}).val('');
 				
 			}else{
+<<<<<<< HEAD
+=======
+				window.alert('일반회원입니다.');
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 				$('#member_Author').val('N');
 			}
 			$('#authorBtn').val('YES');

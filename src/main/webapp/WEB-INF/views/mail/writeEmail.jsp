@@ -9,8 +9,12 @@
 <form action="email.do" method="post">
 <label>발송자</label>
 ${memberinfo }
+<<<<<<< HEAD
 <input>
 <input type="text" name="username" value="cumulus90@naver.com">
+=======
+<input type="text" name="username" value="cumulus90">
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 <input type="hidden" name="password" value="natural@me12">
 <label>제목</label>
 <input type="text" name="subject">

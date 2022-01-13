@@ -7,7 +7,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+<<<<<<< HEAD
 import java.util.Map;
+=======
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -23,7 +26,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+<<<<<<< HEAD
 import org.springframework.ui.Model;
+=======
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,7 +75,10 @@ public class MemberController {
 	@RequestMapping(value = "/dologin.do", produces = "application/json; charset=utf8")
 	public String oauthKakao(@RequestParam(value = "code", required = false) String code, HttpSession session)
 			throws Exception {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 		System.out.println("#########" + code);
 		String access_Token = getAccessToken(code);
 		System.out.println("###access_Token#### : " + access_Token);
@@ -197,6 +206,7 @@ public class MemberController {
 		return userInfo;
 	}
 
+<<<<<<< HEAD
 	@RequestMapping("/email.do")
 	public String email(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("recipient") String recipient,@RequestParam("subject") String subject,
 						@RequestParam("body") String body ,HttpServletRequest request, ModelMap mo) {
@@ -240,5 +250,82 @@ public class MemberController {
 	}
 	
 	
+=======
+	/*
+	 * @RequestMapping("/email.do") public String email(@RequestParam("password")
+	 * String password,
+	 * 
+	 * @RequestParam("recipient") String recipient, @RequestParam("subject") String
+	 * subject,
+	 * 
+	 * @RequestParam("body") String body, HttpServletRequest request, ModelMap mo) {
+	 * 
+	 * // recipient : 받는 사람 // subject : 제목 // body : 내용 try { String host =
+	 * "smtp.naver.com"; int port = 587; final String username = "cumulus90"; // 메일
+	 * 내용 // 메일을 발송할 이메일 주소를 기재해 줍니다. Properties props = System.getProperties();
+	 * props.put("mail.smtp.host", host); props.put("mail.smtp.port", port);
+	 * props.put("mail.smtp.auth", "true"); props.put("mail.smtp.ssl.enable",
+	 * "true"); props.put("mail.smtp.ssl.trust", host);
+	 * 
+	 * Session session = Session.getDefaultInstance(props, new
+	 * javax.mail.Authenticator() { String un = username; String pw = password;
+	 * 
+	 * protected PasswordAuthentication getPasswordAuthentication() { return new
+	 * PasswordAuthentication(un, pw); } }); session.setDebug(true); // for debug
+	 * Message mimeMessage = new MimeMessage(session); mimeMessage.setFrom(new
+	 * InternetAddress(recipient));
+	 * mimeMessage.setRecipient(Message.RecipientType.TO, new
+	 * InternetAddress(recipient)); mimeMessage.setSubject(subject);
+	 * mimeMessage.setText(body); Transport.send(mimeMessage);
+	 * 
+	 * return "redirect:home.do"; } catch (Exception e) { e.printStackTrace(); }
+	 * return null;
+	 * 
+	 * }
+	 */
+	
+	@RequestMapping("/email.do")
+	public String email(HttpServletRequest request, ModelMap mo) {
+		try {
+		
+		String host = "smtp.naver.com";
+		final String username = "cumulus90";
+		//네이버 이메일 주소중 @ naver.com앞주소만 기재합니다.
+		final String password = "natural@me12";
+		//네이버 이메일 비밀번호를 기재합니다.
+		int port=465;
+		// 메일 내용
+		String recipient = "cumulus90@naver.com";
+		//메일을 발송할 이메일 주소를 기재해 줍니다.
+		String subject = "네이버를 사용한 발송 테스트입니다.";
+		String body = "내용 무";
+		Properties props = System.getProperties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.port", port);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.ssl.trust", host);
+		props.put("mail.debug","true");
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			String un=username; String pw=password;
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(un, pw); 
+				} 
+			});
+		session.setDebug(true);
+		//for debug
+		Message mimeMessage = new MimeMessage(session);
+		mimeMessage.setFrom(new InternetAddress("cumulus90@naver.com"));
+		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+		mimeMessage.setSubject(subject); mimeMessage.setText(body);
+		Transport.send(mimeMessage);
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:home.do";
+	}
+>>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 
 }
