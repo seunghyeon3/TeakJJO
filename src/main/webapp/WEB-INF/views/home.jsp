@@ -167,9 +167,11 @@
 			</div>
 		</form>
 	</div>
+
 	<!-- 완성후 주석 해제 예정 -->
 	<c:if test="${memberinfo ne null }">
 		<div class="text text-center" id="urlMark">
+
 
 			<!-- url 즐겨찾기 추가하는 부분... 팝업창 뜨게 되면 데이터 적어주고, 거기에 input tag로 데이터 받기. -->
 			<!-- session 값 받아와서 화면에 뿌려 주는거 해야함. -->
@@ -213,8 +215,7 @@
 			if (keyword == '유튜브') {
 				window.location = "youtube.do";
 			} else if (keyword == '영화') {
-
-			} else if (keyword == '푸드트럭') {
+				window.location = "movieMain.do"
 
 			} else if (keyword == '사전') {
 				window.location = "dictionaryMain.do";
@@ -222,9 +223,13 @@
 			} else if (keyword == '번역') {
 				window.location = "papagoMain.do"
 			} else if (keyword == '푸드트럭') {
-
+				window.location = "foodtruck.do"
 			} else if (keyword == '부동산') {
 
+			} else if (keyword == '뉴스') {
+				window.location = "newsMain.do"
+			} else if (keyword == '뉴스등록') {
+				window.location = "newsInsertForm.do"
 			} else {
 				window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 부동산 중 하나 검색 해주세요.');
 				$('#keyword').val('').focus();
@@ -305,6 +310,7 @@ if (vo == null) {
 	</script>
 	<script type="text/javascript">
 	$("#check_module").click(function () {
+		console.log("여기요");
 		var IMP = window.IMP; // 생략가능
 		IMP.init('imp44063807');
 		// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
@@ -338,7 +344,6 @@ if (vo == null) {
 				location.href = "changeAuthor.do";
 				// 결제 성공 시 정보를 넘겨줘야한다면 body에 form을 만든 뒤 위의 코드를 사용하는 방법이 있습니다.
 				// 자세한 설명은 구글링으로 보시는게 좋습니다.
-				//업데이트 구문 넣어줘야함. 단, 일반회원만 V로 변경해야함.
 			} else {
 				var msg = '결제에 실패하였습니다.';
 				msg += '에러내용 : ' + rsp.error_msg;
