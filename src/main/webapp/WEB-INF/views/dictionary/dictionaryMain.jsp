@@ -67,9 +67,9 @@
 			양택조와 함께하는<br>&lt;국어사전&gt;
 		</h1>
 		<p style="font-size: 18px;">누구든지 이용이 가능한 국어사전입니다.</p>
-		<div class="search-location mt-md-5">
+		<div class="search-location mt-md-2">
 			<div class="row justify-content-center">
-				<div class="col-lg-10 align-items-end ">
+				<div class="col-lg-5 align-items-end ">
 					<div class="form-group">
 						<div class="form-field">
 
@@ -85,11 +85,11 @@
 			</div>
 		</div>
 		<p>
-			This is the main content. To display a lightbox click <a
-				href="javascript:void(0)" onclick="dictionaryRecord()">최근검색단어</a>
+			<a
+				href="javascript:void(0)" onclick="dictionaryRecord()">택조의 시크릿 비밀노트</a>
 		</p>
-		<div id="light" class="white_content">
-			This is the lightbox content. <a href="javascript:void(0)"
+		<div id="light" class="col-md-6 white_content">
+			택조의 시크릿 비밀노트 <a href="javascript:void(0)"
 				onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close
 			</a> <br> <br>
 			<ul id="dictionaryRecord">
@@ -145,6 +145,12 @@
 					//alert("성공");
 					//console.log(typeof data);
 					//console.log(data[1].dictionary_data);
+					if(data == ""){
+						document.getElementById('light').style.display='none';
+						document.getElementById('fade').style.display='none';
+						alert("로그인이 필요한 서비스입니다.");
+						
+					}else{
 					$('#dictionaryRecord').children().remove();
 					
 					var list = $('#dictionaryRecord');
@@ -162,6 +168,7 @@
 						list.append(data);
 						
 					}
+				}
 				}
 				});
 			}

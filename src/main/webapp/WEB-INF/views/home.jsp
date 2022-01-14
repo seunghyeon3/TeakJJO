@@ -53,7 +53,7 @@
 </head>
 
 <body>
-	<!-- 양택조 color=pink (#e86ed0) -->
+	<!-- 양택조 color=pink (#ff0037) -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
