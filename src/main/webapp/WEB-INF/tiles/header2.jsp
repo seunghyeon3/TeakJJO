@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
-	<nav
+	<!-- <nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		id="ftco-navbar" style="margin-top :50px">
 		<div class="container">
@@ -38,9 +38,9 @@
 				<span class="oi oi-menu"></span> Menu
 			</button>
 
-<!-- .ml-auto,.mx-auto {margin-left: 20rem !important;} 
+.ml-auto,.mx-auto {margin-left: 20rem !important;} 
 		resources/css/style.css에서 메뉴바 좌우 조정 가능
--->
+
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto" >
@@ -56,12 +56,9 @@
 				</ul>
 			</div>
 		</div>
-	</nav>
+	</nav> -->
 	
 	<!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
   <script src="resources/js/jquery.min.js"></script>
   <script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
   <script src="resources/js/popper.min.js"></script>
