@@ -12,6 +12,17 @@
           <div class="col-md-8 mb-md-5">
           	<h2 class="text-center">뉴스 기사 등록</h2>
             <form action="newsInsert.do" class="bg-light p-5 contact-form" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <select name="newsboard_genre" id="newsboard_genre">
+						<optgroup label="전체">
+							<option value="전체">전체</option>
+							<option value="부동산">부동산</option>
+							<option value="영화">영화</option>
+							<option value="유튜브">유튜브</option>
+							<option value="푸드트럭">푸드트럭</option>
+						</optgroup>
+					</select>
+              </div>
              <div class="form-group">
                 <input type="text" id="newsboard_title" name="newsboard_title" class="form-control" placeholder="기사 제목">
               </div>
@@ -22,7 +33,7 @@
                 <input type="file" id="file" name="file" class="form-control" placeholder="Subject">
               </div>
               <div class="form-group">
-                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                <input type="submit" value="기사 등록" class="btn btn-primary py-3 px-5">
               </div>
             </form>
           

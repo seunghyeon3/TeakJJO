@@ -7,6 +7,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.teakjjo.prj.boardComment.service.BoardCommentService;
+import co.teakjjo.prj.member.service.MemberVO;
 import co.teakjjo.prj.news.service.NewsService;
 import co.teakjjo.prj.news.service.NewsVO;
 
@@ -25,11 +31,14 @@ public class NewsController {
 	private NewsService newsDao;
 	
 	@Autowired
+	private BoardCommentService boardCommentDao;
+	
+	@Autowired
 	private String saveDir;	//파일저장 경로를 자동 주입
+	
 	
 	@RequestMapping("/newsMain.do")
 	public String newsMain(Model model) {
-
 		StringBuffer result = new StringBuffer();
 		try {
 			String apiURL = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=9wZz70EsbL6Tch6hyEl8F%2Ff0FbN7MTprqP%2ByKEYVwB18Rqr%2F7XDpPz6hl3Vr1PCGszMdeO8IFAILBMif9OCnqg%3D%3D&stdt=2022";
@@ -53,23 +62,40 @@ public class NewsController {
 		//System.out.println("=================================");
 		//System.out.println("최종 뿌리기 " + result.toString());
 		model.addAttribute("covid", result.toString());
-
+		model.addAttribute("newsList", newsDao.newsTopList());
 		return "news/newsMain";
 	}
 	
+	@RequestMapping(value = "/newsGenre.do" )
+	   public String newsAll(@RequestParam(value= "genre")String genre ,NewsVO news, Model model) {
+	      	
+	        if(genre.equals("전체")) {
+	           model.addAttribute("newsList",newsDao.newsList());
+	           return "news/newsAll";
+	        } else {
+	        	model.addAttribute("newsList",newsDao.newsGenreList(genre));
+	        	model.addAttribute("genre", genre);
+	        	
+	        	return "news/newsGenre";
+	        }
+	      
+	   }
+
+	
 	@RequestMapping("/newsInsertForm.do")
 	public String newsInsertForm(){
-		
 		return "news/newsInsertForm";
 	}
 	
 	@RequestMapping("/newsInsert.do")
-	@ResponseBody
-	public String newsInsert(@RequestParam("file") MultipartFile file, NewsVO news){
-		String member_id = "hong";
-		String member_name = "홍길동";
-		String member_company = "택조일보";
+	public String newsInsert(@RequestParam("file") MultipartFile file, NewsVO news, HttpSession session){
+		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		String member_id = member.getMember_Id();
+		String member_name = member.getMember_Name();
+		String member_company = member.getMember_Company();
 		String newsboard_id = member_company+news.getNewsboard_title();
+		news.setNewsboard_content(news.getNewsboard_content().replace("\r\n", "<br>"));
+		//System.out.println(news.getNewsboard_genre());
 		news.setMember_id(member_id);
 		news.setMember_name(member_name);
 		news.setMember_company(member_company);
@@ -89,12 +115,30 @@ public class NewsController {
 			}
 		}
 		
-		
-		
-		
-		
 		newsDao.newsInsert(news);
-		return null;
+		return "redirect:newsMain.do";
 	}
+	
+	//뉴스 제목누르고 상세조회로 들어가는 친구
+	@RequestMapping("/newsDetail.do")
+	public String newsDetail(@RequestParam(value="no")String newsboard_title,@RequestParam(value="newsboard_id")String newsboard_id, Model model) {
+		//상세조회로 넘어갈때 조회수를 업데이트.
+		//System.out.println("1"+newsboard_title);
+		//System.out.println("2"+newsDao.newsGenreSearch(newsboard_title));
+		System.out.println(boardCommentDao.boardCommentList(newsboard_id));
+		model.addAttribute("comment", boardCommentDao.boardCommentList(newsboard_id));
+		model.addAttribute("detail", newsDao.newsGenreSearch(newsboard_title));
+		return "news/newsDetail";
+	}
+	
+	//뉴스 제목 온클릭시 function으로 조회수 업데이트 실행
+	@RequestMapping("/newsHitUpdate.do")
+	public void newsHitUpdate(@RequestParam(value="title")String newsboard_title, NewsVO news) {
+		System.out.println("1"+newsboard_title);
+		System.out.println();
+		newsDao.newsHitUpdate(newsboard_title);
+	}
+	
+
 	
 }

@@ -45,8 +45,9 @@
 				</div>
 			</div>
 			<div class="row">
-
-				<div class="col-md-4" style="height: 300px">
+				<div class="col-md-2">
+				</div>
+				<div class="col-md-3" style="height: 300px">
 					<select name="language" id="language">
 						<optgroup label="언어">
 							<option value="ko">한국어</option>
@@ -56,7 +57,7 @@
 					<textarea id="send_text" class="form-control" name="content"
 						cols="1" rows="1" placeholder="보낼값"></textarea>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-2">
 					<div class="mouse" style="padding-bottom: 150px;">
 						<div class="mouse-icon" id="jsonConvertStringSend">
 							<div class="mouse-wheel" >
@@ -65,10 +66,12 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4" style="height: 300px">
+				<div class="col-md-3" style="height: 300px">
 					<textarea id="result_text" class="form-control" name="content"
 						cols="1" rows="1" placeholder="결과값" readonly
 						style="margin-top: 30px;"></textarea>
+				</div>
+				<div class="col-md-2">
 				</div>
 			</div>
 		</div>
