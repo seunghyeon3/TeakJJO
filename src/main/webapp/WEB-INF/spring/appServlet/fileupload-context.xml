@@ -10,6 +10,6 @@
    
    <!-- 나중에 배포할때 빼야되는 부분 -->
    <bean class="java.lang.String">
-      <constructor-arg value="c://Temp//"/>
+      <constructor-arg value="c:/DEV/MidProject/teakJJO/src/main/webapp/resources/img/"/>
    </bean>
 </beans>

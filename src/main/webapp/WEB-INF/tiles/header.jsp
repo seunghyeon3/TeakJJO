@@ -7,11 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Custom fonts for this template-->
-<link href="resources/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
-	rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
 <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
@@ -21,7 +17,7 @@
 </head>
 
 <body>
-<!-- 양택조 color=pink (#e86ed0) -->
+<!-- 양택조 color=pink (#ff0037) -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 

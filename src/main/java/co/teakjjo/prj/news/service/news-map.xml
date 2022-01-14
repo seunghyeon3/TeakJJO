@@ -3,15 +3,38 @@
 <mapper namespace="co.teakjjo.prj.news.service.NewsMapper">
 
 <select id="newsList" resultType="co.teakjjo.prj.news.service.NewsVO">
-	SELECT * FROM NEWSBOARD
+	SELECT * FROM NEWSBOARD ORDER BY 8 DESC
+</select>
+<select id="newsTopList" resultType="co.teakjjo.prj.news.service.NewsVO">
+	SELECT * FROM NEWSBOARD ORDER BY 9 DESC
 </select>
 <select id="newsMyList" parameterType="String" resultType="co.teakjjo.prj.news.service.NewsVO">
 	SELECT * FROM NEWSBOARD WHERE MEMBER_ID = #{member_id}
 </select>
+
+<select id="newsGenreSearch" parameterType="String" resultType="co.teakjjo.prj.news.service.NewsVO">
+	SELECT * FROM NEWSBOARD WHERE NEWSBOARD_TITLE = #{newsboard_title} ORDER BY 8 DESC
+</select>
+
+<select id="newsGenreList" parameterType="String" resultType="co.teakjjo.prj.news.service.NewsVO">
+	SELECT * FROM NEWSBOARD WHERE NEWSBOARD_GENRE = #{newsboard_genre} ORDER BY 8 DESC
+</select>
+
 <insert id="newsInsert" parameterType="co.teakjjo.prj.news.service.NewsVO">
-INSERT INTO NEWSBOARD(MEMBER_ID,MEMBER_NAME,NEWSBOARD_ID,MEMBER_COMPANY,NEWSBOARD_TITLE,NEWSBOARD_CONTENT,NEWSBOARD_HIT,NEWSBOARD_PFILE,NEWSBOARD_PICTURE)
-VALUES(#{member_id},#{member_name},#{newsboard_id},#{member_company},#{newsboard_title},#{newsboard_content},#{newsboard_hit},#{newsboard_pfile},#{newsboard_picture})
+INSERT INTO NEWSBOARD(MEMBER_ID,MEMBER_NAME,NEWSBOARD_ID,MEMBER_COMPANY,NEWSBOARD_GENRE,NEWSBOARD_TITLE,NEWSBOARD_CONTENT,NEWSBOARD_HIT,NEWSBOARD_PFILE,NEWSBOARD_PICTURE)
+VALUES(#{member_id},#{member_name},#{newsboard_id},#{member_company},#{newsboard_genre},#{newsboard_title},#{newsboard_content},#{newsboard_hit},#{newsboard_pfile},#{newsboard_picture})
 </insert>
+
+
+        
+
+<update id="newsHitUpdate" parameterType="String">
+	UPDATE NEWSBOARD
+	SET 
+	NEWSBOARD_HIT = NEWSBOARD_HIT+1
+	WHERE NEWSBOARD_TITLE = #{newsboard_title}  
+</update>
+
 <delete id="newsDelete" parameterType="String">
 DELETE FROM NEWSBOARD WHERE NEWSBOARD_ID = #{newsboard_id}
 </delete>

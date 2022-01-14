@@ -29,6 +29,10 @@
 <body>
 	<!-- <nav
 		class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+=======
+	<nav
+		class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light"
+>>>>>>> 3fddb2b3cf1e69e7cf637087d0cf6468b411e1fd
 		id="ftco-navbar" style="margin-top :50px">
 		<div class="container">
 		
@@ -42,7 +46,7 @@
 		resources/css/style.css에서 메뉴바 좌우 조정 가능
 
 
-			<div class="collapse navbar-collapse" id="ftco-nav">
+			<div class="collapse navbar-collapse" id="">
 				<ul class="navbar-nav ml-auto" >
 					<li class="nav-item active"><a href="home.do"
 						class="nav-link">Home</a></li>
