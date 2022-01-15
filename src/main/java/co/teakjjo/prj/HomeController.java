@@ -41,5 +41,17 @@ public class HomeController {
 	public String emailForm() {
 		return "mail/writeEmail";
 	}
-
+	 
+	 @RequestMapping("updateInfo.do")
+	 public String updateInfo() {
+		 return "member/updateInfo";
+	 }
+	 @RequestMapping("resertaionInfo.do")
+	 public String resertaionInfo() {
+		 return "member/resertaionInfo";
+	 }
+	 @RequestMapping("acckeyword.do")
+	 public String acckeyword() {
+		 return "member/acckeyword";
+	 }
 }
