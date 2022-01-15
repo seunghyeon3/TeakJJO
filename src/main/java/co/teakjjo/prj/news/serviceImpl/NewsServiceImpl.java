@@ -35,4 +35,24 @@ public class NewsServiceImpl implements NewsService {
 		return map.newsDelete(news);
 	}
 
+	@Override
+	public List<NewsVO> newsGenreList(String newsboard_genre) {
+		return map.newsGenreList(newsboard_genre);
+	}
+
+	@Override
+	public NewsVO newsGenreSearch(String newsboard_title) {
+		return map.newsGenreSearch(newsboard_title);
+	}
+
+	@Override
+	public int newsHitUpdate(String newsboard_title) {
+		return map.newsHitUpdate(newsboard_title);
+	}
+
+	@Override
+	public List<NewsVO> newsTopList() {
+		return map.newsTopList();
+	}
+
 }

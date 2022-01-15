@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.teakjjo.prj.foodtruck.service.FoodMapper">
-	<select id="foodSelectList" resultType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO"
-	 parameterType="co.teakjjo.prj.foodtruck.service.FoodtruckVO" >
-		SELECT FOODTRUCK_RSR , BOOKMARK_DATE FROM FOODBOOKMARK WHERE MEMBER_ID = #{memberId}
+
+	<select id="foodSelectList" resultType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
+		SELECT * 
+		FROM (
+			SELECT ROWNUM RN, A.* 
+				FROM ( SELECT * FROM FOODBOOKMARK
+                       WHERE MEMBER_ID = #{member_id}
+					 ) A
+			 )
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="foodSelectListCnt" resultType="int" parameterType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
+		SELECT COUNT(*) AS CNT FROM FOODBOOKMARK
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<select id="foodSelect" resultType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO" 
+	 parameterType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
+		SELECT * FROM FOODBOOKMARK
+		WHERE MEMBER_ID = #{member_id}
+		AND BOOKMARK_ID = #{bookmark_id}
+	</select>
+	<select id="rsrList" resultType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
+		SELECT FOODTRUCK_RSR FROM FOODBOOKMARK
+		WHERE MEMBER_ID = #{member_id}
 	</select>
 	
 	<insert id="foodInsert" parameterType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
-		<!-- INSERT INTO FOODBOOKMARK (BOOKMARK_ID,FOODTRUCK_ID,MEMBER_ID,FOODTRUCK_RSR,BOOKMARK_DATE)
-		VALUES (#{bookmarkId},#{foodtruckId},#{memberId},#{foodtruckRSR},#{bookmarkDate}) -->
+		INSERT INTO FOODBOOKMARK (BOOKMARK_ID , MEMBER_ID , FOODTRUCK_RSR , LAT , LNG )
+		VALUES (#{bookmark_id},#{member_id},#{foodtruck_rsr},#{lat},#{lng})
 	</insert>
 	
 	<delete id="foodDelete" parameterType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
-		DELETE FROM FOODBOOKMARK WHERE BOOKMARK_ID = #{bookmarkId}
+		DELETE FROM FOODBOOKMARK 
+		WHERE MEMBER_ID = #{member_id}
+		AND BOOKMARK_ID = #{bookmark_id}
 	</delete>
 	
 </mapper>

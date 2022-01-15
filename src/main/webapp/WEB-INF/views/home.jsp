@@ -52,8 +52,9 @@
 </head>
 
 <body>
-	<!-- 양택조 color=pink (#e86ed0) -->
-	<nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+	<!-- 양택조 color=pink (#ff0037) -->
+	<nav
+		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
 		<!-- Sidebar Toggle (Topbar) -->
 		<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +8,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <title>NMT test</title>
 
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
-	rel="stylesheet">
 
 <link rel="stylesheet"
 	href="resources/css/open-iconic-bootstrap.min.css">
@@ -30,7 +28,14 @@
 <link rel="stylesheet" href="resources/css/flaticon.css">
 <link rel="stylesheet" href="resources/css/icomoon.css">
 <link rel="stylesheet" href="resources/css/style.css">
-
+<style>
+	@font-face {
+    font-family: 'HSYuji-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSYuji-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+</style>
 </head>
 
 <body>
@@ -40,6 +45,8 @@
             <h2 class="mb-3">양택조 뉴스</h2>
           </div>
         </div>
+        <%@include file="newsMenu.jsp" %>
+        <br>
 <section class="ftco-counter img" id="section-counter">
     	<div class="container">
     		<div class="row" style="background-color:ghostwhite; height:120px;">
@@ -83,57 +90,55 @@
           </div>
         </div>
         <div class="row">
+        	<c:forEach items="${newsList }" var="news" begin="0" end="3">
+        	
         	<div class="col-md-3 ftco-animate">
         		<div class="agent">
     					<div class="img">
-		    				<img src="resources/images/team-1.jpg" class="img-fluid" alt="Colorlib Template">
+		    				<img src="resources/img/${news.newsboard_pfile }" class="img-fluid" alt="Colorlib Template" style="width:240px; height:350px;">
 	    				</div>
 	    				<div class="desc">
-	    					<h3><a href="properties.html">James Stallon</a></h3>
-								<p class="h-info"><span class="location">Listing</span> <span class="details">&mdash; 10 Properties</span></p>
+	    					<h3><a href="newsDetail.do?no=${news.newsboard_title }&newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_title }`)" id="newsboard_title">조회수 ${news.newsboard_hit } !!</a></h3>
+								<p class="h-info"><span class="details">장르 : ${news.newsboard_genre }</span></p>
 	    				</div>
     				</div>
         	</div>
-        	<div class="col-md-3 ftco-animate">
-        		<div class="agent">
-    					<div class="img">
-		    				<img src="resources/images/team-2.jpg" class="img-fluid" alt="Colorlib Template">
-	    				</div>
-	    				<div class="desc">
-	    					<h3><a href="properties.html">James Stallon</a></h3>
-								<p class="h-info"><span class="location">Listing</span> <span class="details">&mdash; 10 Properties</span></p>
-	    				</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3 ftco-animate">
-        		<div class="agent">
-    					<div class="img">
-		    				<img src="resources/images/team-3.jpg" class="img-fluid" alt="Colorlib Template">
-	    				</div>
-	    				<div class="desc">
-	    					<h3><a href="properties.html">James Stallon</a></h3>
-								<p class="h-info"><span class="location">Listing</span> <span class="details">&mdash; 10 Properties</span></p>
-	    				</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3 ftco-animate">
-        		<div class="agent">
-    					<div class="img">
-		    				<img src="resources/images/team-4.jpg" class="img-fluid" alt="Colorlib Template">
-	    				</div>
-	    				<div class="desc">
-	    					<h3><a href="properties.html">James Stallon</a></h3>
-								<p class="h-info"><span class="position">Listing</span> <span class="details">&mdash; 10 Properties</span></p>
-	    				</div>
-    				</div>
-        	</div>
+        	</c:forEach>
         </div>
     	</div>
     </section>
         
-        
+        <script>
+    	function hitUpdate(title){
+    		console.log(title);
+    		var newsboard_title = title;
+    			 $.ajax({
+ 					type : "POST",
+ 					url : "newsHitUpdate.do",	
+ 					data : {
+ 						"title" : title
+ 					},
+ 					success : function(data){
+ 						console.log(data);
+ 					}
+ 					
+ 				}); 
+    	}
+    </script>
 	<script>
 		$(document).ready(function() {
+			
+			  /*   //Check if the current URL contains '#'
+			    if(document.URL.indexOf("#")==-1){
+			        // Set the URL to whatever it was plus "#".
+			        url = document.URL+"#";
+			        location = "#";
+
+			        //Reload the page
+			        location.reload(true);
+			    } */
+			
+			
 			var covid = '${covid }';
 
 			let parser, xmlDoc;
@@ -145,14 +150,17 @@
 			
 			document.getElementById('updateDay').innerHTML = xmlDoc.getElementsByTagName('item')[0].childNodes[1].childNodes[0].nodeValue + " 기준";
 			
-			document.getElementById('deathCnt').dataset.number = xmlDoc.getElementsByTagName('item')[0].childNodes[2].childNodes[0].nodeValue;
-			document.getElementById('decideCnt').dataset.number = xmlDoc.getElementsByTagName('item')[0].childNodes[3].childNodes[0].nodeValue;
+			document.getElementById('deathCnt').innerHTML = xmlDoc.getElementsByTagName('item')[0].childNodes[2].childNodes[0].nodeValue;
+			document.getElementById('decideCnt').innerHTML = xmlDoc.getElementsByTagName('item')[0].childNodes[3].childNodes[0].nodeValue;
 			
+			//data.number
 			//document.getElementById('deathCnt').innerHTML 
 			//= xmlDoc.getElementsByTagName('item')[0].childNodes[0].childNodes[0].nodeValue;
 			
-
+		
 		});
+		
+		
 	</script>
 
 

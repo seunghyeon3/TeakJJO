@@ -7,21 +7,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Custom fonts for this template-->
-<link href="resources/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
-	rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
 <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet" href="resources/css/style.css?after">
 <script type="text/javascript"
 	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 
 <body>
-<!-- 양택조 color=pink (#e86ed0) -->
+<!-- 양택조 color=pink (#ff0037) -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
