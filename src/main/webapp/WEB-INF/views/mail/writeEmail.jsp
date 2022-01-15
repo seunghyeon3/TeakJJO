@@ -5,19 +5,58 @@
 <head>
 <meta charset="UTF-8">
 </head>
+<link rel="stylesheet" href="resources/css/style.css">
 <body>
-<form action="email.do" method="post">
-<label>발송자</label>
-<input type="text" name="username" value="${memberinfo.member_Id }">
-<input type="password" name="password" value="${param.pswd }"> 
-<label>제목</label>
-<input type="text" name="subject">
-<label>수신자</label>
-<input type="text" name="recipient">
-<label>내용</label>
-<textarea rows="10" cols="10" name="body">
-</textarea>
-<button type="submit">전송</button>
+<br><br>
+   <div class="container">
+      
+        <div class="row block-9 justify-content-center mb-5">
+          <div class="col-md-8 mb-md-5">
+          <br>
+          	<h2 class="text-center">send mail</h2>
+            <form action="email.do" class="bg-light p-5 contact-form" method="post">
+              <div class="form-group">
+                <label>발송자</label><br>
+				<input type="text" name="username" class="form-control" value="${memberinfo.member_Id }"><br>
+              </div>
+              <div class="form-group">
+               <label>제목</label><br>
+			   <input type="text" class="form-control" name="subject"><br>
+              </div>
+              <div class="form-group">
+                <label>수신자</label><br>
+		 	    <input type="text" class="form-control" name="recipient"><br>
+              </div>
+              <div class="form-group">
+                <label>내용</label><br>
+				<textarea rows="7" class="form-control" cols="30" name="body"></textarea>
+              </div>
+              <div class="form-group">
+              <input type="hidden" name="password" class="form-control" value="${param.pswd }">
+                <input type="submit" value="Send mail" class="btn btn-primary py-3 px-5">
+              </div>
+            </form>
+          
+          </div>
+        </div>
+        </div>
+<%-- <div class= "container">
+<div class="row block-3 justify-content-center mb-5">
+<form action="email.do" class="bg-light p-5 contact-form" method="post">
+<h2>메일쓰기</h2>
+<label>발송자</label><br>
+<input type="text" name="username" class="form-control" value="${memberinfo.member_Id }"><br>
+<label>제목</label><br>
+<input type="text" class="form-control" name="subject"><br>
+<label>수신자</label><br>
+<input type="text" class="form-control" name="recipient"><br>
+<label>내용</label><br>
+<textarea rows="7" class="form-control" cols="30" name="body">
+</textarea><br>
+
+<button type="submit" class="btn btn-primary py-3 px-5">전송</button>
 </form>
+</div>
+</div> --%>
 </body>
 </html>

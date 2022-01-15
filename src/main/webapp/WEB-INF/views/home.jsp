@@ -6,49 +6,48 @@
 <html>
 
 <head>
-<title>양택조</title>
-<meta charset="UTF-8">
-<link href="resources/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
-	rel="stylesheet">
+	<title>양택조</title>
+	<meta charset="UTF-8">
+	<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
+		rel="stylesheet">
 
-<!-- Custom styles for this template-->
-<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="resources/css/style.css">
-<script type="text/javascript"
-	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-</head>
+	<!-- Custom styles for this template-->
+	<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="resources/css/style.css">
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/animate.css">
+	<link rel="stylesheet" href="resources/css/ionicons.min.css">
 </head>
 <style>
-.black_overlay {
-	display: none;
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: black;
-	z-index: 1001;
-	-moz-opacity: 0.8;
-	opacity: .80;
-	filter: alpha(opacity = 80);
-}
+	.black_overlay {
+		display: none;
+		position: absolute;
+		top: 0%;
+		left: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		z-index: 1001;
+		-moz-opacity: 0.8;
+		opacity: .80;
+		filter: alpha(opacity=80);
+	}
 
-.white_content {
-	display: none;
-	position: absolute;
-	top: 25%;
-	left: 25%;
-	width: 50%;
-	height: 50%;
-	padding: 16px;
-	border: 16px solid orange;
-	background-color: white;
-	z-index: 1002;
-	overflow: auto;
-}
+	.white_content {
+		display: none;
+		position: absolute;
+		top: 25%;
+		left: 25%;
+		width: 50%;
+		height: 50%;
+		padding: 16px;
+		border: 16px solid orange;
+		background-color: white;
+		z-index: 1002;
+		overflow: auto;
+	}
 </style>
 </head>
 
@@ -58,13 +57,11 @@
 		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
 		<!-- Sidebar Toggle (Topbar) -->
-		<button id="sidebarToggleTop"
-			class="btn btn-link d-md-none rounded-circle mr-3">
+		<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 			<i class="fa fa-bars"></i>
 		</button>
-		<a
-			class="sidebar-brand d-flex align-items-center justify-content-center"
-			href="home.do">
+		<a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.do">
+
 			<div class="sidebar-brand-icon rotate-n-15">
 				<img src="resources/img/양택조Header.png" width="70">
 			</div>
@@ -73,38 +70,34 @@
 			</div>
 		</a>
 		<!-- Topbar Search -->
-		<form
-			class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+		<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 			<div class="input-group">
-				<input type="text" id="keyword"
-					class="form-control bg-light border-0 small"
-					placeholder="Search for..." aria-label="Search"
-					aria-describedby="basic-addon2">
+				<input type="text" id="keyword" class="form-control bg-light border-0 small" placeholder="Search for..."
+					aria-label="Search" aria-describedby="basic-addon2" >
 				<div class="input-group-append">
-					<button class="btn btn-primary" type="button"
-						onclick="searchPage()">
+					<button class="btn btn-primary bg-light" type="button" onclick="searchPage()">
 						<i class="fas fa-search fa-sm"></i>
 					</button>
 				</div>
 			</div>
 		</form>
-		
+
 		<c:if test="${memberinfo ne null }">
-			
+
 			<!-- Dropdown - Messages -->
 			<a class="nav-link" href="javascript:void(0);" id="messagesDropdown" style="display: inline-block;"
-			onclick="document.getElementById('light2').style.display='block';">
-			<i class="fas fa-envelope fa-fw"></i></a> 
-			
+				onclick="document.getElementById('light2').style.display='block';">
+				<i class="fas fa-envelope fa-fw"></i>
+			</a>
+
 			<div id="light2" class="white_content text-left" style="height: 300px;">
 				<form action="writeEmail.do" method="post">
-					<label>메일 쓰기 </label>
-					<label>발송자</label>
-					<input type="text" name="username" value="${memberinfo.member_Id }">
-					<label>비밀번호</label>
+					<label>메일 쓰기 </label> <label>발송자</label> <input type="text" name="username"
+						value="${memberinfo.member_Id }"> <label>비밀번호</label>
 					<input type="password" id="password" name="pswd">
 					<button type="submit" class="btn btn-primary">확인</button>
-						<button type="button" class="btn btn-primary" onclick="document.getElementById('light2').style.display='none';">취소</button>
+					<button type="button" class="btn btn-primary"
+						onclick="document.getElementById('light2').style.display='none';">취소</button>
 					<div id="fade2" class="black_overlay"></div>
 				</form>
 			</div>
@@ -116,37 +109,34 @@
 
 			<c:if test="${memberinfo ne null }">
 				<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-				<li class="nav-item dropdown no-arrow d-sm-none"><a
-					class="nav-link dropdown-toggle" href="#" id="searchDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-				</a> <!-- Dropdown - Messages --></li>
-				<li class="nav-item dropdown no-arrow"><a
-					class="nav-link dropdown-toggle" href="#" id="userDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <span
-						class="mr-2 d-none d-lg-inline text-gray-600 small">
-							${memberinfo.member_Name }님 </span> <img
-						class="img-profile rounded-circle"
-						src="resources/img/undraw_profile.svg">
-				</a> <!-- Dropdown - User Information -->
-					<div
-						class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+				<li class="nav-item dropdown no-arrow d-sm-none"><a class="nav-link dropdown-toggle" href="#"
+						id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+					</a> <!-- Dropdown - Messages -->
+				</li>
+				<li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
+							class="mr-2 d-none d-lg-inline text-gray-600 small">
+							${memberinfo.member_Name }님 </span> <img class="img-profile rounded-circle"
+							src="resources/img/undraw_profile.svg">
+					</a> <!-- Dropdown - User Information -->
+					<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 						aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="updateInfo.do"> <i
-							class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
-						</a> <a class="dropdown-item" href="resertaionInfo.do"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 예매 현황
-						</a> <a class="dropdown-item" href="#" id="check_module"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
-						</a> <a class="dropdown-item" href="acckeyword.do"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
+						<a class="dropdown-item" href="updateInfo.do" style="font-size: 15px;"> <i
+								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
+						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 예매 현황
+						</a> <a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
+						</a> <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
-							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do">
-							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do"
+							style="font-size: 15px;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>
-					</div></li>
+					</div>
+				</li>
 			</c:if>
 			<c:if test="${memberinfo eq null }">
 				<button class="btn btn-primary" type="button" onclick="login()">로그인</button>
@@ -155,32 +145,37 @@
 		</ul>
 
 	</nav>
-	<div class="text text-center">
-		<div class="mb-4">
-			<br> <br> <img src="resources/img/양택조Header.png"
-				width="300">
 
 
-		</div>
-		<form action="/portalSearch.do" class="search-location m-lg-4">
-			<div class="row justify-content-center">
-				<div class="col-lg-10 align-items-end">
-					<div class="form-group">
-						<div class="form-field">
-							<script async
-								src="https://cse.google.com/cse.js?cx=8e2ffa22a72c27063"></script>
-							<div class="gcse-search"></div>
-							<!-- <input type="text" class="form-control bg-light"
-								placeholder="Search location">
-							<button>
-								<span class="ion-ios-search"></span>
-							</button> -->
-						</div>
+	<div class="hero-wrap ftco-degree-bg" style="background-image: url('resources/images/bg_1.jpg');"
+		data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row no-gutters slider-text justify-content-center align-items-center">
+				
+					<div class="text text-center">
+						<img src="resources/img/양택조Header.png" width="300">
+
+							<form action="searchKeyword.do" class="search-location mt-md-5" method="get">
+								<div class="row justify-content-center">
+									<div class="col-lg-10 align-items-end">
+										<div class="form-group">
+											<div class="form-field">
+												<input type="text" class="form-control" placeholder="Search Keyword" id="keywords" name="keywords">
+												<button><span class="ion-ios-search"></span></button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						
 					</div>
-				</div>
+				
 			</div>
-		</form>
+		</div>
 	</div>
+
+
 
 	<!-- 완성후 주석 해제 예정 -->
 	<c:if test="${memberinfo ne null }">
@@ -202,8 +197,8 @@
 				</div>
 
 				<div id="light" class="white_content text-left">
-					<label>바로가기 추가</label><br> <label>이름</label><br> <input
-						type="text" id="urls" name="urlMark"><br> <label>URL</label><br>
+					<label>바로가기 추가</label><br> <label>이름</label><br> <input type="text" id="urls" name="urlMark"><br>
+					<label>URL</label><br>
 					<input type="text" id="urlMarkName" name="urlMarkName"> <br>
 					<br>
 					<button type="button" onclick="insertUrl()" class="btn btn-primary">확인</button>
@@ -235,7 +230,7 @@
 			} else if (keyword == '번역') {
 				window.location = "papagoMain.do"
 			} else if (keyword == '푸드트럭') {
-			window.location = "foodtruck.do"
+				window.location = "foodtruck.do"
 			} else if (keyword == '부동산') {
 
 			} else if (keyword == '뉴스') {
@@ -286,83 +281,85 @@
 		function deleteUrl() {
 			console.log(this.event);
 		}
-		
 
 
-		<%MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
-if (vo == null) {
 
-} else if (vo.getMember_Id() != null) {%>
+		<%	MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
+		if (vo == null) {
+
+		} else if (vo.getMember_Id() != null) {	%>
 			$(document).ready(function () {
-					$.ajax({
-						type: "get",
-						url: "getUrl.do",
-						success: function (result) {
-							console.log(typeof result);
-							for(var fields of result){	
-								$('#urlDiv').append($('<div>').css('display', 'inline-block')
-									.append($('<button>').attr({'class': 'btn btn-primary','onclick': "location.href='https://" + fields.urlMark +
-												"'",
-											'id': fields.urlMarkName
-										}).text(
-											fields.urlMarkName)));
+				$.ajax({
+					type: "get",
+					url: "getUrl.do",
+					success: function (result) {
+						console.log(typeof result);
+						for (var fields of result) {
+							$('#urlDiv').append($('<div>').css('display', 'inline-block')
+								.append($('<button>').attr({
+									'class': 'btn btn-primary',
+									'onclick': "location.href='https://" + fields.urlMark +
+										"'",
+									'id': fields.urlMarkName
+								}).text(
+									fields.urlMarkName)));
 							//view는 확인,, 최종 정리해야함.$('#urlDiv').prepend($('<a>').attr('onclick', 'deleteUrl()').text('삭제'));
 							$('#light').css('display', 'none');
 							$('#fade').css('display', 'none');
 							$('#urls').text('');
 							$('#urlMarkName').text('');
-							}
-						},
-						error: function (error) {
-							console.log(error);
 						}
-					})
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				})
 
-				}) <%}%>
+			}) <%} %>
 	</script>
 	<script type="text/javascript">
-	$("#check_module").click(function () {
-		console.log("여기요");
-		var IMP = window.IMP; // 생략가능
-		IMP.init('imp44063807');
-		// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
-		// ''안에 띄어쓰기 없이 가맹점 식별코드를 붙여넣어주세요. 안그러면 결제창이 안뜹니다.
-		IMP.request_pay({
-			pg: 'kakao',
-			pay_method: 'card',
-			merchant_uid: 'merchant_' + new Date().getTime(),
-			/* 
-			 *  merchant_uid에 경우 
-			 *  https://docs.iamport.kr/implementation/payment
-			 *  위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
-			 */
-			name: '주문명 : 아메리카노',
-			// 결제창에서 보여질 이름
-			// name: '주문명 : ${auction.a_title}',
-			// 위와같이 model에 담은 정보를 넣어 쓸수도 있습니다.
-			amount: 2000,
-			// amount: ${bid.b_bid},
-			// 가격 
-			buyer_name: '이름',
-			// 구매자 이름, 구매자 정보도 model값으로 바꿀 수 있습니다.
-			// 구매자 정보에 여러가지도 있으므로, 자세한 내용은 맨 위 링크를 참고해주세요.
-			buyer_postcode: '123-456',
-		}, function (rsp) {
-			console.log(rsp);
-			if (rsp.success) {
-				var msg = '결제가 완료되었습니다.';
-				msg += '결제 금액 : ' + rsp.paid_amount;
-				// success.submit();
-				location.href = "changeAuthor.do";
-				// 결제 성공 시 정보를 넘겨줘야한다면 body에 form을 만든 뒤 위의 코드를 사용하는 방법이 있습니다.
-				// 자세한 설명은 구글링으로 보시는게 좋습니다.
-			} else {
-				var msg = '결제에 실패하였습니다.';
-				msg += '에러내용 : ' + rsp.error_msg;
-			}
-			alert(msg);
+		$("#check_module").click(function () {
+			console.log("여기요");
+			var IMP = window.IMP; // 생략가능
+			IMP.init('imp44063807');
+			// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
+			// ''안에 띄어쓰기 없이 가맹점 식별코드를 붙여넣어주세요. 안그러면 결제창이 안뜹니다.
+			IMP.request_pay({
+				pg: 'kakao',
+				pay_method: 'card',
+				merchant_uid: 'merchant_' + new Date().getTime(),
+				/* 
+				 *  merchant_uid에 경우 
+				 *  https://docs.iamport.kr/implementation/payment
+				 *  위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
+				 */
+				name: '주문명 : 아메리카노',
+				// 결제창에서 보여질 이름
+				// name: '주문명 : ${auction.a_title}',
+				// 위와같이 model에 담은 정보를 넣어 쓸수도 있습니다.
+				amount: 2000,
+				// amount: ${bid.b_bid},
+				// 가격 
+				buyer_name: '이름',
+				// 구매자 이름, 구매자 정보도 model값으로 바꿀 수 있습니다.
+				// 구매자 정보에 여러가지도 있으므로, 자세한 내용은 맨 위 링크를 참고해주세요.
+				buyer_postcode: '123-456',
+			}, function (rsp) {
+				console.log(rsp);
+				if (rsp.success) {
+					var msg = '결제가 완료되었습니다.';
+					msg += '결제 금액 : ' + rsp.paid_amount;
+					// success.submit();
+					location.href = "changeAuthor.do";
+					// 결제 성공 시 정보를 넘겨줘야한다면 body에 form을 만든 뒤 위의 코드를 사용하는 방법이 있습니다.
+					// 자세한 설명은 구글링으로 보시는게 좋습니다.
+				} else {
+					var msg = '결제에 실패하였습니다.';
+					msg += '에러내용 : ' + rsp.error_msg;
+				}
+				alert(msg);
+			});
 		});
-	});
 	</script>
 </body>
 
