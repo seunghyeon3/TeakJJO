@@ -26,8 +26,7 @@
 			class="btn btn-link d-md-none rounded-circle mr-3">
 			<i class="fa fa-bars"></i>
 		</button>
-		<a
-			class="sidebar-brand d-flex align-items-center justify-content-center"
+		<a class="sidebar-brand d-flex align-items-center justify-content-center"
 			href="home.do">
 			<div class="sidebar-brand-icon rotate-n-15">
 				<img src="resources/img/양택조Header.png" width="70">
@@ -82,16 +81,16 @@
 					<div
 						class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 						aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="updateInfo.do"> <i
+						<a class="dropdown-item" href="updateInfo.do" style="font-size: 15px;"> <i
 							class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
-						</a> <a class="dropdown-item" href="resertaionInfo.do"> <i
+						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
 							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 예매 현황
-						</a> <a class="dropdown-item" href="#" id="check_module"> <i
+						</a> <a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
 							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
-						</a> <a class="dropdown-item" href="acckeyword.do"> <i
+						</a> <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
 							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
-							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do">
+							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do" style="font-size: 15px;">
 							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>

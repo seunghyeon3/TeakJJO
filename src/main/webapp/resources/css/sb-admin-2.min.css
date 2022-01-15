@@ -9,7 +9,11 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root { -
+<<<<<<< HEAD
+	-blue: #4e73df; -
+=======
 	-blue: black; -
+>>>>>>> b3d77fa7fa8f18fadf4429b55fdba5c7fba6cf0a
 	-indigo: #6610f2; -
 	-purple: #6f42c1; -
 	-pink: #e83e8c; -
@@ -35,12 +39,16 @@
 	-breakpoint-md: 768px; -
 	-breakpoint-lg: 992px; -
 	-breakpoint-xl: 1200px; -
+<<<<<<< HEAD
+	-font-family-sans-serif:  'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+=======
 	-font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
 		"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
 		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
 		"Noto Color Emoji"; -
 	-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
 		"Liberation Mono", "Courier New", monospace
+>>>>>>> b3d77fa7fa8f18fadf4429b55fdba5c7fba6cf0a
 }
 
 *, ::after, ::before {

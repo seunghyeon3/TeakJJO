@@ -1,14 +1,18 @@
 package co.teakjjo.prj.foodtruck.service;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+import co.teakjjo.prj.paging.service.PagingVO;
+import lombok.Data;
+
+@Data
 public class FoodBookMarkVO {
-	public String bookmarkId;
-	public String foodtruckId;
-	public String memberId;
-	public String foodtruckRSR;
-	public String bookmarkDate;
+	public String bookmark_id;
+	public String member_id;
+	public String foodtruck_rsr;
+	public String bookmark_date;
+	public String lat;
+	public String lng;
+	public int start;
+	public int end;
+	public PagingVO vo;
 }
