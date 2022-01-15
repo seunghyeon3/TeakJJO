@@ -52,7 +52,7 @@ public class MemberController {
 		
 		return "redirect:"+ url.substring(urlLocation+5);
 	}
-
+	
 	@RequestMapping(value = "/memberRegister.do", produces = "application/json; charset=utf8")
 	public String memberRegister(MemberVO vo, HttpSession session) {
 		memberDao.insertMember(vo);

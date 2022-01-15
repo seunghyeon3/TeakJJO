@@ -5,7 +5,7 @@ import java.util.List;
 public interface SearchKeywordService {
 	
 	//insert
-	public void insertKeyword();
+	public void insertKeyword(SearchKeywordVO vo);
 	//getkeyword
 	public List<SearchKeywordVO> getKeyword(String id);
 

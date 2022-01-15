@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,39 +83,41 @@
 		<ul class="navbar-nav">
 			<!-- Nav Item - User Information -->
 
-			<c:if test="${memberinfo ne null }">
+				<c:if test="${memberinfo ne null }">
+			
 				<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-				<li class="nav-item dropdown no-arrow d-sm-none"><a
-					class="nav-link dropdown-toggle" href="#" id="searchDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-				</a> <!-- Dropdown - Messages --></li>
-				<li class="nav-item dropdown no-arrow"><a
-					class="nav-link dropdown-toggle" href="#" id="userDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <span
-						class="mr-2 d-none d-lg-inline text-gray-600 small">
-							${memberinfo.member_Name }님 </span> <img
-						class="img-profile rounded-circle"
-						src="resources/img/undraw_profile.svg">
-				</a> <!-- Dropdown - User Information -->
-					<div
-						class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+				<li class="nav-item dropdown no-arrow d-sm-none"><a class="nav-link dropdown-toggle" href="#"
+						id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+					</a> <!-- Dropdown - Messages -->
+				</li>
+				<li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
+							class="mr-2 d-none d-lg-inline text-gray-600 small">
+							${memberinfo.member_Name }님 </span> <img class="img-profile rounded-circle"
+							src="resources/img/undraw_profile.svg">
+					</a> <!-- Dropdown - User Information -->
+					<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 						aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="updateInfo.do" style="font-size: 15px;"> <i
-							class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
+						<a class="dropdown-item" href="updateInfoForm.do" style="font-size: 15px;"> <i
+								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
 						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 예매 현황
-						</a> <a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
-						</a> <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 예매 현황
+						</a> 
+						<c:if test="${fn:contains(memberinfo.member_Author , 'N')}">
+						<a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
+						</a>
+						</c:if>
+						 <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
-							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do" style="font-size: 15px;">
-							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do"
+							style="font-size: 15px;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>
-					</div></li>
+					</div>
+				</li>
 			</c:if>
 			<c:if test="${memberinfo eq null }">
 				<button class="btn btn-primary" type="button" onclick="login()">로그인</button>

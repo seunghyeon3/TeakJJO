@@ -50,8 +50,5 @@ public class HomeController {
 	 public String resertaionInfo() {
 		 return "member/resertaionInfo";
 	 }
-	 @RequestMapping("acckeyword.do")
-	 public String acckeyword() {
-		 return "member/acckeyword";
-	 }
+
 }

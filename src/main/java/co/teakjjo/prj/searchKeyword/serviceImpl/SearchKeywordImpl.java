@@ -2,36 +2,39 @@ package co.teakjjo.prj.searchKeyword.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import co.teakjjo.prj.searchKeyword.service.SearchKeywordMapper;
 import co.teakjjo.prj.searchKeyword.service.SearchKeywordService;
 import co.teakjjo.prj.searchKeyword.service.SearchKeywordVO;
 
 @Repository("SearchKeywordDao")
 public class SearchKeywordImpl implements SearchKeywordService {
 
+	@Autowired
+	private SearchKeywordMapper map;
+	
 	@Override
-	public void insertKeyword() {
-		// TODO Auto-generated method stub
+	public void insertKeyword(SearchKeywordVO vo) {
+		map.insertKeyword(vo);
 
 	}
 
 	@Override
 	public List<SearchKeywordVO> getKeyword(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return map.getKeyword(id);
 	}
 
 	@Override
 	public void updateHit() {
-		// TODO Auto-generated method stub
+		map.updateHit();
 
 	}
 
 	@Override
 	public boolean keywordCheck() {
-		// TODO Auto-generated method stub
-		return false;
+		return map.keywordCheck();
 	}
 
 }

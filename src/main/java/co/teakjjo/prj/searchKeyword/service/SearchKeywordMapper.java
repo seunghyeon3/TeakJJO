@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface SearchKeywordMapper {
 	// insert
-	public void insertKeyword();
+	public void insertKeyword(SearchKeywordVO vo);
 	// getkeyword
 	public List<SearchKeywordVO> getKeyword(String id);
 	
