@@ -138,8 +138,8 @@ a.page-link {
 									style="cursor: pointer; margin-top: 5px;" onclick="mapSearch()">검색</a></li>
 								<li><a href="javascript:void(0);" style="cursor: pointer;"
 									onclick="foodMark()">즐겨찾기</a></li>
-								<!-- <li><a href="javascript:void(0);" style="cursor: pointer;"
-									onclick="rsrSearch()">최근검색</a></li> -->
+								<li><a href="javascript:void(0);" style="cursor: pointer;"
+									onclick="rsrSearch()">최근검색</a></li>
 							</ul></li>
 					</ul>
 				</div>
@@ -172,10 +172,10 @@ a.page-link {
 				</div>
 				<!-- 최근검색 이동 -->
 				<div id="rsrDiv" class="hide"
-					style="height: 500px; overflow: auto; margin-left: 115px;">
+					style="width : 300px; height: 500px; margin-left: 100px;">
 					<div>
 						<h3>최근검색 목록</h3>
-						<table id="rsrList"></table>
+						<table id="rsrList" ></table>
 					</div>
 				</div>
 			</div>
@@ -190,9 +190,6 @@ a.page-link {
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=47ef13464842c3a22235787a9d64e6fc&libraries=services,clusterer"></script>
 	<script>
-	
-	
-	
 	
 		var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
 			center : new kakao.maps.LatLng(35.20888446, 128.1250549), // 지도의 중심좌표
@@ -217,8 +214,6 @@ a.page-link {
 		iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 		var markers;
 		var searchData = new Array();
-		
-		
 		
 		
 		// 데이터를 가져오기 위해 jQuery를 사용합니다
@@ -278,7 +273,6 @@ a.page-link {
 		// 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
 		kakao.maps.event.addListener(clusterer, 'clusterclick', function(
 				cluster) {
-
 			// 현재 지도 레벨에서 1레벨 확대한 레벨
 			var level = map.getLevel() - 2;
 
@@ -309,33 +303,10 @@ a.page-link {
 		}
 		//즐겨찾기
 		function foodMark() {
-			
 			selectFoodMark(1);
 		}
-		//페이징 1번
-		 /* function paging(){
-			var $page = $(`<li class="page-item"><a class="page-link" onclick="selectFoodMark(`+prev+`)"
-			tabindex="-1"><</a></li>`);
-			var $page2 = $(`<li class="page-item"><a class="page-link" onclick="selectFoodMark(`+next+`)">></a>
-			</li>`);
-			
-			$(".pagination").append($page);
-			for(var i=1;i<=lastPage;i++){
-				var $page3;
-				if(i==nowPage2){
-					
-					$page3 = $(`<li class="page-item active"><a class="page-link" onclick="selectFoodMark(`+i+`)">`+i+`
-									<span class="sr-only">(current)</span></a></li>`);
-				}else{
-					$page3 = $(`<li class="page-item"><a class="page-link" onclick="selectFoodMark(`+i+`)">`+i+`</a></li>`);
-					}
-				$(".pagination").append($page3);
-			}
-				
-				$(".pagination").append($page2);
-		}  */
 		
-		//페이징 2번
+		//페이징
 		 function paging(){
 			var $page = $(`<li class="page-item"><a class="page-link" onclick="selectFoodMark(`+prev+`)"
 			tabindex="-1"><</a></li>`);
@@ -364,12 +335,12 @@ a.page-link {
 		} 
 		
 		//최근검색
-		/* function rsrSearch(){
+		 function rsrSearch(){
 			$("#searchDiv").hide();
 			$("#markDiv").hide();
 			$("#rsrDiv").show();
 			selectRsrSearch();
-		} */
+		} 
 		
 		//즐겨찾기 목록 리스트 출력
 		function selectFoodMark(nowPage){
@@ -383,11 +354,12 @@ a.page-link {
 			$.ajax({
 	     	        type:"POST",
 	     	        url: "foodSelectList.do",
-	     	        data : {"nowPage" : nowPage} ,
+	     	        data : {"nowPage" : nowPage},
 	     	      	async:false,
 	     	        success: function(result){
+	     	        	console.log(result.length);
 	     	        	if(result ==""){
-	     	        		alert("로그인이 필요한 서비스입니다.");
+	     	        		alert("즐겨찾기 목록이 없습니다.");
 	     	        	}else{
 		     	        	$("#searchDiv").hide();
 		     				$("#rsrDiv").hide();
@@ -398,6 +370,7 @@ a.page-link {
 		     	        	prev=result[0].vo.prev;
 		     	        	lastPage=result[0].vo.lastPage;
 		     	        	nowPage2 = result[0].vo.nowPage;
+		     	        	
 		     	        	for ( var i in result ) {
 				        		$btr = $(`
 				        				<tr>
@@ -430,13 +403,12 @@ a.page-link {
 		     	        	paging();
 	     	        	}
 	     	        }
-	     	        
-	     	        
 	     	   });
 		}
 		
-		//최근검색결과 출력
+		//최근검색목록 출력
 		function selectRsrSearch(){
+			
 			var $rtr;
 			//최근검색 목록 리셋
         	if($(".tr")){
@@ -446,25 +418,49 @@ a.page-link {
 			//최근검색 목록 출력
 			$.ajax({
 	     	        type:"POST",
-	     	        url: "foodSelectList.do",
+	     	        url: "rsrList.do",
 	     	        success: function(result){
-	     	        	console.log(result);
-	     	        	for ( var i in result ) {
-			        		$rtr = $(`
-			        				<tr>
-				        				<input type="hidden" value=`+result[i]+`>
-										<th style="cursor: pointer" colspan="3" >`+result[i].foodtruck_rsr+`</th>
-									</tr>
-									`);
-			        		$("#rsrList").append($rtr);
-			        		$rtr.addClass('tr');
-			        	}
+	     	        	console.log(result.length);
+	     	        	if(result.length != 0){
+		     	        	for ( var i = 0; i < 4; i++ ) {
+				        		$rtr = $(`
+				        				<tr>
+				        					<input type="hidden" value=`+result[i].rsr_id+`>
+					        				<input type="hidden" value=`+result[i]+`>
+											<th style="cursor: pointer;" colspan="3" class="clickRsr">`+result[i].rsr_id+`</th>
+										</tr>
+										<tr>
+											<input type="hidden" value=`+result[i].rsr_id+`>
+											<th style="color : gray !important;">`+result[i].rsr_date.substr(0,10)+`</th>
+										</tr>
+										<tr>
+											<th>
+												<input type="hidden" value=`+result[i].rsr_id+`>
+												<button class="rsrDel btn btn-primary">삭제</button>
+											</th>	
+										</tr>
+										
+										`);
+				        		$("#rsrList").append($rtr);
+				        		$rtr.addClass('tr');
+				        		} 
+				        	}else {
+				        		$h4 = $(`<h4 style="font-weight : bold;">최근검색정보가 없거나 로그인 되어있지 않습니다.<h4>`);
+				        		$("#rsrList").append($h4);
+				        		$h4.addClass('tr');
+	     	        		}
 	     	        },
 	     	        error: function(error) {
 	     	            alert(error);
 					}
 	     	   });
 		}
+		
+		function clickRsr(){
+			var value = $(this).prev().val();
+			console.log(value);
+		}
+		
 			//document
 		$(document).ready(function(){
 				
@@ -480,9 +476,25 @@ a.page-link {
 	            }
 	        });
 		      
-		        //검색버튼 클릭시 이벤트발생
+		        //검색 버튼 클릭시 이벤트발생
 		        $("#foodSearch").on("click",function(e){
-		        	e.preventDefault();
+		        	var search = $(this).prev().val();
+		        	console.log(search);
+		        	$.ajax({
+		     	        type:"POST",
+		     	        url: "${pageContext.request.contextPath}/rsrInsert.do",
+		     	        data : {"search" : search },
+		     	        success: function(result){
+		     	        	if(result == 1){
+		     	        		alert("최근검색 들어갔다!!!");
+		     	        	}else{
+		     	        		alert("최근검색 문제가 있네");
+		     	        	}
+		     	        },
+		     	        error: function(){
+		     	        	return;
+		     	        }
+		     	    }); 
 		        	
 		        	var searchIndex = ""; //String
 		        	var searchBox = $("#searchBox").val();
@@ -693,6 +705,35 @@ a.page-link {
 	     	        },
 	     	    }); 
      		});
+			$(document).on('click','.rsrDel',function(e){
+				var search = $(this).prev().val();
+				console.log(search);
+				$.ajax({
+		     	        type:"POST",
+		     	        url: "rsrDelete.do",
+		     	     	data : {"search" : search},
+		     	        success: function(result){
+		     	        	if(result == 1){
+	     	        		alert("최근검색 삭제완료!");
+	     	        		selectRsrSearch();
+	     	        		}else{
+	     	        		alert("최근검색 삭제실패");
+	     	        		}
+		     	        }
+		     	   });
+			});
+			
+			$(document).on('click','.clickRsr', function(){
+				var value= $(this).prev().prev().val();
+				console.log(value);
+				$("#searchBox").attr('value',value);
+				$("#foodSearch").trigger("click");
+				$("#markDiv").hide();
+				$("#rsrDiv").hide();
+				$("#searchDiv").show();
+				
+			})
+			
 			
 	</script>
 </body>
