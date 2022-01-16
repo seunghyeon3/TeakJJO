@@ -10,12 +10,32 @@
 
 
 <!-- Custom styles for this template-->
-<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="resources/css/style.css?after">
+	<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
+		rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="resources/css/style.css">
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/animate.css">
+	<link rel="stylesheet" href="resources/css/ionicons.min.css">
+	<link rel="stylesheet" href="resources/css/style.css?after">
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
-
+<style>
+@font-face {
+	font-family: 'yg-jalnan';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
 <body>
 <!-- 양택조 color=pink (#ff0037) -->
 	<nav
@@ -120,18 +140,19 @@
 		if (keyword == '유튜브') {
 			window.location = "youtube.do";
 		} else if (keyword == '영화') {
-
-		} else if (keyword == '푸드트럭') {
-
+			window.location = "movieMain.do"
 		} else if (keyword == '사전') {
 			window.location = "dictionaryMain.do";
-
 		} else if (keyword == '번역') {
 			window.location = "papagoMain.do"
 		} else if (keyword == '푸드트럭') {
-
+			window.location = "foodtruck.do"
 		} else if (keyword == '부동산') {
 
+		} else if (keyword == '뉴스') {
+			window.location = "newsMain.do"
+		} else if (keyword == '뉴스등록') {
+			window.location = "newsInsertForm.do"
 		} else {
 			window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 부동산 중 하나 검색 해주세요.');
 			$('#keyword').val('').focus();

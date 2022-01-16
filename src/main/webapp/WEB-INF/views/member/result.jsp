@@ -36,7 +36,7 @@
       <div class="container">
       	<div class="row justify-content-center">
           <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-          	<span class="subheading">양택조</span>
+          	<span class="subheading">양택조의 모든지 알려줍니다</span>
             <h2 class="mb-2">${keyword }의 결과입니다.</h2>
           </div>
         </div>

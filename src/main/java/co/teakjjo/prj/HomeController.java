@@ -42,7 +42,7 @@ public class HomeController {
 		return "mail/writeEmail";
 	}
 	 
-	 @RequestMapping("updateInfo.do")
+	 @RequestMapping("updateInfoForm.do")
 	 public String updateInfo() {
 		 return "member/updateInfo";
 	 }

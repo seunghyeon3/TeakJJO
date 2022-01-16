@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 
@@ -19,8 +20,17 @@
 	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/animate.css">
 	<link rel="stylesheet" href="resources/css/ionicons.min.css">
+	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
 </head>
 <style>
+@font-face {
+	font-family: 'yg-jalnan';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 	.black_overlay {
 		display: none;
 		position: absolute;
@@ -75,7 +85,7 @@
 				<input type="text" id="keyword" class="form-control bg-light border-0 small" placeholder="Search for..."
 					aria-label="Search" aria-describedby="basic-addon2" >
 				<div class="input-group-append">
-					<button class="btn btn-primary bg-light" type="button" onclick="searchPage()">
+					<button class="btn btn-primary" type="button" onclick="searchPage()">
 						<i class="fas fa-search fa-sm"></i>
 					</button>
 				</div>
@@ -83,18 +93,17 @@
 		</form>
 
 		<c:if test="${memberinfo ne null }">
-
 			<!-- Dropdown - Messages -->
 			<a class="nav-link" href="javascript:void(0);" id="messagesDropdown" style="display: inline-block;"
 				onclick="document.getElementById('light2').style.display='block';">
 				<i class="fas fa-envelope fa-fw"></i>
 			</a>
 
-			<div id="light2" class="white_content text-left" style="height: 300px;">
+			<div id="light2" class="white_content text-left" style="height: 320px; width: 350px">
 				<form action="writeEmail.do" method="post">
-					<label>메일 쓰기 </label> <label>발송자</label> <input type="text" name="username"
-						value="${memberinfo.member_Id }"> <label>비밀번호</label>
-					<input type="password" id="password" name="pswd">
+					<label>메일 쓰기 </label><br> <label>발&nbsp;송&nbsp;자&nbsp;</label> <input type="text" name="username"
+						value="${memberinfo.member_Id }" readonly="readonly"><br> <label>비밀번호</label>
+					<input type="password" id="password" name="pswd"><br><br>
 					<button type="submit" class="btn btn-primary">확인</button>
 					<button type="button" class="btn btn-primary"
 						onclick="document.getElementById('light2').style.display='none';">취소</button>
@@ -108,6 +117,7 @@
 			<!-- Nav Item - User Information -->
 
 			<c:if test="${memberinfo ne null }">
+			
 				<!-- Nav Item - Search Dropdown (Visible Only XS) -->
 				<li class="nav-item dropdown no-arrow d-sm-none"><a class="nav-link dropdown-toggle" href="#"
 						id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -122,13 +132,17 @@
 					</a> <!-- Dropdown - User Information -->
 					<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 						aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="updateInfo.do" style="font-size: 15px;"> <i
+						<a class="dropdown-item" href="updateInfoForm.do" style="font-size: 15px;"> <i
 								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
 						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 예매 현황
-						</a> <a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
+						</a> 
+						<c:if test="${fn:contains(memberinfo.member_Author , 'N')}">
+						<a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
-						</a> <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
+						</a>
+						</c:if>
+						 <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
 							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do"
@@ -146,37 +160,31 @@
 
 	</nav>
 
-
 	<div class="hero-wrap ftco-degree-bg" style="background-image: url('resources/images/bg_1.jpg');"
 		data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row no-gutters slider-text justify-content-center align-items-center">
-				
-					<div class="text text-center">
-						<img src="resources/img/양택조Header.png" width="300">
-
+<div class="text text-center" style="margin-top: 100px">
+		<h1 class="mb-4">
+			<img src="resources/img/양택조Header.png" width="300">
+		</h1>
+		<div class="search-location mt-md-2">
+			<div class="row justify-content-center">
+				<div class="col-lg-5 align-items-end ">
+					<div class="form-group">
+						<div class="form-field">
 							<form action="searchKeyword.do" class="search-location mt-md-5" method="get">
-								<div class="row justify-content-center">
-									<div class="col-lg-10 align-items-end">
-										<div class="form-group">
-											<div class="form-field">
-												<input type="text" class="form-control" placeholder="Search Keyword" id="keywords" name="keywords">
-												<button><span class="ion-ios-search"></span></button>
-											</div>
-										</div>
-									</div>
-								</div>
+							<input type="text" class="form-control bg-light" id="keywords" name="keywords" placeholder="Search location" style="border: 2px solid black">
+							<button><span class="ion-ios-search"></span>
+							</button>
 							</form>
-						
+						</div>
 					</div>
-				
+				</div>
 			</div>
 		</div>
+		
+		
 	</div>
-
-
-
+</div>
 	<!-- 완성후 주석 해제 예정 -->
 	<c:if test="${memberinfo ne null }">
 		<div class="text text-center" id="urlMark">
@@ -293,7 +301,6 @@
 					type: "get",
 					url: "getUrl.do",
 					success: function (result) {
-						console.log(typeof result);
 						for (var fields of result) {
 							$('#urlDiv').append($('<div>').css('display', 'inline-block')
 								.append($('<button>').attr({
@@ -318,8 +325,8 @@
 			}) <%} %>
 	</script>
 	<script type="text/javascript">
+	
 		$("#check_module").click(function () {
-			console.log("여기요");
 			var IMP = window.IMP; // 생략가능
 			IMP.init('imp44063807');
 			// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
@@ -333,11 +340,11 @@
 				 *  https://docs.iamport.kr/implementation/payment
 				 *  위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
 				 */
-				name: '주문명 : 아메리카노',
+				name: '프리미엄결제',
 				// 결제창에서 보여질 이름
 				// name: '주문명 : ${auction.a_title}',
 				// 위와같이 model에 담은 정보를 넣어 쓸수도 있습니다.
-				amount: 2000,
+				amount: 1000000,
 				// amount: ${bid.b_bid},
 				// 가격 
 				buyer_name: '이름',
@@ -350,7 +357,8 @@
 					var msg = '결제가 완료되었습니다.';
 					msg += '결제 금액 : ' + rsp.paid_amount;
 					// success.submit();
-					location.href = "changeAuthor.do";
+					location.href = "changeAuthor.do?url=" + window.location.href;
+					
 					// 결제 성공 시 정보를 넘겨줘야한다면 body에 form을 만든 뒤 위의 코드를 사용하는 방법이 있습니다.
 					// 자세한 설명은 구글링으로 보시는게 좋습니다.
 				} else {
@@ -359,6 +367,7 @@
 				}
 				alert(msg);
 			});
+	
 		});
 	</script>
 </body>

@@ -35,9 +35,7 @@ public class UrlMarkController {
 	@RequestMapping("/getUrl.do")
 	@ResponseBody
 	public List<UrlMarkVO> getUrl(HttpSession session){
-		System.out.println("요기요");
 		MemberVO mvo = (MemberVO)session.getAttribute("memberinfo");
-		System.out.println(mvo.getMember_Id());
 		return urlmarkDao.getUrl(mvo.getMember_Id());
 	}
 }

@@ -2,15 +2,11 @@ package co.teakjjo.prj.member.web;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -22,11 +18,11 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,18 +40,23 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberDao;
-
+	
+	
 	@RequestMapping("/changeAuthor.do")
-	public String changeAuthor(HttpSession session) {
+	public String changeAuthor(@Param("url") String url, HttpSession session) {
 		MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
-		memberDao.updateAuthor(vo.getMember_Name());
-		return "redirect:home.do";
+		memberDao.updateAuthor(vo.getMember_Id());
+		vo.setMember_Author('V');
+		session.setAttribute("memberinfo", vo);
+		int urlLocation = url.indexOf("/prj/");
+		
+		return "redirect:"+ url.substring(urlLocation+5);
 	}
 
 	@RequestMapping(value = "/memberRegister.do", produces = "application/json; charset=utf8")
 	public String memberRegister(MemberVO vo, HttpSession session) {
-		// 기자, 회원일때 넣는 데이터가 다름, db를 쪼갈라야함.
 		memberDao.insertMember(vo);
+		vo = memberDao.getMember(vo.getMember_Id());
 		session.setAttribute("memberinfo", vo);
 		return "redirect:home.do";
 	}
@@ -232,20 +233,18 @@ public class MemberController {
 	 */
 	
 	@RequestMapping("/email.do")
-	public String email(HttpServletRequest request, ModelMap mo) {
+	public String email(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("subject") String subject,
+			@RequestParam("recipient") String recipient, @RequestParam("body") String body,	HttpServletRequest request, ModelMap mo) {
 		try {
 		
+			int index = username.indexOf("@");
+			int indexPw = password.indexOf(",");
 		String host = "smtp.naver.com";
-		final String username = "cumulus90";
 		//네이버 이메일 주소중 @ naver.com앞주소만 기재합니다.
-		final String password = "natural@me12";
 		//네이버 이메일 비밀번호를 기재합니다.
 		int port=465;
 		// 메일 내용
-		String recipient = "cumulus90@naver.com";
 		//메일을 발송할 이메일 주소를 기재해 줍니다.
-		String subject = "네이버를 사용한 발송 테스트입니다.";
-		String body = "내용 무";
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", port);
@@ -253,8 +252,10 @@ public class MemberController {
 		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.ssl.trust", host);
 		props.put("mail.debug","true");
+		System.out.println(password);
+		System.out.println(username.substring(0, index));
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-			String un=username; String pw=password;
+			String un=username.substring(0, index); String pw=password.substring(0,indexPw);
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(un, pw); 
 				} 
@@ -274,39 +275,16 @@ public class MemberController {
 		return "redirect:home.do";
 	}
 	
-	@RequestMapping("searchKeyword.do")
-	public String searchKeyword(@RequestParam("keywords") String keywords, Model model) {
-		try {
-			
-			InputStream is = new URL("https://www.googleapis.com/customsearch/v1?key=AIzaSyA2MQJB8EuzKBJsfO1AZHZ3I4BJcZtF3tM&cx=8e2ffa22a72c27063&q="+keywords).openStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-			String jsonText = readAll(rd);
-			JSONParser jsonParser = new JSONParser();
-			Object obj = jsonParser.parse(jsonText);
-			JSONObject jsonobj = (JSONObject) obj;
-			model.addAttribute("results", jsonobj);
-			model.addAttribute("keyword", keywords);
-			return "member/result";
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-				
-		return null;
-	}
-	
-	 private static String readAll(Reader rd)  {
-		 StringBuilder sb = new StringBuilder();
-		 try {
-			    int cp;
-			    while ((cp = rd.read()) != -1) {
-			      sb.append((char) cp);
-			    }
-		 }catch (Exception e) {
-			 e.printStackTrace();
-			 
-		 }
-		    return sb.toString();
-		}
+
+	 
+	 @RequestMapping("updateInfo.do")
+	 public String updateInfo(MemberVO vo,HttpSession session) {
+		 System.out.println(vo.toString());
+		 memberDao.updateMember(vo);
+		 session.setAttribute("memberinfo", vo);
+		 return "redirect:home.do";
+	 }
+	 
+
 	
 }
