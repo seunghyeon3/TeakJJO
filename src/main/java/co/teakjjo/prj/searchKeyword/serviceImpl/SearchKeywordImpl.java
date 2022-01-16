@@ -27,14 +27,19 @@ public class SearchKeywordImpl implements SearchKeywordService {
 	}
 
 	@Override
-	public void updateHit() {
-		map.updateHit();
+	public void updateHit(SearchKeywordVO vo) {
+		map.updateHit(vo);
 
 	}
 
 	@Override
-	public boolean keywordCheck() {
-		return map.keywordCheck();
+	public boolean keywordCheck(SearchKeywordVO vo) {
+		return map.keywordCheck(vo);
+	}
+
+	@Override
+	public void deleteKeyword(String id) {
+		map.deleteKeyword(id);
 	}
 
 }

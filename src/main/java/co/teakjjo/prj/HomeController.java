@@ -32,7 +32,7 @@ public class HomeController {
 	public String kakaopay() {
 		return "member/kakaopay";
 	}
-	@RequestMapping("logout.do")
+	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:home.do";
@@ -42,13 +42,18 @@ public class HomeController {
 		return "mail/writeEmail";
 	}
 	 
-	 @RequestMapping("updateInfoForm.do")
+	 @RequestMapping("/updateInfoForm.do")
 	 public String updateInfo() {
 		 return "member/updateInfo";
 	 }
-	 @RequestMapping("resertaionInfo.do")
+	 @RequestMapping("/resertaionInfo.do")
 	 public String resertaionInfo() {
 		 return "member/resertaionInfo";
 	 }
-
+	 @RequestMapping("/realty.do")
+	 public String realty() {
+		 return "realty/realty";
+	 }
+	 
+	
 }

@@ -1,3 +1,5 @@
+<%@page import="co.teakjjo.prj.searchKeyword.service.SearchKeywordVO"%>
+<%@page import="java.util.List"%>
 <%@page import="co.teakjjo.prj.member.service.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -145,23 +147,14 @@
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
 						</a>
 						</c:if>
-
-				
-						
-						</div>
-
-						 <a class="dropdown-item" onclick="showKeyword()"
-						 style="font-size: 15px;"> <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
+						<a class="dropdown-item" id="clickKeyword" onclick="document.getElementById('light3').style.display='block';" style="font-size: 15px; cursor: pointer;" >
+						 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
 							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do"
 							style="font-size: 15px;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>
-						<div id="light3" class="white_content text-left" style="height: 320px; width: 350px; ">
-							<button type="button" onclick="insertUrl()" class="btn btn-primary">확인</button>
-							<button class="btn btn-primary"
-								onclick="document.getElementById('light3').style.display='none';document.getElementById('fade3').style.display='none'">취소</button>
-						</div>
+						
 					</div>
 				</li>
 			</c:if>
@@ -212,7 +205,7 @@
 				<div style="display: inline-block;">
 				<p>바로가기 추가</p>
 					<button class="btn btn-primary" style="border-radius: 50%;"
-						onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
+						onclick="document.getElementById('light').style.display='block';">
 						+</button>
 				</div>
 				
@@ -223,7 +216,7 @@
 					<br>
 					<button type="button" onclick="insertUrl()" class="btn btn-primary">확인</button>
 					<button class="btn btn-primary"
-						onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">취소</button>
+						onclick="document.getElementById('light').style.display='none';">취소</button>
 				</div>
 			</div>
 			<br>
@@ -232,7 +225,8 @@
 		</div>
 	</c:if>
 </div>
-	
+	 <div id="light3" class="white_content text-left" style="height: 320px; width: 350px; ">
+	</div>
 	<script src="resources/vendor/jquery/jquery.min.js"></script>
 	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -243,6 +237,7 @@
 	<script src="resources/js/sb-admin-2.min.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script>
+	<%	MemberVO vo = (MemberVO) session.getAttribute("memberinfo");%>
 		function searchPage() {
 			var keyword = $('#keyword').val();
 			console.log(keyword);
@@ -257,7 +252,7 @@
 			} else if (keyword == '푸드트럭') {
 				window.location = "foodtruck.do"
 			} else if (keyword == '부동산') {
-
+				window.location = "realty.do"
 			} else if (keyword == '뉴스') {
 				window.location = "newsMain.do"
 			} else if (keyword == '뉴스등록') {
@@ -285,9 +280,10 @@
 		function insertUrl() {
 			var urls = $('#urls').val();
 			var urlname = $('#urlMarkName').val();
-			console.log(urls);
-			$
-				.ajax({
+			if(urls == $('#'+urls).text()){
+				window.alert("이미 등록된 url 입니다.");
+			}else{
+					$.ajax({
 					type: "get",
 					url: "insertUrl.do",
 					data: {
@@ -301,23 +297,43 @@
 						console.log(error);
 					}
 				});
+			}
+		
 		}
 		//url 삭제 추가
 		function deleteUrl() {
 			console.log(this.event);
 		}
 
-		function showKeyword(){
+		$('#clickKeyword').click(function(){
+			showKeyword();
+		});
 
+		function showKeyword(){
 			$.ajax({
 				type:'get',
 				url:"acckeyword.do",
-				data : {
-					url : window.location.href
-				},
 				success:function(result){
-					document.getElementById('light3').style.display='block';document.getElementById('fade3').style.display='block';
-					console.log(result);
+					$('#light3').empty();
+					for(var field of result){
+						$('#light3').append(
+						$('<div>').text(("검색어 : "+field.searchKeyword + ", 조회수 : " + field.searchHit)).css('display', 'inline-block').attr("id", field.searchKeyword).append(
+							$('<a>').attr(
+								'onclick','deleteKeyWord()').text(" x").css({
+									'font-size':'20px',
+									'color' : 'red',
+									'cursor':'pointer'
+							})
+						),
+						$('<br>')
+						);
+					}
+					$('#light3').prepend($('<h2>').text('누적 키워드 수')).append(
+						$('<button>').attr({
+							'class' : 'btn btn-primary',
+							'onclick' : "document.getElementById('light3').style.display='none'"
+							}).text("close").append($('<br>'))
+					)
 				},error:function(error){
 					console.log(error);
 				}
@@ -325,10 +341,27 @@
 			})
 		}
 
-
-
-		<%	MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
-		if (vo == null) {
+		function deleteKeyWord(){
+			var delTarget = this.event.path[1];
+			$.ajax({
+				type:'get',
+				url :'deleteKeyword.do',
+				data : {
+					delKeyword : delTarget.id
+				},
+				success:function(){
+					delTarget.remove();
+					window.alert('정상적으로 삭제 되었습니다.');
+				},error:function(){
+					console.log(error);
+				}
+			})
+		}
+		
+		
+		
+	
+		<%if (vo == null) {
 
 		} else if (vo.getMember_Id() != null) {	%>
 			$(document).ready(function () {
@@ -348,7 +381,7 @@
 									'id': fields.urlMarkName
 								}).text(
 									fields.urlMarkName)));
-							//view는 확인,, 최종 정리해야함.$('#urlDiv').prepend($('<a>').attr('onclick', 'deleteUrl()').text('삭제'));
+							//$('#urlDiv').prepend($('<a>').attr('onclick', 'deleteUrl()').text('삭제'));
 							$('#light').css('display', 'none');
 							$('#fade').css('display', 'none');
 							$('#urls').text('');
@@ -360,7 +393,9 @@
 					}
 				})
 
-			}) <%} %>
+			})
+	
+			<%} %>
 	</script>
 	<script type="text/javascript">
 	

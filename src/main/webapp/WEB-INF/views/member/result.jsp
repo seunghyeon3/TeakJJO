@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
- <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
 	rel="stylesheet">
@@ -39,54 +39,54 @@
 	font-style: normal;
 }
 </style>
-   
+
 <body>
 
-      <div class="container" style="margin-top: 100px;">
-      	<div class="row justify-content-center">
-          <div class="col-md-12 heading-section text-center ftco-animate mb-5">
-          	<span class="subheading">양택조의 모든지 알려줍니다</span>
-            <h2 class="mb-2">${keyword }의 결과입니다.</h2>
-          </div>
-        </div>
-      </div>
-      
-      
-      <section class="ftco-section ftco-no-pb bg-dark">
-			<div class="container">
-				<div class="row no-gutters"> 
-				<c:forEach items="${results.items }" var="item">
-				  <a href="${item.link }">
-				<c:if test="${!empty item.pagemap.cse_thumbnail[0].src}">
-            	<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(${item.pagemap.cse_thumbnail[0].src}); width:${item.pagemap.cse_thumbnail[0].width}px; height:${item.pagemap.cse_thumbnail[0].height}px">
-					</div>
-            	</c:if>
-            	<c:if test="${empty item.pagemap.cse_thumbnail[0].src}">
-            	<div class="col-md-auto p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(resources/img/양택조Header.png); width:300px; height:300px">
-					</div>
-				</c:if>
-				<br>
-			<div class="col-md-12 bg-light py-md-auto ftco-animate fadeInUp ftco-animated">
-	          <div class="heading-section p-md-5">
-	          
-	            <h2 class="mb-4" style="font-size: 20px;">${item.title }</h2>
-	            <p style="font-size: 15px;">${item.snippet }</p>
-	        
-	          </div>
-				</div>
-				</a>
-				 <br>
-					   
-				
-					   </c:forEach>
-					  
-	
-				</div>
+	<div class="container" style="margin-top: 100px;">
+		<div class="row justify-content-center">
+			<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+				<span class="subheading">양택조의 모든지 알려줍니다</span>
+				<h2 class="mb-2">${keyword }의결과입니다.</h2>
 			</div>
-		</section>
-    
+		</div>
+	</div>
 
- <script src="resources/js/jquery.min.js"></script>
+
+	<section class="ftco-section ftco-no-pb bg-dark">
+		<div class="container">
+			<div class="row no-gutters">
+				<c:forEach items="${results.items }" var="item">
+					<a href="${item.link }">
+					<c:if
+							test="${!empty item.pagemap.cse_thumbnail[0].src}">
+							<div
+								class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center"
+								style="background-image: url(${item.pagemap.cse_thumbnail[0].src}); width:${item.pagemap.cse_thumbnail[0].width}px; height:${item.pagemap.cse_thumbnail[0].height}px">
+							</div>
+					</c:if> 
+					<c:if test="${empty item.pagemap.cse_thumbnail[0].src}">
+							<div
+								class="col-md-auto p-md-5 img img-2 d-flex justify-content-center align-items-center"
+								style="background-image: url(resources/img/양택조Header.png); width: 300px; height: 300px">
+							</div>
+					</c:if> 
+					<br>
+						<div class="col-md-12 bg-light py-md-auto ftco-animate fadeInUp ftco-animated">
+							<div class="heading-section p-md-5">
+								<h2 class="mb-4" style="font-size: 20px;">${item.title }</h2>
+								<p style="font-size: 15px;">${item.snippet }</p>
+							</div>
+						</div>
+						<br>
+					</a>
+					<br>
+				</c:forEach>
+			</div>
+		</div>
+	</section>
+
+
+	<script src="resources/js/jquery.min.js"></script>
 	<script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="resources/js/popper.min.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>

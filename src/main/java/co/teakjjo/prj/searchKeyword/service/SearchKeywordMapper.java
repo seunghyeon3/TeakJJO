@@ -8,9 +8,11 @@ public interface SearchKeywordMapper {
 	// getkeyword
 	public List<SearchKeywordVO> getKeyword(String id);
 	
-	public void updateHit();
+	public void updateHit(SearchKeywordVO vo);
 	
-	public boolean keywordCheck();
+	public boolean keywordCheck(SearchKeywordVO vo);
+	
+	public void deleteKeyword(String id);
 	
 
 }

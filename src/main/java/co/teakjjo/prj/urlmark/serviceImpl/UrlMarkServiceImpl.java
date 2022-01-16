@@ -29,5 +29,10 @@ public class UrlMarkServiceImpl implements UrlMarkService{
 	public List<UrlMarkVO> getUrl(String id) {
 		return map.getUrl(id);
 	}
+
+	@Override
+	public boolean checkKeyword(UrlMarkVO vo) {
+		return false;
+	}
 	
 }
