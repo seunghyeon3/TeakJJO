@@ -12,8 +12,8 @@
 	SELECT * FROM NEWSBOARD WHERE MEMBER_ID = #{member_id}
 </select>
 
-<select id="newsGenreSearch" parameterType="String" resultType="co.teakjjo.prj.news.service.NewsVO">
-	SELECT * FROM NEWSBOARD WHERE NEWSBOARD_TITLE = #{newsboard_title} ORDER BY 8 DESC
+<select id="newsGenreSearch" parameterType="int" resultType="co.teakjjo.prj.news.service.NewsVO">
+	SELECT * FROM NEWSBOARD WHERE NEWSBOARD_ID = #{newsboard_id} ORDER BY 8 DESC
 </select>
 
 <select id="newsGenreList" parameterType="String" resultType="co.teakjjo.prj.news.service.NewsVO">
@@ -21,21 +21,36 @@
 </select>
 
 <insert id="newsInsert" parameterType="co.teakjjo.prj.news.service.NewsVO">
+<selectKey keyProperty="newsboard_id" resultType="int" order="BEFORE" >
+			SELECT NVL(MAX(NEWSBOARD_ID)+1,1) AS NEWSBOARD_ID FROM NEWSBOARD
+		</selectKey>
 INSERT INTO NEWSBOARD(MEMBER_ID,MEMBER_NAME,NEWSBOARD_ID,MEMBER_COMPANY,NEWSBOARD_GENRE,NEWSBOARD_TITLE,NEWSBOARD_CONTENT,NEWSBOARD_HIT,NEWSBOARD_PFILE,NEWSBOARD_PICTURE)
 VALUES(#{member_id},#{member_name},#{newsboard_id},#{member_company},#{newsboard_genre},#{newsboard_title},#{newsboard_content},#{newsboard_hit},#{newsboard_pfile},#{newsboard_picture})
+
 </insert>
 
+<update id="newsUpdate" parameterType="co.teakjjo.prj.news.service.NewsVO">
+	UPDATE NEWSBOARD SET
+		MEMBER_ID = #{member_id},
+		MEMBER_NAME = #{member_name},
+		MEMBER_COMPANY = #{member_company},
+		NEWSBOARD_ID = #{newsboard_id},
+		NEWSBOARD_GENRE = #{newsboard_genre},
+		NEWSBOARD_TITLE	= #{newsboard_title},
+		NEWSBOARD_CONTENT = #{newsboard_content},
+		NEWSBOARD_PFILE = #{newsboard_pfile},
+		NEWSBOARD_PICTURE = #{newsboard_picture} 
+	WHERE NEWSBOARD_ID = #{newsboard_id}
+</update>
 
-        
-
-<update id="newsHitUpdate" parameterType="String">
+<update id="newsHitUpdate" parameterType="int">
 	UPDATE NEWSBOARD
 	SET 
 	NEWSBOARD_HIT = NEWSBOARD_HIT+1
-	WHERE NEWSBOARD_TITLE = #{newsboard_title}  
+	WHERE NEWSBOARD_ID = #{newsboard_id}  
 </update>
 
-<delete id="newsDelete" parameterType="String">
+<delete id="newsDelete" parameterType="int">
 DELETE FROM NEWSBOARD WHERE NEWSBOARD_ID = #{newsboard_id}
 </delete>
 </mapper>

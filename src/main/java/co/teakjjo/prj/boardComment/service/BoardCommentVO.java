@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data
 public class BoardCommentVO {
-	private String newsboard_id;
+	private int newsboard_id;
 	private String member_id;
 	private String member_name;
-	private String boardcomment_id; 
+	private int boardcomment_id; 
 	private String boardcomment_content;
 	private Date boardcomment_date;
 	private int boardcomment_report;
