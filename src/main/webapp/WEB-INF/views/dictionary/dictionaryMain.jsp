@@ -154,10 +154,22 @@
 					$('#dictionaryRecord').children().remove();
 					
 					var list = $('#dictionaryRecord');
-					
+					var count = "0";
 					for(var i of data){
+						
+						if(count==5){
+							break;
+						}
+						console.log(i);
 						var data = $('<li>');
-						data.text(i.dictionary_data);
+						var dataSearch = $('<a>');
+						dataSearch.attr('href','javascript:void(0)');
+						dataSearch.attr("val", i.dictionary_data);
+						dataSearch.attr("onclick", "dictionaryRecordSend(this.text)");
+						dataSearch.text(i.dictionary_data);
+						data.append(dataSearch);
+						
+						
 						var deleteRecord = $('<a>');
 						deleteRecord.text("X");
 						deleteRecord.attr('href','javascript:void(0)');
@@ -166,14 +178,50 @@
 						data.append(deleteRecord);
 						//console.log(i.dictionary_data);
 						list.append(data);
-						
+						count++;
 					}
 				}
 				}
 				});
 			}
 		
-	
+		function dictionaryRecordSend(word) {
+			document.getElementById('light').style.display='none';
+			document.getElementById('fade').style.display='none';
+			$("#result_text").children().remove();
+			console.log(word);
+			
+			$.ajax({
+				type : "POST",
+				url : "dictionarySearch.do",
+				data : {
+					"word" : word
+				},
+				success : function(data) { //서블렛을 통한 결과 값을 받을 수 있습니다.
+					console.log(data);
+					//alert(data);
+					if (data == "") {
+						alert("검색된 결과가 없습니다.");
+					} else {
+						//string의 값을 object 형식으로 변환합니다.
+						var result_obj = JSON.parse(data);
+						console.log(result_obj);
+						//결과값을 textarea에 넣기 위해서
+						var res = result_obj.channel.item;
+						for (i = 0; i < res.length; i++) {
+							var item = res[i].sense.definition;
+							$("#result_text").append(
+									"<li>" + item + "</li><br>");
+						}
+					}
+				},
+				error : function(e) {
+					console.log(e);
+					alert('실패했습니다.');
+				}
+			});
+		}
+		
 		
 		function dictionarySend(word) {
 			$.ajax({

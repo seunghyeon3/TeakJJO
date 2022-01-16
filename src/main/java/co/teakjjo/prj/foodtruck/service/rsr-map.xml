@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.teakjjo.prj.foodtruck.service.RsrMapper">
+	
+	<select id="rsrSelectList" resultType="co.teakjjo.prj.foodtruck.service.RsrVO">
+	 
+		SELECT * FROM FOODTRUCKRSR
+		WHERE MEMBER_ID = #{member_id}
+		ORDER BY 1 DESC
+		
+	</select>
+	
+	
+	<insert id="rsrInsert" parameterType="co.teakjjo.prj.foodtruck.service.RsrVO">
+		<selectKey keyProperty="rsr_no" resultType="int" order="BEFORE" >
+				SELECT NVL(MAX(RSR_NO)+1,1) AS RSR_NO FROM FOODTRUCKRSR WHERE MEMBER_ID = #{member_id}
+		</selectKey>
+				INSERT INTO FOODTRUCKRSR(MEMBER_ID,RSR_ID,RSR_NO)
+				VALUES(#{member_id},#{rsr_id},#{rsr_no})
+	</insert>
+	
+	<delete id="rsrDelete" parameterType="co.teakjjo.prj.foodtruck.service.RsrVO">
+		DELETE FROM FOODTRUCKRSR
+		WHERE MEMBER_ID = #{member_id}
+		AND RSR_ID = #{rsr_id}
+	</delete>
+</mapper>

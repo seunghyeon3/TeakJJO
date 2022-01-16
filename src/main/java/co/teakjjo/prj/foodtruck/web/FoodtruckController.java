@@ -1,7 +1,11 @@
 package co.teakjjo.prj.foodtruck.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.teakjjo.prj.foodtruck.service.FoodBookMarkVO;
 import co.teakjjo.prj.foodtruck.service.FoodService;
+import co.teakjjo.prj.foodtruck.service.RsrService;
+import co.teakjjo.prj.foodtruck.service.RsrVO;
 import co.teakjjo.prj.member.service.MemberVO;
 import co.teakjjo.prj.paging.service.PagingVO;
 
@@ -22,6 +28,9 @@ public class FoodtruckController {
 
 	@Autowired
 	private FoodService foodBookMarkDao;
+	
+	@Autowired
+	private RsrService rsrDao;
 
 	@RequestMapping("foodtruck.do")
 	public String foodtruck() {
@@ -36,8 +45,9 @@ public class FoodtruckController {
 	@PostMapping("foodSelectList.do")
 	@ResponseBody
 	public List<FoodBookMarkVO> foodSelectList(HttpSession session, FoodBookMarkVO foodMark, Model model,
-			PagingVO paging) {
+			PagingVO paging, HttpServletResponse response) throws Exception {
 		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		String a = "a";
 		if (member != null) {
 			String member_Id = member.getMember_Id();
 			foodMark.setMember_id(member_Id);
@@ -59,18 +69,6 @@ public class FoodtruckController {
 		}else {
 			return null;
 		}
-
-	}
-
-	@PostMapping("rsrList.do")
-	@ResponseBody
-	public List<FoodBookMarkVO> rsrList(HttpSession session, FoodBookMarkVO foodMark, Model model) {
-		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
-		String member_Id = member.getMember_Id();
-		foodMark.setMember_id(member_Id);
-
-		// System.out.println(foodBookMarkDao.rsrList(foodMark));
-		return foodBookMarkDao.rsrList(foodMark);
 
 	}
 
@@ -111,12 +109,52 @@ public class FoodtruckController {
 			String member_Id = member.getMember_Id();
 			foodMark.setMember_id(member_Id);
 			foodMark.setBookmark_id(key);
+			
 			return foodBookMarkDao.foodSelect(foodMark);
 		}else {
-			
 			return null;
 		}
 		
+	}
+	
+	
+	@PostMapping("rsrList.do")
+	@ResponseBody
+	public List<RsrVO> rsrSelectList(RsrVO rsr, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		if(member != null) {
+			String member_Id = member.getMember_Id();
+			rsr.setMember_id(member_Id);
+			System.out.println(rsrDao.rsrSelectList(rsr));
+			return rsrDao.rsrSelectList(rsr);
+		}else {
+			return null;
+		}
+	}
+	@PostMapping("rsrInsert.do")
+	@ResponseBody
+	public int rsrInsert(@RequestParam(value = "search") String search, HttpSession session, FoodBookMarkVO foodMark , RsrVO rsr) {
+		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		String member_Id = member.getMember_Id();
+		rsr.setMember_id(member_Id);
+		rsr.setRsr_id(search);
+		
+		int n = rsrDao.rsrInsert(rsr);
+		
+		System.out.println(n);
+		return n;
+	}
+	
+	@PostMapping("rsrDelete.do")
+	@ResponseBody
+	public int rsrDelete(@RequestParam(value = "search") String search, HttpSession session, FoodBookMarkVO foodMark , RsrVO rsr) {
+		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		String member_Id = member.getMember_Id();
+		rsr.setMember_id(member_Id);
+		rsr.setRsr_id(search);
+		int n = rsrDao.rsrDelete(rsr);
+		System.out.println(n);
+		return n;
 	}
 
 }

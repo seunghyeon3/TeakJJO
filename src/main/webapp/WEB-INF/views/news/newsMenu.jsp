@@ -20,8 +20,7 @@
 				id="pills-review-tab" href="newsGenre.do?genre=유튜브">유튜브</a></li>
 			<li class="nav-item"><a class="nav-link active"
 				id="pills-review-tab" href="newsGenre.do?genre=푸드트럭">푸드트럭</a></li>
-			<li class="nav-item"><a class="nav-link active"
-				id="pills-review-tab" href="#">시민 제보 게시판</a></li>
+              
 		</ul>
 	</div>
 	
