@@ -36,6 +36,14 @@
 
 <section class="ftco-section ftco-no-pb" style="margin-top:80px">
 			<div class="container">
+			
+			<div class="row justify-content-center mb-5">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+          	<span class="subheading">양택조가 실시간으로 알려주는</span>
+            <h2 type="button" onclick="location.href='newsMain.do'">양택조 뉴스</h2>
+          </div>
+        </div>
+			
 				<div class="row no-gutters">
 					<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url('resources/img/${detail.newsboard_pfile }');">
 					</div>
@@ -51,6 +59,9 @@
 	            <p style="display: inline; margin-right:150px;">${detail.member_name }&nbsp;기자</p> <p style="display: inline; margin-right:150px;">${detail.newsboard_date }&nbsp;작성</p><p style="display: inline">조회수&nbsp;${detail.newsboard_hit }</p>
 	          <br>
 	          <span><a class="flaticon-piggy-bank" id = "btnRecommend"><span>추천 : </span></a></span>
+	          <br><br>
+	            <a class= "btn btn-primary py-3 px-5" href="newsDelete.do?newsboard_id=${detail.newsboard_id}" style="float:right;">삭제</a>
+	          <a class= "btn btn-primary py-3 px-5" href="newsUpdateForm.do?newsboard_id=${detail.newsboard_id}" style="float:right; margin-right:10px;">수정</a>
 	          </div>
 					</div>
 				</div>
@@ -75,14 +86,32 @@
             
           <ul class="comment-list " style="margin-top:30px">
          
-                <li class="comment">
-                  <div >
+                <li class="comment" style="border-bottom:1px solid black;padding-bottom: 10px;">
+                  <div>
                     <h3>${comment.member_name }</h3>
-                    <div class="meta">${comment.boardcomment_date }</div>
+                    <div class="meta">${comment.boardcomment_date } 작성</div>
                     <p>${comment.boardcomment_content }</p>
                   </div>
+                  <a class= "btn btn-primary py-3 px-5" href="boardCommentDelete.do?boardComment_id=${comment.boardcomment_id}" style="float:right;">삭제</a>
+	          <a class= "btn btn-primary py-3 px-5" onclick="boardCommentUpdate(this,${comment.boardcomment_id })" style="float:right; margin-right:10px;">수정</a>
                 </li>
-               
+                
+                
+                <li id="${comment.boardcomment_id }" style="display:none">
+                
+                <h3>${comment.member_name }</h3>
+                <form action="boardCommentUpdate.do" method ="POST" class="bg-light p-5 contact-form" enctype="application/x-www-form-urlencoded">
+              <div class="form-group">
+	            <input type="text" class="form-control" name="boardcomment_content" id="boardcomment_content" value="${comment.boardcomment_content }" >
+	            <input type="hidden" name="newsboard_id" id="newsboard_id" value= '${detail.newsboard_id }'>
+                </div>
+                <div class="form-group">
+                <span><input type="button" value="취소" class="btn btn-primary py-3 px-5" style="float:right;" onclick="boardCommentCancel(this,${comment.boardcomment_id })"></span>
+                <span><input type="submit" value="재등록" class="btn btn-primary py-3 px-5" style="float:right; margin-right:10px;"></span>
+                
+              </div>
+            </form>
+               </li>
 
               </ul>
               
@@ -90,12 +119,23 @@
           </div>
         </div>
         <script>
-        function boardCommentInsert(){
-        	$.ajax({
-			
-				});
-        	
+       
+        function boardCommentUpdate(e, id){
+        	console.log(id);
+        e.parentNode.style.display='none';
+        document.getElementById(id).style.display='block';
+        //$("#"+id).style.display='none';
         }
+        
+        function boardCommentCancel(e, id){
+        	
+        	
+        	  document.getElementById(id).style.display='none';
+        	  e.parentNode.parentNode.parentNode.parentNode.parentNode.children[0].style.display='block';
+        	  
+        	//console.log(e.parentNode.parentNode.parentNode.parentNode.parentNode.children[0]);
+        }
+        
         </script>
 	<!-- <script>
    		 $(document).ready(function(){

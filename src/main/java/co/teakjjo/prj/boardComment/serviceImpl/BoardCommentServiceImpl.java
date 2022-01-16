@@ -16,7 +16,7 @@ public class BoardCommentServiceImpl implements BoardCommentService{
 	private BoardCommentMapper map;
 	
 	@Override
-	public List<BoardCommentVO> boardCommentList(String newsboard_id) {
+	public List<BoardCommentVO> boardCommentList(int newsboard_id) {
 		return map.boardCommentList(newsboard_id);
 	}
 
@@ -26,8 +26,13 @@ public class BoardCommentServiceImpl implements BoardCommentService{
 	}
 
 	@Override
-	public int boardCommentDelete(String boardcomment_id) {
+	public int boardCommentDelete(int boardcomment_id) {
 		return map.boardCommentDelete(boardcomment_id);
+	}
+
+	@Override
+	public int boardCommentUpdate(BoardCommentVO boardcomment) {
+		return map.boardCommentUpdate(boardcomment);
 	}
 
 }

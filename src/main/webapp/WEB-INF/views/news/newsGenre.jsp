@@ -52,14 +52,14 @@
 	   				<div class="col-md-3 d-flex ftco-animate">
           			<div class="blog-entry justify-content-end">
               		<div class="text">
-                		<h3 class="heading"><a href="newsDetail.do?no=${news.newsboard_title }&newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_title }`)" id="newsboard_title">${news.newsboard_title }</a></h3>
+                		<h3 class="heading"><a href="newsDetail.do?newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_id }`)" id="newsboard_title">${news.newsboard_title }</a></h3>
                 		<div class="meta mb-3">
                 		   <h6>${news.newsboard_date }</h6>
 
                  		 <h6>${news.member_name } 기자</h6>
                  		 <h6>조회수 ${news.newsboard_hit }</h6>
                 		</div>
-                <a href="newsDetail.do?no=${news.newsboard_title }&newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_title }`)" id="newsboard_title" class="block-20 img" style="background-image: url('resources/img/${news.newsboard_pfile }');">
+                <a href="newsDetail.do?newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_id }`)" id="newsboard_title" class="block-20 img" style="background-image: url('resources/img/${news.newsboard_pfile }');">
 	              </a>
 					</div>
       				</div>
@@ -70,14 +70,14 @@
       </div>
     </section>	
       <script>
-    	function hitUpdate(title){
-    		console.log(title);
-    		var newsboard_title = title;
+    	function hitUpdate(newsboard_id){
+    		console.log(newsboard_id);
+    		var newsboard_id = newsboard_id;
     			 $.ajax({
  					type : "POST",
  					url : "newsHitUpdate.do",	
  					data : {
- 						"title" : title
+ 						"newsboard_id" : newsboard_id
  					},
  					success : function(data){
  						console.log(data);
