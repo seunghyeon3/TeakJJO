@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+.form-group>input{
+background: #fff;
+}
+</style>
 <body>
 	<br>
 	<br>

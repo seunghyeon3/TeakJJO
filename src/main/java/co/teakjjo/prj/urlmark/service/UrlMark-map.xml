@@ -34,8 +34,11 @@
 	<select id="getUrl"	resultType="co.teakjjo.prj.urlmark.service.UrlMarkVO">
 		SELECT * FROM URLMARK WHERE MEMBER_ID = #{member_Id}
 	</select>
-
-
+	
+	<select id="checkKeyword">
+	SELECT CASE WHEN COUNT(*) >= 1 THEN 0 ELSE 1 END AS ID
+		FROM URLMARK WHERE  MEMBER_ID= #{member_Id} AND URLMARK = #{urlMark}
+	</select>
 
 
 

@@ -8,12 +8,7 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 </head>
-<style>
-input{
-	width: 400px;
-}
 
-</style>
 <body>
 	<br>
 	<br>

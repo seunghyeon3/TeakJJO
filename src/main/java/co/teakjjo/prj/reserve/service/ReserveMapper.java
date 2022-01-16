@@ -6,4 +6,5 @@ public interface ReserveMapper {
 
 	public boolean Reserve(ReserveVO reserve);
 	public List<ReserveVO> getReserve(ReserveVO reserve);
+	public List<ReserveVO> getReserveMember(ReserveVO reserve);
 }

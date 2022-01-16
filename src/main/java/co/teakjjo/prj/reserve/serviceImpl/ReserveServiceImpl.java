@@ -28,6 +28,11 @@ public class ReserveServiceImpl implements ReserveService {
 		list = map.getReserve(reserve);
 		return list;
 	}
+
+	@Override
+	public List<ReserveVO> getReserveMember(ReserveVO reserve) {
+		return map.getReserveMember(reserve);
+	}
 	
 
 

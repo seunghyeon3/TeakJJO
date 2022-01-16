@@ -1,3 +1,5 @@
+<%@page import="co.teakjjo.prj.searchKeyword.service.SearchKeywordVO"%>
+<%@page import="java.util.List"%>
 <%@page import="co.teakjjo.prj.member.service.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -48,8 +50,8 @@
 	.white_content {
 		display: none;
 		position: absolute;
-		top: 25%;
-		left: 25%;
+		top: 0%;
+		left: 40.5%;
 		width: 50%;
 		height: 50%;
 		padding: 16px;
@@ -58,6 +60,7 @@
 		z-index: 1002;
 		overflow: auto;
 	}
+	
 </style>
 </head>
 
@@ -79,11 +82,13 @@
 				양택조 <sup>site</sup>
 			</div>
 		</a>
+
+		
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 			<div class="input-group">
-				<input type="text" id="keyword" class="form-control bg-light border-0 small" placeholder="Search for..."
-					aria-label="Search" aria-describedby="basic-addon2" >
+				<input type="text" id="keyword" class="form-control" placeholder="Search for category"
+					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage()">
 				<div class="input-group-append">
 					<button class="btn btn-primary" type="button" onclick="searchPage()">
 						<i class="fas fa-search fa-sm"></i>
@@ -99,7 +104,7 @@
 				<i class="fas fa-envelope fa-fw"></i>
 			</a>
 
-			<div id="light2" class="white_content text-left" style="height: 320px; width: 350px">
+			<div id="light2" class="white_content text-left" style="height: 320px; width: 350px; top:250%;">
 				<form action="writeEmail.do" method="post">
 					<label>메일 쓰기 </label><br> <label>발&nbsp;송&nbsp;자&nbsp;</label> <input type="text" name="username"
 						value="${memberinfo.member_Id }" readonly="readonly"><br> <label>비밀번호</label>
@@ -142,13 +147,14 @@
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
 						</a>
 						</c:if>
-						 <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
-								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
+						<a class="dropdown-item" id="clickKeyword" onclick="document.getElementById('light3').style.display='block';" style="font-size: 15px; cursor: pointer;" >
+						 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
 							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do"
 							style="font-size: 15px;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>
+						
 					</div>
 				</li>
 			</c:if>
@@ -171,8 +177,8 @@
 				<div class="col-lg-5 align-items-end ">
 					<div class="form-group">
 						<div class="form-field">
-							<form action="searchKeyword.do" class="search-location mt-md-5" method="get">
-							<input type="text" class="form-control bg-light" id="keywords" name="keywords" placeholder="Search location" style="border: 2px solid black">
+							<form action="searchKeyword.do" method="get">
+							<input type="text" class="form-control" id="keywords" name="keywords" placeholder="Search Keyword" style="border: 2px soild black" >
 							<button><span class="ion-ios-search"></span>
 							</button>
 							</form>
@@ -184,7 +190,6 @@
 		
 		
 	</div>
-</div>
 	<!-- 완성후 주석 해제 예정 -->
 	<c:if test="${memberinfo ne null }">
 		<div class="text text-center" id="urlMark">
@@ -198,25 +203,30 @@
 
 			<div id="urlDiv">
 				<div style="display: inline-block;">
+				<p>바로가기 추가</p>
 					<button class="btn btn-primary" style="border-radius: 50%;"
-						onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
+						onclick="document.getElementById('light').style.display='block';">
 						+</button>
-					<br> <br>바로가기 추가
 				</div>
-
-				<div id="light" class="white_content text-left">
+				
+				<div id="light" class="white_content text-left" style="height: 320px; width: 350px; ">
 					<label>바로가기 추가</label><br> <label>이름</label><br> <input type="text" id="urls" name="urlMark"><br>
 					<label>URL</label><br>
 					<input type="text" id="urlMarkName" name="urlMarkName"> <br>
 					<br>
 					<button type="button" onclick="insertUrl()" class="btn btn-primary">확인</button>
 					<button class="btn btn-primary"
-						onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">취소</button>
+						onclick="document.getElementById('light').style.display='none';">취소</button>
 				</div>
-				<div id="fade" class="black_overlay"></div>
+			</div>
+			<br>
+			<div id="addUrl">
 			</div>
 		</div>
 	</c:if>
+</div>
+	 <div id="light3" class="white_content text-left" style="height: 320px; width: 350px; ">
+	</div>
 	<script src="resources/vendor/jquery/jquery.min.js"></script>
 	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -227,8 +237,10 @@
 	<script src="resources/js/sb-admin-2.min.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script>
+	<%	MemberVO vo = (MemberVO) session.getAttribute("memberinfo");%>
 		function searchPage() {
 			var keyword = $('#keyword').val();
+			console.log(keyword);
 			if (keyword == '유튜브') {
 				window.location = "youtube.do";
 			} else if (keyword == '영화') {
@@ -240,7 +252,7 @@
 			} else if (keyword == '푸드트럭') {
 				window.location = "foodtruck.do"
 			} else if (keyword == '부동산') {
-
+				window.location = "realty.do"
 			} else if (keyword == '뉴스') {
 				window.location = "newsMain.do"
 			} else if (keyword == '뉴스등록') {
@@ -268,9 +280,10 @@
 		function insertUrl() {
 			var urls = $('#urls').val();
 			var urlname = $('#urlMarkName').val();
-			console.log(urls);
-			$
-				.ajax({
+			if(urls == $('#'+urls).text()){
+				window.alert("이미 등록된 url 입니다.");
+			}else{
+					$.ajax({
 					type: "get",
 					url: "insertUrl.do",
 					data: {
@@ -284,16 +297,71 @@
 						console.log(error);
 					}
 				});
+			}
+		
 		}
 		//url 삭제 추가
 		function deleteUrl() {
 			console.log(this.event);
 		}
 
+		$('#clickKeyword').click(function(){
+			showKeyword();
+		});
 
+		function showKeyword(){
+			$.ajax({
+				type:'get',
+				url:"acckeyword.do",
+				success:function(result){
+					$('#light3').empty();
+					for(var field of result){
+						$('#light3').append(
+						$('<div>').text(("검색어 : "+field.searchKeyword + ", 조회수 : " + field.searchHit)).css('display', 'inline-block').attr("id", field.searchKeyword).append(
+							$('<a>').attr(
+								'onclick','deleteKeyWord()').text(" x").css({
+									'font-size':'20px',
+									'color' : 'red',
+									'cursor':'pointer'
+							})
+						),
+						$('<br>')
+						);
+					}
+					$('#light3').prepend($('<h2>').text('누적 키워드 수')).append(
+						$('<button>').attr({
+							'class' : 'btn btn-primary',
+							'onclick' : "document.getElementById('light3').style.display='none'"
+							}).text("close").append($('<br>'))
+					)
+				},error:function(error){
+					console.log(error);
+				}
 
-		<%	MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
-		if (vo == null) {
+			})
+		}
+
+		function deleteKeyWord(){
+			var delTarget = this.event.path[1];
+			$.ajax({
+				type:'get',
+				url :'deleteKeyword.do',
+				data : {
+					delKeyword : delTarget.id
+				},
+				success:function(){
+					delTarget.remove();
+					window.alert('정상적으로 삭제 되었습니다.');
+				},error:function(){
+					console.log(error);
+				}
+			})
+		}
+		
+		
+		
+	
+		<%if (vo == null) {
 
 		} else if (vo.getMember_Id() != null) {	%>
 			$(document).ready(function () {
@@ -302,7 +370,10 @@
 					url: "getUrl.do",
 					success: function (result) {
 						for (var fields of result) {
-							$('#urlDiv').append($('<div>').css('display', 'inline-block')
+							$('#addUrl').append($('<div>').css({
+								'display': 'inline-block',
+								'margin-right' : '5px'
+							})
 								.append($('<button>').attr({
 									'class': 'btn btn-primary',
 									'onclick': "location.href='https://" + fields.urlMark +
@@ -310,7 +381,7 @@
 									'id': fields.urlMarkName
 								}).text(
 									fields.urlMarkName)));
-							//view는 확인,, 최종 정리해야함.$('#urlDiv').prepend($('<a>').attr('onclick', 'deleteUrl()').text('삭제'));
+							//$('#urlDiv').prepend($('<a>').attr('onclick', 'deleteUrl()').text('삭제'));
 							$('#light').css('display', 'none');
 							$('#fade').css('display', 'none');
 							$('#urls').text('');
@@ -322,7 +393,9 @@
 					}
 				})
 
-			}) <%} %>
+			})
+	
+			<%} %>
 	</script>
 	<script type="text/javascript">
 	

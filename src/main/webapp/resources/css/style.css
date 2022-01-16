@@ -7066,7 +7066,7 @@ button.bg-dark:focus {
     margin-bottom: 1rem !important; }
   .ml-md-3,
   .mx-md-3 {
-    margin-left: 20rem !important; }
+    margin-left: 60rem !important; }
   .m-md-4 {
     margin: 1.5rem !important; }
   .mt-md-4,
@@ -8001,7 +8001,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 body {
   font-family:  'yg-jalnan'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff'); 
-  background: #fff;
+  background: height;
   font-size: 16px;
   line-height: 1.8;
   font-weight: 400;
@@ -8926,7 +8926,7 @@ h1, h2, h3, h4, h5,
 
 .form-control {
   height: 52px !important;
-  background: #fff !important;
+  background: #f8f9fa ;
   color: #000000 !important;
   font-size: 18px;
   border-radius: 5px;
@@ -8934,7 +8934,6 @@ h1, h2, h3, h4, h5,
   box-shadow: none !important; }
   .form-control:focus, .form-control:active {
     border-color: #000000; }
-
 textarea.form-control {
   height: inherit !important; }
 

@@ -5,5 +5,5 @@ import java.util.List;
 public interface ReserveService {
 	public boolean Reserve(ReserveVO reserve);
 	public List<ReserveVO> getReserve(ReserveVO reserve);
-	
+	public List<ReserveVO> getReserveMember(ReserveVO reserve);
 }

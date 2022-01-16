@@ -1,4 +1,4 @@
-package co.teakjjo.prj.urlmark.service.web;
+package co.teakjjo.prj.urlmark.web;
 
 import java.util.List;
 
@@ -23,14 +23,16 @@ public class UrlMarkController {
 	@RequestMapping("/insertUrl.do")
 	@ResponseBody
 	public void insertUrl(@RequestParam("url") String url, @RequestParam("urlname")String urlname, HttpSession session) {
+		
 		UrlMarkVO vo = new UrlMarkVO();
 		MemberVO mvo = (MemberVO)session.getAttribute("memberinfo");
 		vo.setMember_Id(mvo.getMember_Id());
 		vo.setUrlMark(urlname);
 		vo.setUrlMarkName(url);
-		System.out.println(mvo.toString());
-		System.out.println(vo.toString());
-		urlmarkDao.insertUrl(vo);
+		System.out.println(urlmarkDao.checkKeyword(vo));
+		if(urlmarkDao.checkKeyword(vo)) {
+			urlmarkDao.insertUrl(vo);
+		}
 	}
 	@RequestMapping("/getUrl.do")
 	@ResponseBody
