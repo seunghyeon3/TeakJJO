@@ -268,12 +268,12 @@ public class MemberController {
 		 }
 		    return sb.toString();
 		}
-	
-
-	 
+		 
 	 @RequestMapping("/updateInfo.do")
 	 public String updateInfo(MemberVO vo,HttpSession session) {
-		 session.setAttribute("memberinfo", vo);
+		 memberDao.updateMember(vo);
+		 
+		 session.setAttribute("memberinfo", memberDao.getMember(vo.getMember_Id()));
 		 return "redirect:home.do";
 	 }
 	 //영화 내용의 사진 내용도 들고와야함 조인 해야함
