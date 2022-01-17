@@ -30,4 +30,11 @@ public class RsrServiceImpl implements RsrService {
 		return map.rsrDelete(rsr);
 	}
 
+	@Override
+	public int rsrUpdate(RsrVO rsr) {
+		return map.rsrUpdate(rsr);
+	}
+	
+	
+
 }
