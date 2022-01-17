@@ -88,7 +88,7 @@
 		<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 			<div class="input-group">
 				<input type="text" id="keyword" class="form-control" placeholder="Search for category"
-					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage()">
+					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage())">
 				<div class="input-group-append">
 					<button class="btn btn-primary" type="button" onclick="searchPage()">
 						<i class="fas fa-search fa-sm"></i>
@@ -177,7 +177,7 @@
 				<div class="col-lg-5 align-items-end ">
 					<div class="form-group">
 						<div class="form-field">
-							<form action="searchKeyword.do" method="get">
+							<form action="searchKeyword.do" method="get" onsubmit ="return searchResult()">
 							<input type="text" class="form-control" id="keywords" name="keywords" placeholder="Search Keyword" style="border: 2px soild black" >
 							<button><span class="ion-ios-search"></span>
 							</button>
@@ -252,14 +252,12 @@
 				window.location = "papagoMain.do"
 			} else if (keyword == '푸드트럭') {
 				window.location = "foodtruck.do"
-			} else if (keyword == '부동산') {
-				window.location = "realty.do"
-			} else if (keyword == '뉴스') {
+			}  else if (keyword == '뉴스') {
 				window.location = "newsMain.do"
 			} else if (keyword == '뉴스등록') {
 				window.location = "newsInsertForm.do"
 			} else {
-				window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 부동산 중 하나 검색 해주세요.');
+				window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 뉴스, 뉴스등록 중 하나 검색 해주세요.');
 				$('#keyword').val('').focus();
 			}
 			return;
@@ -391,14 +389,24 @@
 					},
 					error: function (error) {
 						console.log(error);
-					}\
+					}
 				})
 
 			})
 	
 			<%} %>
+			
+		
 	</script>
 	<script type="text/javascript">
+		function searchResult(){
+			if($('#keywords').val() == ""){
+				alert("검색어를 입력하세요.");
+				return false;
+			}else{
+				return true;
+			}
+		}
 	
 		$("#check_module").click(function () {
 			var IMP = window.IMP; // 생략가능

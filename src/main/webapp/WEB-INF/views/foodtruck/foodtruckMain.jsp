@@ -91,6 +91,7 @@ div #mapInfo {
 }
 
 .sidebar li {
+	font-size : 2rem;
 	list-style: none;
 }
 
@@ -112,7 +113,7 @@ div #mapInfo {
 }
 
 a.page-link {
-	color: blue !important;
+	color: ff0047 !important;
 }
 </style>
 </head>
@@ -174,6 +175,7 @@ a.page-link {
 						</nav>
 					</div>
 				</div>
+				<div id ="SearchFail" class="hide"></div>
 				<!-- 최근검색 이동 -->
 				<div id="rsrDiv" class="hide"
 					style="width : 300px; height: 500px; margin-left: 100px;">
@@ -303,6 +305,7 @@ a.page-link {
 		function mapSearch() {
 			$("#markDiv").hide();
 			$("#rsrDiv").hide();
+			$("#SearchFail").hide();
 			$("#searchDiv").show();
 		}
 		//즐겨찾기
@@ -314,7 +317,7 @@ a.page-link {
 		 function paging(){
 			var $page = $(`<li class="page-item"><a class="page-link" onclick="selectFoodMark(`+prev+`)"
 			tabindex="-1"><</a></li>`);
-			var $page2 = $(`<li class="page-item"><a class="page-link" onclick="selectFoodMark(`+next+`)">></a>
+			var $page2 = $(`<li class="page-item"><a class="page-link" style="color : #ff0047 !important;" onclick="selectFoodMark(`+next+`)">></a>
 			</li>`);
 			
 			$(".pagination").append($page);
@@ -328,7 +331,7 @@ a.page-link {
 				}else if((i!=nowPage2 && nowPage2 >= i+3) ||(i!=nowPage2 && nowPage2 <= i-3)) /* && i != lastPage */{
 					
 				}else {
-						$page3 = $(`<li class="page-item"><a class="page-link" onclick="selectFoodMark(`+i+`)">`+i+`</a></li>`);
+						$page3 = $(`<li class="page-item"><a class="page-link"  onclick="selectFoodMark(`+i+`)">`+i+`</a></li>`);
 					}
 				
 				$(".pagination").append($other);
@@ -342,6 +345,7 @@ a.page-link {
 		 function rsrSearch(){
 			$("#searchDiv").hide();
 			$("#markDiv").hide();
+			$("#SearchFail").hide();
 			$("#rsrDiv").show();
 			selectRsrSearch();
 		} 
@@ -352,6 +356,8 @@ a.page-link {
 			//기존 검색결과 리셋
         	if($(".tr")){
         		$("#bookMarkList").empty();
+        		$("#SearchFail").empty();
+        		
         	}
 			
 			//즐겨찾기 목록 출력
@@ -362,7 +368,7 @@ a.page-link {
 	     	      	async:false,
 	     	        success: function(result){
 	     	        	console.log(result.length);
-	     	        	if(result.length != 0 ){
+	     	        	if(!result.length < 1 ){
 		     	        	$("#searchDiv").hide();
 		     				$("#rsrDiv").hide();
 		     				$("#markDiv").show();
@@ -411,10 +417,17 @@ a.page-link {
 				        		
 				        	}
 		     	        	paging();
+		     	        	
 	     	        	}else{
-	     	        		$h4 = $(`<h4 style="font-weight : bold;">검색하신 이력이 없습니다.</h4>`);
-			        		$("#bookMarkList").append($h4);
-			        		$h4.addClass('tr');
+	     	      			console.log("dddddddd")
+	     	      			var temp = $('<p>').text("즐겨찾기 목록이 비었습니다.");
+	     	      			$("#searchDiv").hide();
+		     				$("#rsrDiv").hide();
+		     				$("#markDiv").hide();
+		     	        	$(".pagination").empty();
+			        		$('#SearchFail').append(temp);
+			        		$('#SearchFail').show();
+			        		temp.addClass('tr');
 	     	        	}
 	     	        },
 	     	        error : function(e){
@@ -533,41 +546,37 @@ a.page-link {
 		        	
 		        	//console.log(searchIndex);
 		        	searchArray = searchIndex.split(',');
-		        	
-		        	//검색 버튼을 눌렀을때의 테이블 생성
-		        	for ( var i in searchArray ) {
-		        		if(searchArray[i] != 'undefined' && searchArray[i] != ""){
-		        		
-		        		$tr = $(`<tr>
-		        				<input type="hidden" value=`+searchArray[i]+`>
-								<th style="cursor: pointer" colspan="3" class="searchView" >`+searchData.records[searchArray[i]][searchData.fields[0].id]+`</th>
-								</tr>
-								<tr>
-									<th><input type="hidden" value=`+searchData.records[searchArray[i]][searchData.fields[0].id]+`><button class="bookmark btn btn-primary">즐겨찾기</button></th>
-									<th><input type="hidden" value=`+searchArray[i]+`><button class="searchBtn btn btn-primary">길찾기</button></th>
-									<th><input type="hidden" value=`+searchArray[i]+`><button class="viewBtn btn btn-primary">로드뷰</button></th>
-								</tr>`);
-		        		$("#searchTable").append($tr);
-		        		$tr.addClass('tr');
-		        		}
-		        		//검색값 초기화
-		        		//$("#searchBox").val('');
+		        	console.log(searchArray.length);
+		        	if (searchArray.length == 1){
+		        		$h4 = $(`<h4>검색결과가 없습니다.</h4>`);
+		        		$("#searchTable").append($h4);
+		        		$h4.addClass('tr');
+		        	}else{
+			        	//검색 버튼을 눌렀을때의 테이블 생성
+			        	for ( var i in searchArray ) {
+			        		if(searchArray[i] != 'undefined' && searchArray[i] != ""){
+			        		
+			        		$tr = $(`<tr>
+			        				<input type="hidden" value=`+searchArray[i]+`>
+									<th style="cursor: pointer" colspan="3" class="searchView" >`+searchData.records[searchArray[i]][searchData.fields[0].id]+`</th>
+									</tr>
+									<tr>
+										<th><input type="hidden" value=`+searchData.records[searchArray[i]][searchData.fields[0].id]+`><button class="bookmark btn btn-primary">즐겨찾기</button></th>
+										<th><input type="hidden" value=`+searchArray[i]+`><button class="searchBtn btn btn-primary">길찾기</button></th>
+										<th><input type="hidden" value=`+searchArray[i]+`><button class="viewBtn btn btn-primary">로드뷰</button></th>
+									</tr>`);
+			        		$("#searchTable").append($tr);
+			        		$tr.addClass('tr');
+			        		}
+			        		//검색값 초기화
+			        		//$("#searchBox").val('');
+			        	}
+			        	$up = $(`<br><div><button id="up"  class="btn btn-primary"  onclick="location.href='#searchBox'">위로</button></div>`);
+						$("#searchTable").append($up);
 		        	}
-		        	$up = $(`<br><div><button id="up"  class="btn btn-primary"  onclick="location.href='#searchBox'">위로</button></div>`);
-					$("#searchTable").append($up);
 		        })
 		         //검색버튼 이벤트 끝부분
 		         
-		         //즐겨찾기 목록 표출
-		          $("#foodMark").on("click",function(e){
-		        	  $.ajax({
-			     	        url: "/foodSelectList.do",
-			     	        success: function(html){
-			     	         var value = $(this);
-			     	        console.log(value); 
-			     	        }
-			     	    });
-		          });
 		        
 		        //검색시 길찾기 버튼 값 지정
 		        $(document).on('click',".searchBtn", function(e){

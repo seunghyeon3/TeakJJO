@@ -88,9 +88,9 @@
 			</div>
 		</div>
 		<p>
-		<c:if test="${fn:contains(memberinfo.member_Author, 'P')}">
+		<c:if test="${!empty memberinfo.member_Id }">
 			<a
-				href="javascript:void(0)" onclick="dictionaryRecord()">최근 검색 기록</a>
+				href="javascript:void(0)" onclick="dictionaryRecord()" style="font-size : 1.5rem;">최근 검색 기록</a>
 				</c:if>
 		</p>
 		<div id="light" class="col-md-4 white_content" style="margin-left: 190px;">
@@ -106,7 +106,7 @@
 	</div>
 	<br>
 	<div class="col-md-4" style="height: 300px; margin-left: 35vw;  padding-top:10px; ">
-		<ul id="result_text" style="padding-left: 20px; border: 2px solid black;"><li style="list-style:none;"><h1 style="text-align:center">검색결과</h1></li></ul>
+		<ul id="result_text" style="padding: 0px 20px; border: 2px solid black;"><li style="list-style:none;"><h1 style="text-align:center">검색결과</h1></li></ul>
 	</div>
 
 	<script>
@@ -123,7 +123,6 @@
 		});
 		
 		function dictionaryDelete(dictionary_no) {
-			alert(dictionary_no);
 			//console.log($("#"+dictionary_no).children());
 			$("#"+dictionary_no).parent().remove();
 			$.ajax({
@@ -150,9 +149,9 @@
 				success : function(data){
 					
 					if(data == ""){
+						alert("검색기록이 없습니다.");
 						document.getElementById('light').style.display='none';
 						document.getElementById('fade').style.display='none';
-						alert("검색기록이 없습니다.");
 						
 					}else{
 					$('#dictionaryRecord').children().remove();
