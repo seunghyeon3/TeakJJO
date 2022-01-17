@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +43,7 @@
 <div class="row justify-content-center mb-5" style="margin-top:80px;">
           <div class="col-md-7 text-center heading-section ftco-animate">
           	<span class="subheading">양택조가 실시간으로 알려주는</span>
-            <h2 class="mb-3">양택조 뉴스</h2>  <a class= "btn btn-primary py-3 px-5" href="newsInsertForm.do" style="float:right">뉴스 기사 등록</a>
+            <h2 class="mb-3">양택조 뉴스</h2>  <c:if test="${fn:contains(memberinfo.member_Author, 'P')}"><a class= "btn btn-primary py-3 px-5" href="newsInsertForm.do" style="float:right">뉴스 기사 등록</a></c:if>
           </div>
         </div>
          
@@ -98,8 +99,8 @@
     					<div class="img">
 		    				<img src="resources/img/${news.newsboard_pfile }" class="img-fluid" alt="Colorlib Template" style="width:240px; height:350px;">
 	    				</div>
-	    				<div class="desc" style="padding:5px">
-	    					<p style="font-size:1.8vw"><a href="newsDetail.do?newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_id }`)" id="newsboard_title">조회수 ${news.newsboard_hit } 돌파!!</a></p>
+	    				<div class="desc" style="padding:5px; width: 260px;">
+	    					<p style="font-size:1.5vw"><a href="newsDetail.do?newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_id }`)" id="newsboard_title">조회수 ${news.newsboard_hit } 돌파!!</a></p>
 								<p class="h-info"><span class="details">장르 : ${news.newsboard_genre }</span></p>
 	    				</div>
     				</div>

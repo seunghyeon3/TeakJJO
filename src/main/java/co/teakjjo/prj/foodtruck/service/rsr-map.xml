@@ -19,6 +19,15 @@
 				VALUES(#{member_id},#{rsr_id},#{rsr_no})
 	</insert>
 	
+	<update id="rsrUpdate" parameterType="co.teakjjo.prj.foodtruck.service.RsrVO">
+		<selectKey keyProperty="rsrno" resultType="int" order="BEFORE">
+			SELECT MAX(RSR_NO)+1 AS RSR_NO FROM FOODTRUCKRSR
+		</selectKey>
+		UPDATE FOODTRUCKRSR
+		<if test="rsr_no != null">SET RSR_NO = #{rsrno} </if>
+		WHERE RSR_ID = ${rsr_id}
+	</update>
+	
 	<delete id="rsrDelete" parameterType="co.teakjjo.prj.foodtruck.service.RsrVO">
 		DELETE FROM FOODTRUCKRSR
 		WHERE MEMBER_ID = #{member_id}
