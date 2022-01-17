@@ -41,16 +41,8 @@ public class DictionaryController {
 	public List<DictionaryVO> dictionaryRecord(DictionaryVO dictionary, Model model,HttpSession session) {
 		
 		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
-		if(member != null) {
 			String member_id = member.getMember_Id();
-		
-			model.addAttribute("message", "성성공");
 			return dictionaryDao.dictionarySelectList(member_id);
-		} else {
-			model.addAttribute("message", "로그인이 필요한 서비스 입니다.");
-			System.out.println("실패");
-			return null;
-		}
 
 	}
 

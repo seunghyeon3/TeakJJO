@@ -11,4 +11,7 @@ public interface RsrMapper {
 		
 		//최근검색 삭제
 		int rsrDelete(RsrVO rsr);
+		
+		//최근검색 수정(중복검색시 상단표시)
+		int rsrUpdate(RsrVO rsr);
 }

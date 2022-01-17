@@ -99,8 +99,8 @@
     					<div class="img">
 		    				<img src="resources/img/${news.newsboard_pfile }" class="img-fluid" alt="Colorlib Template" style="width:240px; height:350px;">
 	    				</div>
-	    				<div class="desc" style="padding:5px">
-	    					<p style="font-size:1.8vw"><a href="newsDetail.do?newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_id }`)" id="newsboard_title">조회수 ${news.newsboard_hit } 돌파!!</a></p>
+	    				<div class="desc" style="padding:5px; width: 260px;">
+	    					<p style="font-size:1.5vw"><a href="newsDetail.do?newsboard_id=${news.newsboard_id}" onclick="hitUpdate(`${news.newsboard_id }`)" id="newsboard_title">조회수 ${news.newsboard_hit } 돌파!!</a></p>
 								<p class="h-info"><span class="details">장르 : ${news.newsboard_genre }</span></p>
 	    				</div>
     				</div>
