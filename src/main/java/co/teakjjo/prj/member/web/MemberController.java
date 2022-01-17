@@ -243,7 +243,7 @@ public class MemberController {
 		session.setDebug(true);
 		//for debug
 		Message mimeMessage = new MimeMessage(session);
-		mimeMessage.setFrom(new InternetAddress("cumulus90@naver.com"));
+		mimeMessage.setFrom(new InternetAddress(username));
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 		mimeMessage.setSubject(subject); mimeMessage.setText(body);
 		Transport.send(mimeMessage);
