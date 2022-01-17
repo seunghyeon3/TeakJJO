@@ -30,7 +30,7 @@ public class UrlMarkController {
 		vo.setUrlMark(urlname);
 		vo.setUrlMarkName(url);
 		System.out.println(urlmarkDao.checkKeyword(vo));
-		if(urlmarkDao.checkKeyword(vo)) {
+		if(!urlmarkDao.checkKeyword(vo)) {
 			urlmarkDao.insertUrl(vo);
 		}
 	}

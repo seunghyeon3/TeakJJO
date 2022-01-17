@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="co.teakjjo.prj.member.service.MemberVO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +36,7 @@
 
 <body>
 
-<section class="ftco-section ftco-no-pb" style="margin-top:80px">
+<section class="ftco-section ftco-no-pb" >
 			<div class="container">
 			
 			<div class="row justify-content-center mb-5">
@@ -59,11 +61,16 @@
 	            <p style="display: inline; margin-right:150px;">${detail.member_name }&nbsp;기자</p> <p style="display: inline; margin-right:150px;">${detail.newsboard_date }&nbsp;작성</p><p style="display: inline">조회수&nbsp;${detail.newsboard_hit }</p>
 	          <br><br>
 	          <div>
-	          <span><a href="recommand.do?newsboard_id=${detail.newsboard_id }&recommand_no=${recommand}"><img width="150" src="resources/img/택조형추천.png"></a><span style="font-size:25px">&nbsp;추천 <c:choose ><c:when test="${empty recommand}">0</c:when><c:otherwise>${recommand }</c:otherwise></c:choose></span></span>
+	          
+	          <span><c:if test="${!empty memberinfo.member_Id }"><a href="recommand.do?newsboard_id=${detail.newsboard_id }&recommand_no=${recommand}"><img width="150" src="resources/img/택조형추천.png"></a>  </c:if><span style="font-size:25px">&nbsp;추천 <c:choose ><c:when test="${empty recommand}">0</c:when><c:otherwise>${recommand }</c:otherwise></c:choose></span></span>
 	          </div>
+	        
+	          
+	          <c:if test="${memberinfo.member_Id eq detail.member_id }">
 	          <br><br>
 	            <a class= "btn btn-primary py-3 px-5" href="newsDelete.do?newsboard_id=${detail.newsboard_id}" style="float:right;">삭제</a>
 	          <a class= "btn btn-primary py-3 px-5" href="newsUpdateForm.do?newsboard_id=${detail.newsboard_id}" style="float:right; margin-right:10px;">수정</a>
+	          </c:if>
 	          </div>
 					</div>
 				</div>
@@ -72,7 +79,7 @@
 		
 		<div class="row block-9 justify-content-center mb-5" style="margin-top:60px">
           <div class="col-md-8 mb-md-5">
-            <form action="boardCommentInsert.do" method ="POST" class="bg-light p-5 contact-form" enctype="application/x-www-form-urlencoded">
+            <form action="boardCommentInsert.do" method ="POST" class="bg-light p-5 contact-form" enctype="application/x-www-form-urlencoded" onsubmit="return commentLoginCheck()">
               <div class="form-group">
                 <input type="text" class="form-control" name="comment" id="comment" placeholder="댓글을 입력하세요...">
                 <input type="hidden" name="newsboard_id" id="newsboard_id" value= '${detail.newsboard_id }' >
@@ -94,8 +101,10 @@
                     <div class="meta">${comment.boardcomment_date } 작성</div>
                     <p>${comment.boardcomment_content }</p>
                   </div>
+                  <c:if test="${memberinfo.member_Id eq comment.member_id }">
                   <a class= "btn btn-primary py-3 px-5" href="boardCommentDelete.do?boardComment_id=${comment.boardcomment_id}" style="float:right;">삭제</a>
 	          <a class= "btn btn-primary py-3 px-5" onclick="boardCommentUpdate(this,${comment.boardcomment_id })" style="float:right; margin-right:10px;">수정</a>
+	          </c:if>
                 </li>
                 
                 
@@ -120,8 +129,32 @@
               </c:forEach>
           </div>
         </div>
+        
         <script>
+       function commentLoginCheck(){
+    	
+    	   
+        <%MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
+        
+        if(vo == null) {
+        	%>
+        	alert("로그인이 필요한 서비스입니다.");   		
+   			return false;
+        <%}
+        else{
+        	%>
+        	if($("#comment").val() ==""){
+        		alert("검색어를 입력하세요");   		
+       			return false;
+        	}else{
+        	return true;
+        	}
+   		<%}%> 
+   		
+       } 
+       </script>
        
+       <script>
         function boardCommentUpdate(e, id){
         	console.log(id);
         e.parentNode.style.display='none';
@@ -131,7 +164,6 @@
         
         function boardCommentCancel(e, id){
         	
-        	
         	  document.getElementById(id).style.display='none';
         	  e.parentNode.parentNode.parentNode.parentNode.parentNode.children[0].style.display='block';
         	  
@@ -139,6 +171,7 @@
         }
         
         </script>
+        
 <!--  <script>
    		 $(document).ready(function(){
    			 var newsboard_id = ${detail.newsboard_id};

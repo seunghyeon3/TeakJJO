@@ -1,6 +1,10 @@
 package co.teakjjo.prj.recommand.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +23,13 @@ public class RecommandController {
 	private RecommandService recommandDao;
 
 	  @RequestMapping("/recommand.do") 
-	  public String recommand(@RequestParam(value = "newsboard_id") int newsboard_id,HttpSession session, RecommandVO recommand, HttpServletRequest request) {
+	  public String recommand(@RequestParam(value = "newsboard_id") int newsboard_id,HttpSession session, RecommandVO recommand, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		  MemberVO member = (MemberVO) session.getAttribute("memberinfo");
 		  String member_id = member.getMember_Id();
+		  String referer = request.getHeader("Referer");
+		 
 		  recommand.setMember_id(member_id);
 		  recommand.setNewsboard_id(newsboard_id);
-		  String referer = request.getHeader("Referer");
 		  if(recommandDao.recommandCheck(recommand) == null) {
 			  int recommand_no = 1;
 			  recommand.setRecommand_no(recommand_no);
@@ -34,5 +39,6 @@ public class RecommandController {
 			  recommandDao.recommandDelete(recommand);
 			  return "redirect:"+ referer;
 		  }
+		  
 	  }
 }

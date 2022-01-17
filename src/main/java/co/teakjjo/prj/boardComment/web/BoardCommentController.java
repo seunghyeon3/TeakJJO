@@ -35,6 +35,7 @@ public class BoardCommentController {
 		//System.out.println(newsboard_id);
 		//String url = "newsDetail.do?no="+newsboard_title+"&newsboard_id="+newsboard_id;
 		//return url;
+		
 		String referer = request.getHeader("Referer"); // 헤더에서 이전 페이지를 읽는다.
 		return "redirect:"+ referer; // 이전 페이지로 리다이렉트
 		
