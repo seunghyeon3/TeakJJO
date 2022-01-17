@@ -57,8 +57,10 @@
 	            <br>
 	            <p>${detail.member_company }</p>
 	            <p style="display: inline; margin-right:150px;">${detail.member_name }&nbsp;기자</p> <p style="display: inline; margin-right:150px;">${detail.newsboard_date }&nbsp;작성</p><p style="display: inline">조회수&nbsp;${detail.newsboard_hit }</p>
-	          <br>
-	          <span><a class="flaticon-piggy-bank" id = "btnRecommend"><span>추천 : </span></a></span>
+	          <br><br>
+	          <div>
+	          <span><a href="recommand.do?newsboard_id=${detail.newsboard_id }&recommand_no=${recommand}"><img width="150" src="resources/img/택조형추천.png"></a><span style="font-size:25px">&nbsp;추천 <c:choose ><c:when test="${empty recommand}">0</c:when><c:otherwise>${recommand }</c:otherwise></c:choose></span></span>
+	          </div>
 	          <br><br>
 	            <a class= "btn btn-primary py-3 px-5" href="newsDelete.do?newsboard_id=${detail.newsboard_id}" style="float:right;">삭제</a>
 	          <a class= "btn btn-primary py-3 px-5" href="newsUpdateForm.do?newsboard_id=${detail.newsboard_id}" style="float:right; margin-right:10px;">수정</a>
@@ -137,8 +139,20 @@
         }
         
         </script>
-	<!-- <script>
+<!--  <script>
    		 $(document).ready(function(){
+   			 var newsboard_id = ${detail.newsboard_id};
+   			 console.log(newsboard_id);
+   			 $.ajax({
+				type : "POST",
+				url : "recommandSum.do",
+				data : {"newsboard_id" : newsboard_id},
+				
+				success : function(data){
+					console.log(data)
+				
+				}
+				}); 
     		});
     </script> -->
 
