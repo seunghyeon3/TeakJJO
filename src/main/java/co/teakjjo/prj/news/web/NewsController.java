@@ -23,6 +23,7 @@ import co.teakjjo.prj.boardComment.service.BoardCommentService;
 import co.teakjjo.prj.member.service.MemberVO;
 import co.teakjjo.prj.news.service.NewsService;
 import co.teakjjo.prj.news.service.NewsVO;
+import co.teakjjo.prj.recommand.service.RecommandService;
 
 @Controller
 public class NewsController {
@@ -33,6 +34,9 @@ public class NewsController {
 	@Autowired
 	private BoardCommentService boardCommentDao;
 
+	@Autowired
+	private RecommandService recommandDao;
+	
 	@Autowired
 	private String saveDir; // 파일저장 경로를 자동 주입
 
@@ -128,9 +132,13 @@ public class NewsController {
 		// System.out.println(newsDao.newsGenreSearch(newsboard_id));
 		model.addAttribute("comment", boardCommentDao.boardCommentList(newsboard_id));
 		model.addAttribute("detail", newsDao.newsGenreSearch(newsboard_id));
+		model.addAttribute("recommand", recommandDao.recommandSum(newsboard_id));
+		//model.addAttribute("recommand", recommandDao.recommandSum(newsboard_id));
 		return "news/newsDetail";
 	}
 
+	
+	
 	// 뉴스 제목 온클릭시 function으로 조회수 업데이트 실행
 	@RequestMapping("/newsHitUpdate.do")
 	public void newsHitUpdate(@RequestParam(value = "newsboard_id") int newsboard_id, NewsVO news) {

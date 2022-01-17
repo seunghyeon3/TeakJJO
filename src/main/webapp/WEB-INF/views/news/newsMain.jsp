@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +43,7 @@
 <div class="row justify-content-center mb-5" style="margin-top:80px;">
           <div class="col-md-7 text-center heading-section ftco-animate">
           	<span class="subheading">양택조가 실시간으로 알려주는</span>
-            <h2 class="mb-3">양택조 뉴스</h2>  <a class= "btn btn-primary py-3 px-5" href="newsInsertForm.do" style="float:right">뉴스 기사 등록</a>
+            <h2 class="mb-3">양택조 뉴스</h2>  <c:if test="${fn:contains(memberinfo.member_Author, 'P')}"><a class= "btn btn-primary py-3 px-5" href="newsInsertForm.do" style="float:right">뉴스 기사 등록</a></c:if>
           </div>
         </div>
          
