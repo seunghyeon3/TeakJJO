@@ -22,12 +22,8 @@
 	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/animate.css">
 	<link rel="stylesheet" href="resources/css/ionicons.min.css">
-<<<<<<< HEAD
 	<link rel="stylesheet" href="resources/css/style.css?after">
 	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-=======
-
->>>>>>> master
 <script type="text/javascript"
 	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
@@ -40,8 +36,6 @@
 	font-weight: normal;
 	font-style: normal;
 }
-<<<<<<< HEAD
-=======
 .black_overlay {
 		display: none;
 		position: absolute;
@@ -68,7 +62,6 @@
 		z-index: 1002;
 		overflow: auto;
 	}
->>>>>>> master
 </style>
 <body>
 <!-- 양택조 color=pink (#ff0037) -->
@@ -93,6 +86,10 @@
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 			<div class="input-group">
+				<input type="text" class="form-control bg-light border-0 small" id="keyword"
+					placeholder="Search for category" aria-label="Search"
+					aria-describedby="basic-addon2">
+=======
 				<input type="text" id="keyword" class="form-control" placeholder="Search for category"
 					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage()">
 				<div class="input-group-append">

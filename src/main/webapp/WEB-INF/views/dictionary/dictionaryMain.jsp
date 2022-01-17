@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,18 +64,20 @@
 
 
 	<div class="text text-center" style="margin-top: 100px">
-		<h1 class="mb-4">
-			양택조와 함께하는<br>&lt;국어사전&gt;
-		</h1>
-		<p style="font-size: 18px;">누구든지 이용이 가능한 국어사전입니다.</p>
+		<div class="row justify-content-center">
+				<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+					<span class="subheading">양택조와 함께하는</span>
+					<h2 class="mb-2">프리미엄 사전</h2>
+				</div>
+			</div>
 		<div class="search-location mt-md-2">
 			<div class="row justify-content-center">
 				<div class="col-lg-5 align-items-end ">
 					<div class="form-group">
 						<div class="form-field">
 
-							<input type="text" class="form-control bg-dark" id="search_text"
-								placeholder="Search location" style="border: 2px solid black">
+							<input type="text" class="form-control bg-light" id="search_text"
+								placeholder="Search Keyword" style="border: 2px solid black">
 
 							<button id="dictionarySearch">
 								<span class="ion-ios-search"></span>
@@ -85,11 +88,14 @@
 			</div>
 		</div>
 		<p>
+		<c:if test="${fn:contains(memberinfo.member_Author, 'P')}">
 			<a
-				href="javascript:void(0)" onclick="dictionaryRecord()">택조의 시크릿 비밀노트</a>
+				href="javascript:void(0)" onclick="dictionaryRecord()">최근 검색 기록</a>
+				</c:if>
 		</p>
-		<div id="light" class="col-md-6 white_content">
-			택조의 시크릿 비밀노트 <a href="javascript:void(0)"
+		<div id="light" class="col-md-4 white_content" style="margin-left: 190px;">
+			최근 검색 기록 
+			<a href="javascript:void(0)"
 				onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close
 			</a> <br> <br>
 			<ul id="dictionaryRecord">
@@ -99,8 +105,8 @@
 		<div id="fade" class="black_overlay"></div>
 	</div>
 	<br>
-	<div class="col-md-4" style="height: 300px; margin-left: 35vw;">
-		<ul id="result_text"></ul>
+	<div class="col-md-4" style="height: 300px; margin-left: 35vw;  padding-top:10px; ">
+		<ul id="result_text" style="padding-left: 20px; border: 2px solid black;"><li style="list-style:none;"><h1 style="text-align:center">검색결과</h1></li></ul>
 	</div>
 
 	<script>
@@ -127,7 +133,7 @@
 					"dictionary_no" : dictionary_no
 				},
 				success : function(data){
-					alert("성공");
+					alert("삭제가 정상적으로 이루어 졌습니다.");
 					
 					}
 			
@@ -142,13 +148,11 @@
 				type : "POST",
 				url : "dictionaryRecord.do",
 				success : function(data){
-					//alert("성공");
-					//console.log(typeof data);
-					//console.log(data[1].dictionary_data);
+					
 					if(data == ""){
 						document.getElementById('light').style.display='none';
 						document.getElementById('fade').style.display='none';
-						alert("로그인이 필요한 서비스입니다.");
+						alert("검색기록이 없습니다.");
 						
 					}else{
 					$('#dictionaryRecord').children().remove();
@@ -167,12 +171,15 @@
 						dataSearch.attr("val", i.dictionary_data);
 						dataSearch.attr("onclick", "dictionaryRecordSend(this.text)");
 						dataSearch.text(i.dictionary_data);
+						data.attr("style", "list-style:none; border-bottom:2px solid black; width:500px");
 						data.append(dataSearch);
 						
 						
 						var deleteRecord = $('<a>');
-						deleteRecord.text("X");
+						deleteRecord.attr("type", 'button');
+						deleteRecord.text("삭제");
 						deleteRecord.attr('href','javascript:void(0)');
+						deleteRecord.attr('style','margin-left:50px');
 						deleteRecord.attr('id', i.dictionary_no);
 						deleteRecord.attr("onclick", "dictionaryDelete("+i.dictionary_no+")");
 						data.append(deleteRecord);
