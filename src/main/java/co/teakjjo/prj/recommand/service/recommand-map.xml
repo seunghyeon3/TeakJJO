@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.teakjjo.prj.recommand.service.RecommandMapper">
+
+<select id="recommandSum" parameterType="co.teakjjo.prj.recommand.service.RecommandVO" resultType="int">
+	SELECT SUM(RECOMMAND_NO) FROM RECOMMAND WHERE NEWSBOARD_ID = #{newsboard_id}
+</select>
+
+<select id="recommandCheck" parameterType="co.teakjjo.prj.recommand.service.RecommandVO" resultType="int">
+	SELECT RECOMMAND_NO FROM RECOMMAND WHERE MEMBER_ID = #{member_id} AND NEWSBOARD_ID = #{newsboard_id}
+</select>
+
+<insert id="recommandInsert" parameterType="co.teakjjo.prj.recommand.service.RecommandVO" >
+	INSERT INTO RECOMMAND(MEMBER_ID, NEWSBOARD_ID, RECOMMAND_NO)
+	VALUES(#{member_id},#{newsboard_id},#{recommand_no})
+</insert>
+
+<delete id="recommandDelete" parameterType="co.teakjjo.prj.recommand.service.RecommandVO" >
+	DELETE FROM RECOMMAND WHERE MEMBER_ID = #{member_id} AND NEWSBOARD_ID = #{newsboard_id}
+</delete>
+
+</mapper>
