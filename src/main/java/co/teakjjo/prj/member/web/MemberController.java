@@ -2,15 +2,14 @@ package co.teakjjo.prj.member.web;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.HashMap;
-<<<<<<< HEAD
-import java.util.Map;
-=======
->>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -26,10 +25,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
 import org.springframework.ui.Model;
-=======
->>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,10 +71,6 @@ public class MemberController {
 	@RequestMapping(value = "/dologin.do", produces = "application/json; charset=utf8")
 	public String oauthKakao(@RequestParam(value = "code", required = false) String code, HttpSession session)
 			throws Exception {
-<<<<<<< HEAD
-
-=======
->>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
 		System.out.println("#########" + code);
 		String access_Token = getAccessToken(code);
 		System.out.println("###access_Token#### : " + access_Token);
@@ -205,52 +197,6 @@ public class MemberController {
 
 		return userInfo;
 	}
-
-<<<<<<< HEAD
-	@RequestMapping("/email.do")
-	public String email(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("recipient") String recipient,@RequestParam("subject") String subject,
-						@RequestParam("body") String body ,HttpServletRequest request, ModelMap mo) {
-		
-		//recipient : 받는 사람
-		//subject : 제목
-		//body : 내용
-		try {
-			String host = "smtp.naver.com";
-			int port = 587;
-			// 메일 내용
-			// 메일을 발송할 이메일 주소를 기재해 줍니다.
-			Properties props = System.getProperties();
-			props.put("mail.smtp.host", host);
-			props.put("mail.smtp.port", port);
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.ssl.enable", "true");
-			props.put("mail.smtp.ssl.trust", host);
-			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-				String un = username;
-				String pw = password;
-
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(un, pw);
-				}
-			});
-			session.setDebug(true); // for debug
-			Message mimeMessage = new MimeMessage(session);
-			mimeMessage.setFrom(new InternetAddress(recipient));
-			mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-			mimeMessage.setSubject(subject);
-			mimeMessage.setText(body);
-			Transport.send(mimeMessage);
-
-			return "redirect:home.do";
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
-	
-	
-=======
 	/*
 	 * @RequestMapping("/email.do") public String email(@RequestParam("password")
 	 * String password,
@@ -326,6 +272,40 @@ public class MemberController {
 
 		return "redirect:home.do";
 	}
->>>>>>> 79bdd534f1164f8e76c9f15577ecad91dd9e4f8e
-
+	
+	@RequestMapping("searchKeyword.do")
+	public String searchKeyword(@RequestParam("keywords") String keywords, Model model) {
+		try {
+			
+			InputStream is = new URL("https://www.googleapis.com/customsearch/v1?key=AIzaSyA2MQJB8EuzKBJsfO1AZHZ3I4BJcZtF3tM&cx=8e2ffa22a72c27063&q="+keywords).openStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+			String jsonText = readAll(rd);
+			JSONParser jsonParser = new JSONParser();
+			Object obj = jsonParser.parse(jsonText);
+			JSONObject jsonobj = (JSONObject) obj;
+			model.addAttribute("results", jsonobj);
+			model.addAttribute("keyword", keywords);
+			return "member/result";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return null;
+	}
+	
+	 private static String readAll(Reader rd)  {
+		 StringBuilder sb = new StringBuilder();
+		 try {
+			    int cp;
+			    while ((cp = rd.read()) != -1) {
+			      sb.append((char) cp);
+			    }
+		 }catch (Exception e) {
+			 e.printStackTrace();
+			 
+		 }
+		    return sb.toString();
+		}
+	
 }
