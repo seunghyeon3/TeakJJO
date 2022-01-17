@@ -2,6 +2,7 @@ package co.teakjjo.prj.dictionary.web;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Member;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import co.teakjjo.prj.dictionary.service.DictionaryService;
 import co.teakjjo.prj.dictionary.service.DictionaryVO;
+import co.teakjjo.prj.member.service.MemberVO;
 
 @Controller
 public class DictionaryController {
@@ -25,8 +27,10 @@ public class DictionaryController {
 	@Autowired
 	private DictionaryService dictionaryDao;
 
+	
 	@RequestMapping("/dictionaryMain.do")
 	public String papagoMain() {
+		
 		return "dictionary/dictionaryMain";
 	}
 
@@ -34,9 +38,12 @@ public class DictionaryController {
 
 	@RequestMapping("/dictionaryRecord.do")
 	@ResponseBody
-	public List<DictionaryVO> dictionaryRecord(DictionaryVO dictionary, Model model) {
-		String member_id = "hong";
-		if (dictionary != null) {
+	public List<DictionaryVO> dictionaryRecord(DictionaryVO dictionary, Model model,HttpSession session) {
+		
+		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		if(member != null) {
+			String member_id = member.getMember_Id();
+		
 			model.addAttribute("message", "성성공");
 			return dictionaryDao.dictionarySelectList(member_id);
 		} else {
@@ -49,14 +56,15 @@ public class DictionaryController {
 
 	@RequestMapping(value = "/dictionarySearch.do", produces = "application/text;charset=utf8")
 	@ResponseBody
-	public String dictionarySearch(@RequestParam(value = "word") String word, DictionaryVO dictionary, Model model) {
-
-		 String member_id = "hong"; 
+	public String dictionarySearch(@RequestParam(value = "word") String word, DictionaryVO dictionary, Model model, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		if(member !=null) {
+		 String member_id = member.getMember_Id(); 
 		 dictionary.setMember_id(member_id);
 		 dictionary.setDictionary_data(word);
-		
-		  if (dictionary.getMember_id() != null) {
-		  dictionaryDao.dictionaryInsert(dictionary); } else { 
+		  
+		  dictionaryDao.dictionaryInsert(dictionary); 
+		  } else { 
 			  // 비회원검색할시 }
 		  }
 		 
@@ -91,8 +99,9 @@ public class DictionaryController {
 
 	@RequestMapping(value = "/dictionaryDelete.do")
 	@ResponseBody
-	public void dictionaryDelete(@RequestParam(value= "dictionary_no") int dictionary_no, DictionaryVO dictionary) {
-		String member_id = "hong";
+	public void dictionaryDelete(@RequestParam(value= "dictionary_no") int dictionary_no, DictionaryVO dictionary, HttpSession session) {
+		MemberVO member = (MemberVO) session.getAttribute("memberinfo");
+		String member_id = member.getMember_Id();
 		dictionary.setMember_id(member_id);
 		 dictionary.setDictionary_no(dictionary_no);
 		dictionaryDao.dictionaryDelete(dictionary);

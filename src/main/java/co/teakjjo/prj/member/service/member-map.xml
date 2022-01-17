@@ -35,21 +35,13 @@
 
 	<update id="updateMember">
 
-		UPDATE MEMBER SET (
-
-		<if test="member_Name != null">
-			MEMBER_NAME = #{member_Name}
+		UPDATE MEMBER SET MEMBER_PW = #{member_Pw},	MEMBER_NAME = #{member_Name}, MEMBER_AGE = #{member_Age}, MEMBER_TEL = #{member_Tel},MEMBER_ADDR = #{member_Addr}
+		
+		<if test="member_Author == 'P'">
+		, MEMBER_COMPANY=#{member_Company}
 		</if>
-		<if test="member_Age != null">
-			MEMBER_AGE = #{member_Age}
-		</if>
-		<if test="member_Tel != null">
-			MEMBER_TEL = #{member_Tel}
-		</if>
-		<if test="member_Addr != null">
-			MEMBER_ADDR = #{member_Addr}
-		</if>
-		) WHERE MEMBER_ID = #{member_Id}
+		
+		 WHERE MEMBER_ID = #{member_Id}
 
 	</update>
 
@@ -68,6 +60,6 @@
 	</select>
 	
 	<update id="updateAuthor">
-	UPDATE MEMBER SET MEMBER_AUTHOR='P' WHERE MEMBER_ID = #{member_Id}
+	UPDATE MEMBER SET MEMBER_AUTHOR='V' WHERE MEMBER_ID = #{member_Id}
 	</update>
 </mapper>
