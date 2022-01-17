@@ -9,4 +9,6 @@ public interface UrlMarkService {
 	public void deleteUrl(UrlMarkVO vo);
 	// geturl
 	public List<UrlMarkVO> getUrl(String id);
+	
+	public boolean checkKeyword(UrlMarkVO vo);
 }

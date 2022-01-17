@@ -1,37 +1,78 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+\<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Custom fonts for this template-->
-<link href="resources/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
-	rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
-<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="resources/css/style.css">
+	<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
+		rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="resources/css/style.css">
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/animate.css">
+	<link rel="stylesheet" href="resources/css/ionicons.min.css">
+
 <script type="text/javascript"
 	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
-
+<style>
+@font-face {
+	font-family: 'yg-jalnan';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+.black_overlay {
+		display: none;
+		position: absolute;
+		top: 0%;
+		left: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		z-index: 1001;
+		-moz-opacity: 0.8;
+		opacity: .80;
+		filter: alpha(opacity=80);
+	}
+		.white_content {
+		display: none;
+		position: absolute;
+		top: 0%;
+		left: 40.5%;
+		width: 50%;
+		height: 50%;
+		padding: 16px;
+		border: 16px solid orange;
+		background-color: white;
+		z-index: 1002;
+		overflow: auto;
+	}
+</style>
 <body>
-<!-- 양택조 color=pink (#e86ed0) -->
+<!-- 양택조 color=pink (#ff0037) -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
 		<!-- Sidebar Toggle (Topbar) -->
-		<button id="sidebarToggleTop"
-			class="btn btn-link d-md-none rounded-circle mr-3">
+		<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 			<i class="fa fa-bars"></i>
 		</button>
-		<a class="sidebar-brand d-flex align-items-center justify-content-center"
-			href="home.do">
+		<a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.do">
+
 			<div class="sidebar-brand-icon rotate-n-15">
 				<img src="resources/img/양택조Header.png" width="70">
 			</div>
@@ -39,13 +80,13 @@
 				양택조 <sup>site</sup>
 			</div>
 		</a>
+
+		
 		<!-- Topbar Search -->
-		<form
-			class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+		<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 			<div class="input-group">
-				<input type="text" class="form-control bg-light border-0 small" id="keyword"
-					placeholder="Search for..." aria-label="Search"
-					aria-describedby="basic-addon2">
+				<input type="text" id="keyword" class="form-control" placeholder="Search for category"
+					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage()">
 				<div class="input-group-append">
 					<button class="btn btn-primary" type="button" onclick="searchPage()">
 						<i class="fas fa-search fa-sm"></i>
@@ -54,12 +95,24 @@
 			</div>
 		</form>
 
-		<!-- Topbar Navbar -->
 		<c:if test="${memberinfo ne null }">
-			
-			<a class="nav-link" href="emailForm.do" id="messagesDropdown" style="display: inline-block;"> <i class="fas fa-envelope fa-fw"></i>
-			</a> <!-- Dropdown - Messages -->
-			
+			<!-- Dropdown - Messages -->
+			<a class="nav-link" href="javascript:void(0);" id="messagesDropdown" style="display: inline-block;"
+				onclick="document.getElementById('light2').style.display='block';">
+				<i class="fas fa-envelope fa-fw"></i>
+			</a>
+
+			<div id="light2" class="white_content text-left" style="height: 320px; width: 350px; top:250%;">
+				<form action="writeEmail.do" method="post">
+					<label>메일 쓰기 </label><br> <label>발&nbsp;송&nbsp;자&nbsp;</label> <input type="text" name="username"
+						value="${memberinfo.member_Id }" readonly="readonly"><br> <label>비밀번호</label>
+					<input type="password" id="password" name="pswd"><br><br>
+					<button type="submit" class="btn btn-primary">확인</button>
+					<button type="button" class="btn btn-primary"
+						onclick="document.getElementById('light2').style.display='none';">취소</button>
+					<div id="fade2" class="black_overlay"></div>
+				</form>
+			</div>
 		</c:if>
 
 		<!-- Topbar Navbar -->
@@ -67,38 +120,41 @@
 			<!-- Nav Item - User Information -->
 
 			<c:if test="${memberinfo ne null }">
+			
 				<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-				<li class="nav-item dropdown no-arrow d-sm-none"><a
-					class="nav-link dropdown-toggle" href="#" id="searchDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-				</a> <!-- Dropdown - Messages --></li>
-				<li class="nav-item dropdown no-arrow"><a
-					class="nav-link dropdown-toggle" href="#" id="userDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <span
-						class="mr-2 d-none d-lg-inline text-gray-600 small">
-							${memberinfo.member_Name }님 </span> <img
-						class="img-profile rounded-circle"
-						src="resources/img/undraw_profile.svg">
-				</a> <!-- Dropdown - User Information -->
-					<div
-						class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+				<li class="nav-item dropdown no-arrow d-sm-none"><a class="nav-link dropdown-toggle" href="#"
+						id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+					</a> <!-- Dropdown - Messages -->
+				</li>
+				<li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
+							class="mr-2 d-none d-lg-inline text-gray-600 small">
+							${memberinfo.member_Name }님 </span> <img class="img-profile rounded-circle"
+							src="resources/img/undraw_profile.svg">
+					</a> <!-- Dropdown - User Information -->
+					<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 						aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="updateInfo.do" style="font-size: 15px;"> <i
-							class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
+						<a class="dropdown-item" href="updateInfoForm.do" style="font-size: 15px;"> <i
+								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
 						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 예매 현황
-						</a> <a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
-						</a> <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 예매 현황
+						</a> 
+						<c:if test="${fn:contains(memberinfo.member_Author , 'N')}">
+						<a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
+						</a>
+						</c:if>
+						<a class="dropdown-item" id="clickKeyword" onclick="document.getElementById('light3').style.display='block';" style="font-size: 15px; cursor: pointer;" >
+						 <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
-							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do" style="font-size: 15px;">
-							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do"
+							style="font-size: 15px;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>
-					</div></li>
+						
+					</div>
+				</li>
 			</c:if>
 			<c:if test="${memberinfo eq null }">
 				<button class="btn btn-primary" type="button" onclick="login()">로그인</button>
@@ -124,18 +180,19 @@
 		if (keyword == '유튜브') {
 			window.location = "youtube.do";
 		} else if (keyword == '영화') {
-
-		} else if (keyword == '푸드트럭') {
-
+			window.location = "movieMain.do"
 		} else if (keyword == '사전') {
 			window.location = "dictionaryMain.do";
-
 		} else if (keyword == '번역') {
 			window.location = "papagoMain.do"
 		} else if (keyword == '푸드트럭') {
-
+			window.location = "foodtruck.do"
 		} else if (keyword == '부동산') {
-
+			window.location = "realty.do"
+		} else if (keyword == '뉴스') {
+			window.location = "newsMain.do"
+		} else if (keyword == '뉴스등록') {
+			window.location = "newsInsertForm.do"
 		} else {
 			window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 부동산 중 하나 검색 해주세요.');
 			$('#keyword').val('').focus();

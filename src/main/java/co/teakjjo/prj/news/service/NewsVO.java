@@ -9,8 +9,9 @@ public class NewsVO {
 //newsboard_id 만들때 member_company+newsboard_title
 	private String member_id;
 	private String member_name;
-	private String newsboard_id;
+	private int newsboard_id;
 	private String member_company;
+	private String newsboard_genre;
 	private String newsboard_title;
 	private String newsboard_content;
 	private Date newsboard_date;

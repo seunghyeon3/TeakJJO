@@ -4,36 +4,29 @@
 	namespace="co.teakjjo.prj.searchKeyword.service.SearchKeywordMapper">
 
 	<insert id="insertKeyword">
-		INSERT INTO SEARCHKEYWORD VALUES(
-		<if test="member_Id != null">
-			#{member_Id}
-		</if>
-		<if test="searchKeyword != null">
-			,#{searchKeyword}
-		</if>, 1
-		)
+		INSERT INTO SEARCHKEYWORD VALUES(#{member_Id},#{searchKeyword}, 1)
 	</insert>
 
 	<select id="getKeyword"
 		resultType="co.teakjjo.prj.searchKeyword.service.SearchKeywordVO">
-		SELECT * FROM SEARCHKEYWORD
+		SELECT * FROM SEARCHKEYWORD WHERE MEMBER_ID = #{member_Id} ORDER BY 3 DESC
 	</select>
 
 	<update id="updateHit">
-		UPDATE SEARCHKEYWORD SET
-		<if test="member_Id != null">
-			hit = #{searchHit}
-		</if>
-		WHERE MEMBER_ID = #{memberId} AND SEARCHKEYWORD = #{searchKeyword}
+		UPDATE SEARCHKEYWORD SET SEARCHHIT = SEARCHHIT+1
+		WHERE MEMBER_ID = #{member_Id} AND SEARCHKEYWORD = #{searchKeyword}
 
 	</update>
 
 	<select id="keywordCheck" resultType="boolean">
-	SELECT CASE WHEN COUNT(*) = 1 THEN 0 ELSE 1 END AS ID
-		FROM SEARCHKEYWORD WHERE SEARCHKEYWORD= #{memberId}
-	
+	SELECT CASE WHEN COUNT(*) >= 1 THEN 0 ELSE 1 END AS ID
+		FROM SEARCHKEYWORD WHERE  MEMBER_ID= #{member_Id} AND SEARCHKEYWORD = #{searchKeyword}
 	</select>
-
+	
+	<delete id="deleteKeyword">
+	 DELETE FROM SEARCHKEYWORD WHERE SEARCHKEYWORD = #{searchKeyword}
+	
+	</delete>
 
 
 </mapper>

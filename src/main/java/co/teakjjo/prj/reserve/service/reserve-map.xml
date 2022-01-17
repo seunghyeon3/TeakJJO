@@ -5,4 +5,8 @@
 
 </select>
 
+
+<select id="getReserveMember" resultType="co.teakjjo.prj.reserve.service.ReserveVO">
+SELECT * FROM RESERVATION WHERE MEMBER_ID = #{member_id} ORDER BY 4 DESC
+</select>
 </mapper>

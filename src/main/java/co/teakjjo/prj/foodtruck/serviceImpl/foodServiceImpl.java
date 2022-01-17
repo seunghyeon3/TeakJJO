@@ -16,8 +16,9 @@ public class foodServiceImpl implements FoodService {
 	private FoodMapper map;
 
 	@Override
-	public List<FoodBookMarkVO> foodSelectList() {
-		return map.foodSelectList();
+	public List<FoodBookMarkVO> foodSelectList(FoodBookMarkVO foodMark) {
+		//System.out.println(map.foodSelectList(foodMark));
+		return map.foodSelectList(foodMark);
 	}
 
 	@Override
@@ -28,6 +29,21 @@ public class foodServiceImpl implements FoodService {
 	@Override
 	public int foodDelete(FoodBookMarkVO foodMark) {
 		return map.foodDelete(foodMark);
+	}
+
+	@Override
+	public FoodBookMarkVO foodSelect(FoodBookMarkVO foodMark) {
+		return map.foodSelect(foodMark);
+	}
+
+	@Override
+	public List<FoodBookMarkVO> rsrList(FoodBookMarkVO foodMark) {
+		return map.rsrList(foodMark);
+	}
+
+	@Override
+	public int foodSelectListCnt(FoodBookMarkVO foodMark) {
+		return map.foodSelectListCnt(foodMark);
 	}
 
 }

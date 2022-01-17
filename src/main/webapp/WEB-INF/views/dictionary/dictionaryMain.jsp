@@ -67,9 +67,9 @@
 			양택조와 함께하는<br>&lt;국어사전&gt;
 		</h1>
 		<p style="font-size: 18px;">누구든지 이용이 가능한 국어사전입니다.</p>
-		<div class="search-location mt-md-5">
+		<div class="search-location mt-md-2">
 			<div class="row justify-content-center">
-				<div class="col-lg-10 align-items-end ">
+				<div class="col-lg-5 align-items-end ">
 					<div class="form-group">
 						<div class="form-field">
 
@@ -85,11 +85,11 @@
 			</div>
 		</div>
 		<p>
-			This is the main content. To display a lightbox click <a
-				href="javascript:void(0)" onclick="dictionaryRecord()">최근검색단어</a>
+			<a
+				href="javascript:void(0)" onclick="dictionaryRecord()">택조의 시크릿 비밀노트</a>
 		</p>
-		<div id="light" class="white_content">
-			This is the lightbox content. <a href="javascript:void(0)"
+		<div id="light" class="col-md-6 white_content">
+			택조의 시크릿 비밀노트 <a href="javascript:void(0)"
 				onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close
 			</a> <br> <br>
 			<ul id="dictionaryRecord">
@@ -145,13 +145,31 @@
 					//alert("성공");
 					//console.log(typeof data);
 					//console.log(data[1].dictionary_data);
+					if(data == ""){
+						document.getElementById('light').style.display='none';
+						document.getElementById('fade').style.display='none';
+						alert("로그인이 필요한 서비스입니다.");
+						
+					}else{
 					$('#dictionaryRecord').children().remove();
 					
 					var list = $('#dictionaryRecord');
-					
+					var count = "0";
 					for(var i of data){
+						
+						if(count==5){
+							break;
+						}
+						console.log(i);
 						var data = $('<li>');
-						data.text(i.dictionary_data);
+						var dataSearch = $('<a>');
+						dataSearch.attr('href','javascript:void(0)');
+						dataSearch.attr("val", i.dictionary_data);
+						dataSearch.attr("onclick", "dictionaryRecordSend(this.text)");
+						dataSearch.text(i.dictionary_data);
+						data.append(dataSearch);
+						
+						
 						var deleteRecord = $('<a>');
 						deleteRecord.text("X");
 						deleteRecord.attr('href','javascript:void(0)');
@@ -160,13 +178,50 @@
 						data.append(deleteRecord);
 						//console.log(i.dictionary_data);
 						list.append(data);
-						
+						count++;
 					}
+				}
 				}
 				});
 			}
 		
-	
+		function dictionaryRecordSend(word) {
+			document.getElementById('light').style.display='none';
+			document.getElementById('fade').style.display='none';
+			$("#result_text").children().remove();
+			console.log(word);
+			
+			$.ajax({
+				type : "POST",
+				url : "dictionarySearch.do",
+				data : {
+					"word" : word
+				},
+				success : function(data) { //서블렛을 통한 결과 값을 받을 수 있습니다.
+					console.log(data);
+					//alert(data);
+					if (data == "") {
+						alert("검색된 결과가 없습니다.");
+					} else {
+						//string의 값을 object 형식으로 변환합니다.
+						var result_obj = JSON.parse(data);
+						console.log(result_obj);
+						//결과값을 textarea에 넣기 위해서
+						var res = result_obj.channel.item;
+						for (i = 0; i < res.length; i++) {
+							var item = res[i].sense.definition;
+							$("#result_text").append(
+									"<li>" + item + "</li><br>");
+						}
+					}
+				},
+				error : function(e) {
+					console.log(e);
+					alert('실패했습니다.');
+				}
+			});
+		}
+		
 		
 		function dictionarySend(word) {
 			$.ajax({

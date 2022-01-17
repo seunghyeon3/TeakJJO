@@ -14,18 +14,22 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.teakjjo.prj.member.service.MemberVO;
+
 
 @Controller
 public class PapagoController {
 
 	@RequestMapping("/papagoMain.do")
-	public String papagoMain(Locale locale, Model model) {
+	public String papagoMain(Locale locale, Model model, HttpSession session) {
 		return "papago/papagoMain";
 	}
 	
