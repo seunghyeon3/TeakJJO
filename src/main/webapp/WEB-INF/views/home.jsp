@@ -60,7 +60,7 @@
 		z-index: 1002;
 		overflow: auto;
 	}
-	
+
 </style>
 </head>
 
@@ -202,13 +202,15 @@
 			<!-- script 부분은 다 만든 후 js 파일 따로 만들어서 넣어주든 정리 필요함. -->
 
 			<div id="urlDiv">
+
 				<div style="display: inline-block;">
+
 				<p>바로가기 추가</p>
 					<button class="btn btn-primary" style="border-radius: 50%;"
 						onclick="document.getElementById('light').style.display='block';">
 						+</button>
 				</div>
-				
+
 				<div id="light" class="white_content text-left" style="height: 320px; width: 350px; ">
 					<label>바로가기 추가</label><br> <label>이름</label><br> <input type="text" id="urls" name="urlMark"><br>
 					<label>URL</label><br>
@@ -221,8 +223,7 @@
 			</div>
 			<br>
 			<div id="addUrl">
-			</div>
-		</div>
+			</div>	
 	</c:if>
 </div>
 	 <div id="light3" class="white_content text-left" style="height: 320px; width: 350px; ">
@@ -390,7 +391,7 @@
 					},
 					error: function (error) {
 						console.log(error);
-					}
+					}\
 				})
 
 			})

@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -92,7 +93,7 @@ public class MemberController {
 		System.out.println("###userInfo#### : " + userInfo.get("email"));
 		System.out.println("###nickname#### : " + userInfo.get("nickname"));
 		System.out.println(userInfo);
-
+		
 		if (memberDao.idCheck(userInfo.get("email").toString())) {
 			session.setAttribute("memberinfo", memberDao.getMember(userInfo.get("email").toString()));
 			memberDao.getMember(userInfo.get("email").toString());
@@ -253,28 +254,7 @@ public class MemberController {
 
 		return "redirect:home.do";
 	}
-	
-	@RequestMapping("searchKeyword.do")
-	public String searchKeyword(@RequestParam("keywords") String keywords, Model model) {
-		try {
-			
-			InputStream is = new URL("https://www.googleapis.com/customsearch/v1?key=AIzaSyA2MQJB8EuzKBJsfO1AZHZ3I4BJcZtF3tM&cx=8e2ffa22a72c27063&q="+keywords).openStream();
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-			String jsonText = readAll(rd);
-			JSONParser jsonParser = new JSONParser();
-			Object obj = jsonParser.parse(jsonText);
-			JSONObject jsonobj = (JSONObject) obj;
-			model.addAttribute("results", jsonobj);
-			model.addAttribute("keyword", keywords);
-			return "member/result";
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-				
-		return null;
-	}
-	
+		
 	 private static String readAll(Reader rd)  {
 		 StringBuilder sb = new StringBuilder();
 		 try {
