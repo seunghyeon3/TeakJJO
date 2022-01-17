@@ -28,6 +28,11 @@ public class HomeController {
 	}
 
 
+	@RequestMapping("/Admin.do")
+	public String Admin() {
+		return "member/admin";
+	}
+
 	@RequestMapping("/kakaopay.do")
 	public String kakaopay() {
 		return "member/kakaopay";

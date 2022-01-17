@@ -40,4 +40,17 @@ public class UrlMarkController {
 		MemberVO mvo = (MemberVO)session.getAttribute("memberinfo");
 		return urlmarkDao.getUrl(mvo.getMember_Id());
 	}
+	
+	 
+	 @RequestMapping("/deleteUrl.do")
+	 @ResponseBody
+	 public void deleteUrl(@RequestParam("urlName")String urlName, HttpSession session) {
+		 System.out.println(urlName);
+		 MemberVO mvo = (MemberVO) session.getAttribute("memberinfo");
+		 System.out.println(mvo.getMember_Id());
+		 UrlMarkVO vo = new UrlMarkVO();
+		 vo.setMember_Id(mvo.getMember_Id());
+		 vo.setUrlMarkName(urlName);
+		 urlmarkDao.deleteUrl(vo);
+	 }
 }

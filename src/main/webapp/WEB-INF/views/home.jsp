@@ -19,7 +19,6 @@
 	<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="resources/css/style.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/animate.css">
 	<link rel="stylesheet" href="resources/css/ionicons.min.css">
 	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
@@ -139,9 +138,15 @@
 						aria-labelledby="userDropdown">
 						<a class="dropdown-item" href="updateInfoForm.do" style="font-size: 15px;"> <i
 								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
-						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
+						</a>
+						<c:if test="${fn:contains(memberinfo.member_Author , 'A')}">
+						<a class="dropdown-item" href="Admin.do" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 관리자 전용
+						</a>
+						</c:if>
+						<!--  <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 예매 현황
-						</a> 
+						</a> --> 
 						<c:if test="${fn:contains(memberinfo.member_Author , 'N')}">
 						<a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
@@ -228,6 +233,8 @@
 </div>
 	 <div id="light3" class="white_content text-left" style="height: 320px; width: 350px; ">
 	</div>
+	 <div id="light4" class="white_content text-left" style="height: 320px; width: 350px; ">
+	</div>
 	<script src="resources/vendor/jquery/jquery.min.js"></script>
 	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -301,8 +308,22 @@
 		}
 		//url 삭제 추가
 		function deleteUrl() {
-			console.log(this.event);
+			let temp = this.event.path[1];
+			$.ajax({
+				method:'get',
+				url:'deleteUrl.do',
+				data:{
+					urlName : this.event.path[1].children[0].id
+				},
+				success:function(){
+					window.alert("정상삭제");
+					temp.remove();
+				},error:function(error){
+					console.log(error);
+				}
+			})
 		}
+	
 
 		$('#clickKeyword').click(function(){
 			showKeyword();
@@ -311,7 +332,7 @@
 		function showKeyword(){
 			$.ajax({
 				type:'get',
-				url:"acckeyword.do",
+				url:"memberAcckeyword.do",
 				success:function(result){
 					$('#light3').empty();
 					for(var field of result){
@@ -375,12 +396,19 @@
 							})
 								.append($('<button>').attr({
 									'class': 'btn btn-primary',
-									'onclick': "location.href='https://" + fields.urlMark +
+									'onclick': "location.href='https://" + fields.urlMark + //여기 수정해야함
 										"'",
 									'id': fields.urlMarkName
 								}).text(
-									fields.urlMarkName)));
-							//$('#urlDiv').prepend($('<a>').attr('onclick', 'deleteUrl()').text('삭제'));
+									fields.urlMarkName),
+									$('<a>').attr('onclick', 'deleteUrl()').text('삭제').css({
+										'cursor':'pointer',
+										'color':'red',
+										'margin-left':'10px',
+										'margin-right':'10px',
+										'font-size':'1px'
+										})									
+							));
 							$('#light').css('display', 'none');
 							$('#fade').css('display', 'none');
 							$('#urls').text('');

@@ -27,6 +27,8 @@
 	 DELETE FROM SEARCHKEYWORD WHERE SEARCHKEYWORD = #{searchKeyword}
 	
 	</delete>
-
+<select id="getKeywords" resultType="co.teakjjo.prj.searchKeyword.service.SearchKeywordVO">
+SELECT * FROM SEARCHKEYWORD ORDER BY 1 DESC
+</select>
 
 </mapper>

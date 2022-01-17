@@ -14,5 +14,7 @@ public interface SearchKeywordMapper {
 	
 	public void deleteKeyword(String id);
 	
+	public List<SearchKeywordVO> getKeywords();
+	
 
 }

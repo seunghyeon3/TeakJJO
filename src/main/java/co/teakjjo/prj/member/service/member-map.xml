@@ -62,4 +62,8 @@
 	<update id="updateAuthor">
 	UPDATE MEMBER SET MEMBER_AUTHOR='V' WHERE MEMBER_ID = #{member_Id}
 	</update>
+	
+	<select id="getMembers" resultType="co.teakjjo.prj.member.service.MemberVO">
+		SELECT * FROM MEMBER ORDER BY 1 DESC
+	</select>
 </mapper>
