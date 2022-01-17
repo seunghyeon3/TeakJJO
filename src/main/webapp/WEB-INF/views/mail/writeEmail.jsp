@@ -18,7 +18,7 @@
               <div class="form-group">
                 <label>발송자</label><br>
 				<input type="text" name="username" class="form-control" value="${memberinfo.member_Id }"><br>
-				<input type="text" name="password" value="${param.pswd }">
+				<input type="hidden" name="password" value="${param.pswd }">
               </div>
               <div class="form-group">
                <label>제목</label><br>

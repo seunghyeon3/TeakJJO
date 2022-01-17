@@ -30,10 +30,13 @@
 </style>
 
 <body>
-	<div class="text text-center" style="margin-top: 100px">
-		<h1 class="mb-4" id="header">
-			양택조와 함께하는<br>&lt;유튜브&gt;
-		</h1>
+<div class="container" style="margin-top: 100px;">
+		<div class="row justify-content-center">
+			<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+				<span class="subheading">양택조의 모든 보여줘</span>
+				<h2 class="mb-2">택튜브</h2>
+			</div>
+		</div>
 	</div>
 	<div style="float: right; margin-top: 10px; margin-right: 50px;">
 		<!-- Topbar Search -->
@@ -76,14 +79,24 @@
 	 -->
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="resources/vendor/jquery/jquery.min.js"></script>
-	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
-	<script src="resources/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Custom scripts for all pages-->
-	<script src="resources/js/sb-admin-2.min.js"></script>
+	<script src="resources/js/jquery.min.js"></script>
+	<script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="resources/js/popper.min.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.easing.1.3.js"></script>
+	<script src="resources/js/jquery.waypoints.min.js"></script>
+	<script src="resources/js/jquery.stellar.min.js"></script>
+	<script src="resources/js/owl.carousel.min.js"></script>
+	<script src="resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="resources/js/aos.js"></script>
+	<script src="resources/js/jquery.animateNumber.min.js"></script>
+	<script src="resources/js/bootstrap-datepicker.js"></script>
+	<script src="resources/js/jquery.timepicker.min.js"></script>
+	<script src="resources/js/scrollax.min.js"></script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="resources/js/google-map.js"></script>
+	<script src="resources/js/main.js"></script>
 	<script>
 		function getYoutube() {
 			let token = $('#token').val();
