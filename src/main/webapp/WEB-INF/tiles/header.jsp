@@ -1,4 +1,4 @@
-\<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -86,10 +86,6 @@
 		<!-- Topbar Search -->
 		<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 			<div class="input-group">
-				<input type="text" class="form-control bg-light border-0 small" id="keyword"
-					placeholder="Search for category" aria-label="Search"
-					aria-describedby="basic-addon2">
-=======
 				<input type="text" id="keyword" class="form-control" placeholder="Search for category"
 					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage()">
 				<div class="input-group-append">
@@ -179,29 +175,28 @@
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script type="text/javascript">
 	function searchPage() {
-		var keyword = $('#keyword').val();
-		if (keyword == '유튜브') {
-			window.location = "youtube.do";
-		} else if (keyword == '영화') {
-			window.location = "movieMain.do"
-		} else if (keyword == '사전') {
-			window.location = "dictionaryMain.do";
-		} else if (keyword == '번역') {
-			window.location = "papagoMain.do"
-		} else if (keyword == '푸드트럭') {
-			window.location = "foodtruck.do"
-		} else if (keyword == '부동산') {
-			window.location = "realty.do"
-		} else if (keyword == '뉴스') {
-			window.location = "newsMain.do"
-		} else if (keyword == '뉴스등록') {
-			window.location = "newsInsertForm.do"
-		} else {
-			window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 부동산 중 하나 검색 해주세요.');
-			$('#keyword').val('').focus();
+			var keyword = $('#keyword').val();
+			console.log(keyword);
+			if (keyword == '유튜브') {
+				window.location = "youtube.do";
+			} else if (keyword == '영화') {
+				window.location = "movieMain.do"
+			} else if (keyword == '사전') {
+				window.location = "dictionaryMain.do";
+			} else if (keyword == '번역') {
+				window.location = "papagoMain.do"
+			} else if (keyword == '푸드트럭') {
+				window.location = "foodtruck.do"
+			}  else if (keyword == '뉴스') {
+				window.location = "newsMain.do"
+			} else if (keyword == '뉴스등록') {
+				window.location = "newsInsertForm.do"
+			} else {
+				window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 뉴스, 뉴스등록 중 하나 검색 해주세요.');
+				$('#keyword').val('').focus();
+			}
+			return;
 		}
-		return;
-	}
 	function login() {
 		$.ajax({
 			url: 'geturi.do',
