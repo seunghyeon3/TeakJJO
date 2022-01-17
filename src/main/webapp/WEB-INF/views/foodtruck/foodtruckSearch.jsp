@@ -48,6 +48,17 @@ margin-top: 75px;
 </style>
 </head>
 <body>
+	<section class="ftco-section goto-here">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+					<span class="subheading">양택조와 함께하는</span>
+					<h2 class="mb-2">프리미엄 번역기</h2>
+				</div>
+			</div>
+		</div>
+	</section>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=47ef13464842c3a22235787a9d64e6fc&libraries=services"></script>
 <!-- 로드뷰를 표시할 div 입니다 -->
 <div id="roadview" style="width:100%;height:300px;"></div>

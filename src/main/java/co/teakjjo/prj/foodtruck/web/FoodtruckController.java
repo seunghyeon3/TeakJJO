@@ -138,10 +138,11 @@ public class FoodtruckController {
 		String member_Id = member.getMember_Id();
 		rsr.setMember_id(member_Id);
 		rsr.setRsr_id(search);
-		
+		rsrDao.rsrDelete(rsr);
+		rsr.setRsr_id(search);
 		int n = rsrDao.rsrInsert(rsr);
-		
 		System.out.println(n);
+		
 		return n;
 	}
 	
