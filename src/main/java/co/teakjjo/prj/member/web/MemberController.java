@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -21,6 +22,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,24 +39,34 @@ import com.google.gson.JsonParser;
 
 import co.teakjjo.prj.member.service.MemberService;
 import co.teakjjo.prj.member.service.MemberVO;
+import co.teakjjo.prj.reserve.service.ReserveService;
+import co.teakjjo.prj.reserve.service.ReserveVO;
 
 @Controller
 public class MemberController {
 
 	@Autowired
 	private MemberService memberDao;
-
+	
+	@Autowired
+	private ReserveService reserveDao;
+	
+	
 	@RequestMapping("/changeAuthor.do")
-	public String changeAuthor(HttpSession session) {
+	public String changeAuthor(@Param("url") String url, HttpSession session) {
 		MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
-		memberDao.updateAuthor(vo.getMember_Name());
-		return "redirect:home.do";
+		memberDao.updateAuthor(vo.getMember_Id());
+		vo.setMember_Author('V');
+		session.setAttribute("memberinfo", vo);
+		int urlLocation = url.indexOf("/prj/");
+		
+		return "redirect:"+ url.substring(urlLocation+5);
 	}
-
+	
 	@RequestMapping(value = "/memberRegister.do", produces = "application/json; charset=utf8")
 	public String memberRegister(MemberVO vo, HttpSession session) {
-		// 기자, 회원일때 넣는 데이터가 다름, db를 쪼갈라야함.
 		memberDao.insertMember(vo);
+		vo = memberDao.getMember(vo.getMember_Id());
 		session.setAttribute("memberinfo", vo);
 		return "redirect:home.do";
 	}
@@ -197,54 +209,21 @@ public class MemberController {
 
 		return userInfo;
 	}
-	/*
-	 * @RequestMapping("/email.do") public String email(@RequestParam("password")
-	 * String password,
-	 * 
-	 * @RequestParam("recipient") String recipient, @RequestParam("subject") String
-	 * subject,
-	 * 
-	 * @RequestParam("body") String body, HttpServletRequest request, ModelMap mo) {
-	 * 
-	 * // recipient : 받는 사람 // subject : 제목 // body : 내용 try { String host =
-	 * "smtp.naver.com"; int port = 587; final String username = "cumulus90"; // 메일
-	 * 내용 // 메일을 발송할 이메일 주소를 기재해 줍니다. Properties props = System.getProperties();
-	 * props.put("mail.smtp.host", host); props.put("mail.smtp.port", port);
-	 * props.put("mail.smtp.auth", "true"); props.put("mail.smtp.ssl.enable",
-	 * "true"); props.put("mail.smtp.ssl.trust", host);
-	 * 
-	 * Session session = Session.getDefaultInstance(props, new
-	 * javax.mail.Authenticator() { String un = username; String pw = password;
-	 * 
-	 * protected PasswordAuthentication getPasswordAuthentication() { return new
-	 * PasswordAuthentication(un, pw); } }); session.setDebug(true); // for debug
-	 * Message mimeMessage = new MimeMessage(session); mimeMessage.setFrom(new
-	 * InternetAddress(recipient));
-	 * mimeMessage.setRecipient(Message.RecipientType.TO, new
-	 * InternetAddress(recipient)); mimeMessage.setSubject(subject);
-	 * mimeMessage.setText(body); Transport.send(mimeMessage);
-	 * 
-	 * return "redirect:home.do"; } catch (Exception e) { e.printStackTrace(); }
-	 * return null;
-	 * 
-	 * }
-	 */
+
 	
 	@RequestMapping("/email.do")
-	public String email(HttpServletRequest request, ModelMap mo) {
+	public String email(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("subject") String subject,
+			@RequestParam("recipient") String recipient, @RequestParam("body") String body,	HttpServletRequest request, ModelMap mo) {
 		try {
 		
+			int index = username.indexOf("@");
+			int indexPw = password.indexOf(",");
 		String host = "smtp.naver.com";
-		final String username = "cumulus90";
 		//네이버 이메일 주소중 @ naver.com앞주소만 기재합니다.
-		final String password = "natural@me12";
 		//네이버 이메일 비밀번호를 기재합니다.
 		int port=465;
 		// 메일 내용
-		String recipient = "cumulus90@naver.com";
 		//메일을 발송할 이메일 주소를 기재해 줍니다.
-		String subject = "네이버를 사용한 발송 테스트입니다.";
-		String body = "내용 무";
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", port);
@@ -252,8 +231,10 @@ public class MemberController {
 		props.put("mail.smtp.ssl.enable", "true");
 		props.put("mail.smtp.ssl.trust", host);
 		props.put("mail.debug","true");
+		System.out.println(password);
+		System.out.println(username.substring(0, index));
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-			String un=username; String pw=password;
+			String un=username.substring(0, index); String pw=password.substring(0,indexPw);
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(un, pw); 
 				} 
@@ -308,4 +289,21 @@ public class MemberController {
 		    return sb.toString();
 		}
 	
+
+	 
+	 @RequestMapping("/updateInfo.do")
+	 public String updateInfo(MemberVO vo,HttpSession session) {
+		 session.setAttribute("memberinfo", vo);
+		 return "redirect:home.do";
+	 }
+	 //영화 내용의 사진 내용도 들고와야함 조인 해야함
+	 @RequestMapping("/getresertaionMember.do")
+	 @ResponseBody
+	 public List<ReserveVO> getresertaionMember(HttpSession session) {
+		 MemberVO vo = (MemberVO)session.getAttribute("memberinfo");
+		 ReserveVO Rvo = new ReserveVO();
+		 Rvo.setMember_id(vo.getMember_Id());
+		 List<ReserveVO> list =  reserveDao.getReserveMember(Rvo);
+		 return list;
+	 }
 }

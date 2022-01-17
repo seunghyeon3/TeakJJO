@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="co.teakjjo.prj.boardComment.service.BoardCommentMapper">
+
+<select id="boardCommentList" parameterType="int" resultType="co.teakjjo.prj.boardComment.service.BoardCommentVO">
+SELECT * FROM BOARDCOMMENT WHERE NEWSBOARD_ID = #{newsboard_id} ORDER BY 4
+</select>
+
+<insert id="boardCommentInsert" parameterType="co.teakjjo.prj.boardComment.service.BoardCommentVO">
+<selectKey keyProperty="boardcomment_id" resultType="int" order="BEFORE" >
+			SELECT NVL(MAX(BOARDCOMMENT_ID)+1,1) AS BOARDCOMMENT_ID FROM BOARDCOMMENT WHERE NEWSBOARD_ID = #{newsboard_id}
+</selectKey>
+INSERT INTO BOARDCOMMENT(NEWSBOARD_ID,MEMBER_ID,MEMBER_NAME,BOARDCOMMENT_ID,BOARDCOMMENT_CONTENT)
+VALUES (#{newsboard_id},#{member_id},#{member_name},#{boardcomment_id},#{boardcomment_content})
+</insert>
+
+<update id="boardCommentUpdate" parameterType="co.teakjjo.prj.boardComment.service.BoardCommentVO">
+UPDATE BOARDCOMMENT SET
+		BOARDCOMMENT_CONTENT = #{boardcomment_content}
+	WHERE NEWSBOARD_ID = #{newsboard_id}
+</update>
+
+<delete id="boardCommentDelete" parameterType="int">
+		DELETE FROM BOARDCOMMENT WHERE BOARDCOMMENT_ID = #{boardcomment_id}
+	</delete>	
+</mapper>

@@ -9,5 +9,5 @@ public class SearchKeywordVO {
 	
 	private String member_Id;
 	private String searchKeyword;
-	private String searhHit;
+	private String searchHit;
 }

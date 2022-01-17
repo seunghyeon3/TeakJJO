@@ -1,27 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- Custom fonts for this template-->
-<link href="resources/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
-	rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
-<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
-<link rel="stylesheet" href="resources/css/style.css">
+	<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
+		rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="resources/css/style.css">
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/animate.css">
+	<link rel="stylesheet" href="resources/css/ionicons.min.css">
+	<link rel="stylesheet" href="resources/css/style.css?after">
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
-
+<style>
+@font-face {
+	font-family: 'yg-jalnan';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+</style>
 <body>
-<!-- 양택조 color=pink (#e86ed0) -->
+<!-- 양택조 color=pink (#ff0037) -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
@@ -66,39 +83,41 @@
 		<ul class="navbar-nav">
 			<!-- Nav Item - User Information -->
 
-			<c:if test="${memberinfo ne null }">
+				<c:if test="${memberinfo ne null }">
+			
 				<!-- Nav Item - Search Dropdown (Visible Only XS) -->
-				<li class="nav-item dropdown no-arrow d-sm-none"><a
-					class="nav-link dropdown-toggle" href="#" id="searchDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
-				</a> <!-- Dropdown - Messages --></li>
-				<li class="nav-item dropdown no-arrow"><a
-					class="nav-link dropdown-toggle" href="#" id="userDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> <span
-						class="mr-2 d-none d-lg-inline text-gray-600 small">
-							${memberinfo.member_Name }님 </span> <img
-						class="img-profile rounded-circle"
-						src="resources/img/undraw_profile.svg">
-				</a> <!-- Dropdown - User Information -->
-					<div
-						class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+				<li class="nav-item dropdown no-arrow d-sm-none"><a class="nav-link dropdown-toggle" href="#"
+						id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> <i class="fas fa-search fa-fw"></i>
+					</a> <!-- Dropdown - Messages -->
+				</li>
+				<li class="nav-item dropdown no-arrow"><a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span
+							class="mr-2 d-none d-lg-inline text-gray-600 small">
+							${memberinfo.member_Name }님 </span> <img class="img-profile rounded-circle"
+							src="resources/img/undraw_profile.svg">
+					</a> <!-- Dropdown - User Information -->
+					<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 						aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="updateInfo.do" style="font-size: 15px;"> <i
-							class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
+						<a class="dropdown-item" href="updateInfoForm.do" style="font-size: 15px;"> <i
+								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
 						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 예매 현황
-						</a> <a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
-						</a> <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
-							class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 예매 현황
+						</a> 
+						<c:if test="${fn:contains(memberinfo.member_Author , 'N')}">
+						<a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제
+						</a>
+						</c:if>
+						 <a class="dropdown-item" href="acckeyword.do" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 누적키워드수
 						</a> <a class="dropdown-item"
-							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do" style="font-size: 15px;">
-							<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							href="https://kauth.kakao.com/oauth/logout?client_id=80fd8a8ab79372ef8a66ba99b5dc4ed0&logout_redirect_uri=http://localhost/prj/logout.do"
+							style="font-size: 15px;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>
-					</div></li>
+					</div>
+				</li>
 			</c:if>
 			<c:if test="${memberinfo eq null }">
 				<button class="btn btn-primary" type="button" onclick="login()">로그인</button>
@@ -124,18 +143,19 @@
 		if (keyword == '유튜브') {
 			window.location = "youtube.do";
 		} else if (keyword == '영화') {
-
-		} else if (keyword == '푸드트럭') {
-
+			window.location = "movieMain.do"
 		} else if (keyword == '사전') {
 			window.location = "dictionaryMain.do";
-
 		} else if (keyword == '번역') {
 			window.location = "papagoMain.do"
 		} else if (keyword == '푸드트럭') {
-
+			window.location = "foodtruck.do"
 		} else if (keyword == '부동산') {
 
+		} else if (keyword == '뉴스') {
+			window.location = "newsMain.do"
+		} else if (keyword == '뉴스등록') {
+			window.location = "newsInsertForm.do"
 		} else {
 			window.alert('유튜브, 영화, 사전, 번역, 푸드트럭, 부동산 중 하나 검색 해주세요.');
 			$('#keyword').val('').focus();

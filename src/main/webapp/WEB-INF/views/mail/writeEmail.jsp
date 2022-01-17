@@ -13,11 +13,12 @@
         <div class="row block-9 justify-content-center mb-5">
           <div class="col-md-8 mb-md-5">
           <br>
-          	<h2 class="text-center">send mail</h2>
+          	<h2 class="text-center">메일 쓰기</h2>
             <form action="email.do" class="bg-light p-5 contact-form" method="post">
               <div class="form-group">
                 <label>발송자</label><br>
 				<input type="text" name="username" class="form-control" value="${memberinfo.member_Id }"><br>
+				<input type="text" name="password" value="${param.pswd }">
               </div>
               <div class="form-group">
                <label>제목</label><br>
