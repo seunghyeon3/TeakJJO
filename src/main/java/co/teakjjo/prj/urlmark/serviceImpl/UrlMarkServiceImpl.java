@@ -32,7 +32,7 @@ public class UrlMarkServiceImpl implements UrlMarkService{
 
 	@Override
 	public boolean checkKeyword(UrlMarkVO vo) {
-		return false;
+		return map.checkKeyword(vo);
 	}
 	
 }
