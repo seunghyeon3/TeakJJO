@@ -2,10 +2,13 @@ package co.teakjjo.prj.member.web;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -24,7 +27,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -88,7 +93,7 @@ public class MemberController {
 		System.out.println("###userInfo#### : " + userInfo.get("email"));
 		System.out.println("###nickname#### : " + userInfo.get("nickname"));
 		System.out.println(userInfo);
-
+		
 		if (memberDao.idCheck(userInfo.get("email").toString())) {
 			session.setAttribute("memberinfo", memberDao.getMember(userInfo.get("email").toString()));
 			memberDao.getMember(userInfo.get("email").toString());
@@ -205,6 +210,7 @@ public class MemberController {
 
 		return userInfo;
 	}
+
 	
 	@RequestMapping("/email.do")
 	public String email(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("subject") String subject,
@@ -248,6 +254,20 @@ public class MemberController {
 
 		return "redirect:home.do";
 	}
+		
+	 private static String readAll(Reader rd)  {
+		 StringBuilder sb = new StringBuilder();
+		 try {
+			    int cp;
+			    while ((cp = rd.read()) != -1) {
+			      sb.append((char) cp);
+			    }
+		 }catch (Exception e) {
+			 e.printStackTrace();
+			 
+		 }
+		    return sb.toString();
+		}
 	
 
 	 

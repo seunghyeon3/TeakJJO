@@ -9,6 +9,8 @@
 <title>맵 테스트</title>
 <script type="text/javascript"
 	src="/prj/resources/js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="resources/css/style.css">
+	
 <style type="text/css">
 @font-face {
 	font-family: 'yg-jalnan';
@@ -51,17 +53,11 @@
 @media ( min-width : @screen-lg-min) {
 	...
 }
-/* 전체 색상 설정 */
-* {
-	color: #ff4b7b !important;
-}
 /* 헤더 아이콘 색상설정 */
-i {
-	color: white !important;
-}
+
 /* 클러스터 색상설정  */
 #map>div>div>div>div>div {
-	color: #4885e8 !important;
+	color: black !important;
 }
 
 /* #mapinfo 상위 div  */
@@ -108,6 +104,7 @@ div #mapInfo {
 
 .tr>th {
 	width: 110px;
+	color : #ff0047 !important;
 }
 
 .tr>th>button {
@@ -120,6 +117,13 @@ a.page-link {
 </style>
 </head>
 <body>
+<!-- 타이틀 출력 -->
+			<div class="row justify-content-center" style="margin-top:46px; margin-right: 50px; ">
+				<div class="col-md-12 heading-section text-center mb-5">
+					<span class="subheading">양택조와 함께하는</span>
+					<h2 class="mb-2">푸드트럭 위치찾기</h2>
+				</div>
+			</div>
 
 	<%
 	MemberVO vo = (MemberVO) session.getAttribute("memberinfo");
@@ -331,7 +335,7 @@ a.page-link {
 				$(".pagination").append($page3);
 			}
 				
-				$(".pagination").append($page2);
+			$(".pagination").append($page2);
 		} 
 		
 		//최근검색
@@ -358,9 +362,7 @@ a.page-link {
 	     	      	async:false,
 	     	        success: function(result){
 	     	        	console.log(result.length);
-	     	        	if(result ==""){
-	     	        		alert("즐겨찾기 목록이 없습니다.");
-	     	        	}else{
+	     	        	if(result.length != 0 ){
 		     	        	$("#searchDiv").hide();
 		     				$("#rsrDiv").hide();
 		     				$("#markDiv").show();
@@ -380,7 +382,7 @@ a.page-link {
 										</tr>
 										<tr>
 					        				<input type="hidden" value=`+result[i]+`>
-											<th colspan="2" >
+											<th colspan="2" style = "color : gray !important;">
 											`+result[i].bookmark_date.substr(0,10)+`</th>
 										</tr>
 										<tr>
@@ -388,12 +390,20 @@ a.page-link {
 											<th><input type="hidden" value=`+result[i].bookmark_id+`>
 												<input type="hidden" value=`+result[i].lat+`>
 												<input type="hidden" value=`+result[i].lng+`>
-												<button class="bookMarkSearch btn btn-primary">길찾기</button></th>
+												<button class="bookMarkSearch btn btn-primary">길찾기</button>
+											</th>
 												
 											<th><input type="hidden" value=`+result[i].bookmark_id+`>
 												<input type="hidden" value=`+result[i].lat+`>
 												<input type="hidden" value=`+result[i].lng+`>
-												<button class="bookMarkLoad btn btn-primary">로드뷰</button></th>
+												<button class="bookMarkLoad btn btn-primary">로드뷰</button>
+											</th>
+											
+											<th>
+											<input type="hidden" value=`+result[i].bookmark_id+`>
+											<button class="bookMarkDel btn btn-primary">등록해제</button>
+											</th>
+											
 										</tr>
 										`);
 				        		$("#bookMarkList").append($btr);
@@ -401,14 +411,22 @@ a.page-link {
 				        		
 				        	}
 		     	        	paging();
+	     	        	}else{
+	     	        		$h4 = $(`<h4 style="font-weight : bold;">검색하신 이력이 없습니다.</h4>`);
+			        		$("#bookMarkList").append($h4);
+			        		$h4.addClass('tr');
 	     	        	}
+	     	        },
+	     	        error : function(e){
+	     	        	$h4 = $(`<h4 style="font-weight : bold;"> 로그인이 필요한 서비스입니다.</h4>`);
+		        		$("#bookMarkList").append($h4);
+		        		$h4.addClass('tr');
 	     	        }
 	     	   });
 		}
 		
 		//최근검색목록 출력
 		function selectRsrSearch(){
-			
 			var $rtr;
 			//최근검색 목록 리셋
         	if($(".tr")){
@@ -445,7 +463,7 @@ a.page-link {
 				        		$rtr.addClass('tr');
 				        		} 
 				        	}else {
-				        		$h4 = $(`<h4 style="font-weight : bold;">최근검색정보가 없거나 로그인 되어있지 않습니다.<h4>`);
+				        		$h4 = $(`<h4 style="font-weight : bold;">최근검색정보가 없거나 로그인 되어있지 않습니다.</h4>`);
 				        		$("#rsrList").append($h4);
 				        		$h4.addClass('tr');
 	     	        		}
@@ -456,19 +474,15 @@ a.page-link {
 	     	   });
 		}
 		
-		function clickRsr(){
-			var value = $(this).prev().val();
-			console.log(value);
-		}
 		
-			//document
+		//document
 		$(document).ready(function(){
 				
 	        // menu 클래스 바로 하위에 있는 a 태그를 클릭했을때
 	        $(".sidebar>div>div>ul>li>a").click(function(){
 	            var submenu = $(this).next("ul");
 	            // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
-	            if( submenu.is(":visible") ){
+	            if( submenu.is(":visible")){
 	                submenu.slideUp();
 	            }else{
 	                submenu.slideDown();
@@ -480,21 +494,25 @@ a.page-link {
 		        $("#foodSearch").on("click",function(e){
 		        	var search = $(this).prev().val();
 		        	console.log(search);
-		        	$.ajax({
-		     	        type:"POST",
-		     	        url: "${pageContext.request.contextPath}/rsrInsert.do",
-		     	        data : {"search" : search },
-		     	        success: function(result){
-		     	        	if(result == 1){
-		     	        		alert("최근검색 들어갔다!!!");
-		     	        	}else{
-		     	        		alert("최근검색 문제가 있네");
-		     	        	}
-		     	        },
-		     	        error: function(){
-		     	        	return;
-		     	        }
-		     	    }); 
+		        	if(search == ""){
+		        		
+		        	}else{
+			        	$.ajax({
+			     	        type:"POST",
+			     	        url: "${pageContext.request.contextPath}/rsrInsert.do",
+			     	        data : {"search" : search },
+			     	        success: function(result){
+			     	        	if(result == 1){
+			     	        		
+			     	        	}else{
+			     	        		alert("검색도중 오류가 발생했습니다.");
+			     	        	}
+			     	        },
+			     	        error: function(){
+			     	        	return;
+			     	        }
+			     	    });
+	        		}	
 		        	
 		        	var searchIndex = ""; //String
 		        	var searchBox = $("#searchBox").val();
@@ -515,6 +533,7 @@ a.page-link {
 		        	
 		        	//console.log(searchIndex);
 		        	searchArray = searchIndex.split(',');
+		        	
 		        	//검색 버튼을 눌렀을때의 테이블 생성
 		        	for ( var i in searchArray ) {
 		        		if(searchArray[i] != 'undefined' && searchArray[i] != ""){
@@ -532,7 +551,7 @@ a.page-link {
 		        		$tr.addClass('tr');
 		        		}
 		        		//검색값 초기화
-		        		$("#searchBox").val('');
+		        		//$("#searchBox").val('');
 		        	}
 		        	$up = $(`<br><div><button id="up"  class="btn btn-primary"  onclick="location.href='#searchBox'">위로</button></div>`);
 					$("#searchTable").append($up);
@@ -629,7 +648,6 @@ a.page-link {
 					});
 		      	//즐겨찾기 목록 th클릭시 지도 이동
 				$(document).on('click',".bookMarkSearchView", function(e){	
-					
 					var lat = $(this).prev().prev().val();
 		        	var lng = $(this).prev().val();
 					
@@ -705,6 +723,7 @@ a.page-link {
 	     	        },
 	     	    }); 
      		});
+			//최근검색 삭제버튼 이벤트
 			$(document).on('click','.rsrDel',function(e){
 				var search = $(this).prev().val();
 				console.log(search);
@@ -723,6 +742,7 @@ a.page-link {
 		     	   });
 			});
 			
+			//최근검색 th부분 클릭시 이벤트발생
 			$(document).on('click','.clickRsr', function(){
 				var value= $(this).prev().prev().val();
 				console.log(value);
@@ -731,8 +751,27 @@ a.page-link {
 				$("#markDiv").hide();
 				$("#rsrDiv").hide();
 				$("#searchDiv").show();
-				
-			})
+			});
+			
+			
+			//즐겨찾기 삭제버튼 이벤트
+			$(document).on('click','.bookMarkDel',function(){
+				var key = $(this).prev().val();
+				console.log(key);
+				$.ajax({
+		     	        type:"POST",
+		     	        url: "foodDelete.do",
+		     	     	data : {"key" : key},
+		     	        success: function(result){
+		     	        	if(result == 1){
+	     	        		alert("즐겨찾기 해제되었습니다.");
+	     	        		selectFoodMark(1);
+	     	        		}else{
+	     	        		alert("삭제실패");
+	     	        		}
+		     	        }
+		     	   });
+			});
 			
 			
 	</script>
