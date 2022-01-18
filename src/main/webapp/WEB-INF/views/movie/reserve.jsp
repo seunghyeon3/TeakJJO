@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 
@@ -20,6 +22,14 @@
 </head>
 
 <body>
+
+<c:if test="${memberinfo == null }">
+ <script type="text/javascript">
+		window.alert("로그인이 필요한 서비스입니다.");
+		history.go(-1);
+    </script>
+</c:if>
+<c:if test="${memberinfo !=null }">
 
     <div class="reserve-container">
         <div class="movie-part">
@@ -107,8 +117,9 @@
         </div>
 
     </div>
+    </c:if>
     <script src="resources/js/reserve.js"></script>
-
+   
 </body>
 
 </html>
