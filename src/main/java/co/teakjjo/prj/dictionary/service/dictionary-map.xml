@@ -18,4 +18,8 @@
 	<delete id="dictionaryDelete" parameterType="co.teakjjo.prj.dictionary.service.DictionaryVO">
 		DELETE FROM DICTIONARY WHERE MEMBER_ID = #{member_id} AND DICTIONARY_NO= #{dictionary_no}
 	</delete>
+	
+	<select id="getdictionaryList" resultType="co.teakjjo.prj.dictionary.service.DictionaryVO">
+	SELECT * FROM DICTIONARY ORDER BY DICTIONARY_DATA DESC
+	</select>
 </mapper>

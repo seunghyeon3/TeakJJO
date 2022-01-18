@@ -189,5 +189,11 @@ public class NewsController {
 		newsDao.newsDelete(newsboard_id);
 		return "redirect:newsMain.do";
 	}
+	
+	@RequestMapping("/showTotalNews.do")
+	public String showTotalNews(Model model) {
+		model.addAttribute("newsList", newsDao.newsList());
+		return "news/showTotalNews";
+	}
 
 }

@@ -99,4 +99,10 @@ public class DictionaryController {
 		 dictionary.setDictionary_no(dictionary_no);
 		dictionaryDao.dictionaryDelete(dictionary);
 }
+	
+	@RequestMapping("/showTotalDictionary.do")
+	public String showTotalDictionary(Model model) {
+		model.addAttribute("dictionaryList",dictionaryDao.getdictionaryList());
+		return "dictionary/showTotalDictionary";
+	}
 }

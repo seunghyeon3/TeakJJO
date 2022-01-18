@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 </head>
 <body>
-<%-- 
-<c:if test="${fn:contains(memberinfo.member_Author , 'A')}">
-</c:if> --%>
-
 <div class="container" style="margin-top: 30px;">
 		<div class="row justify-content-center">
 			<div class="col-md-12 heading-section text-center ftco-animate mb-5">
@@ -33,10 +28,10 @@
 
 			<div class="collapse navbar-collapse" id="">
 				<ul class="navbar-nav" style="padding-left:240px;">
-									<li class="nav-item active"><a href="showTotalMember.do" class="nav-link">회원 조회</a></li>
+									<li class="nav-item"><a href="showTotalMember.do" class="nav-link">회원 조회</a></li>
 					<li class="nav-item"><a href="showTotalAccKeyWord.do" class="nav-link">누적 키워드</a></li>
 					<li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li>
-					<li class="nav-item"><a href="showTotalNews.do" class="nav-link">뉴스</a></li>
+					<li class="nav-item active"><a href="showTotalNews.do" class="nav-link">뉴스</a></li>
 					<li class="nav-item"><a href="showTotalFoodTruck.do" class="nav-link">푸드트럭</a></li>
 					<li class="nav-item"><a href="showTotalDictionary.do" class="nav-link">사전</a></li>
 					<li class="nav-item"><a href="home.do" class="nav-link">메인으로</a></li>
@@ -45,51 +40,37 @@
 		</div>
 	</nav>
 	</nav>
-	
-	
 	<div class="row block-9 justify-content-center mb-5">
 			<div class="col-md-8 mb-md-5">
-				<div class="bg-light p-5 contact-form">
-				<form action="AdminupdateInfo.do" method="post">
-					<table class="table">
+				<div class="bg-light p-5 contact-form">	
+				<table class="table">
 						<thead>
 							<tr>
-								<th>회원 ID</th>
-								<th>회원 이름</th>
-								<th>수    정</th>
+								<th>게시판 ID</th>
+								<th>뉴스 제목</th>
+								<th>작 성 자</th>
+								<th>장    르</th>
+								<th>조 회 수</th>
+								
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${getMemberList }" var="member">
+						<c:forEach items="${newsList }" var="news">
+						
 						<tr>
-						<td>${member.member_Id }</td>
-						<td>${member.member_Name }</td>
-						<td>
-						<button type="button" onclick="modifyMember()" class="btn btn-primary">수 정</button>
-						</td>
+						<a href="newsDetail.do?newsboard_id=${news.newsboard_id}" style="cursor: pointer;">
+						<td>${news.newsboard_id }</td>
+						<td>${news.newsboard_title }</td>
+						<td>${news.member_name }</td>
+						<td>${news.newsboard_genre }</td>
+						<td>${news.newsboard_hit }</td>
+						</a>
 						</tr>
 						</c:forEach>
 						</tbody>
 					</table>
-					</form>
 				</div>
 			</div>
 		</div>
-</body>
-
-<script type="text/javascript">
-function modifyMember() {
-	var form = $('<form>');
-	form.attr('action', 'updateMember.do');
-	form.attr('method', 'post');
-	var no = $("<input type='hidden' value=" + event.target.parentNode.parentNode.children[0].textContent +
-	" name='id'>");
-	form.appendTo('body');
-	form.append(no);
-	form.submit();
-}
-
-
-</script>
-
-</html>
+	</body>
+</html>	

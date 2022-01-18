@@ -46,4 +46,12 @@ public class foodServiceImpl implements FoodService {
 		return map.foodSelectListCnt(foodMark);
 	}
 
+	@Override
+	public List<FoodBookMarkVO> getFoodList() {
+		// TODO Auto-generated method stub
+		return map.getFoodList();
+	}
+	
+	
+
 }

@@ -40,4 +40,8 @@
 		AND BOOKMARK_ID = #{bookmark_id}
 	</delete>
 	
+	<select id="getFoodList" resultType="co.teakjjo.prj.foodtruck.service.FoodBookMarkVO">
+	SELECT * FROM FOODBOOKMARK ORDER BY BOOKMARK_DATE DESC
+	</select>
+	
 </mapper>

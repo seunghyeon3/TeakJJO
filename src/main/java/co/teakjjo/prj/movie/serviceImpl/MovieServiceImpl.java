@@ -10,7 +10,7 @@ import co.teakjjo.prj.movie.service.MovieService;
 import co.teakjjo.prj.movie.service.MovieVO;
 
 
-@Repository
+@Repository("movieDao")
 public class MovieServiceImpl implements MovieService {
 
 	@Autowired

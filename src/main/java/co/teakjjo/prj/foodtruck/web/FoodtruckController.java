@@ -157,5 +157,10 @@ public class FoodtruckController {
 		System.out.println(n);
 		return n;
 	}
+	@RequestMapping("/showTotalFoodTruck.do")
+	public String showTotalFoodTruck(Model model) {
+		model.addAttribute("foodtruckMark", foodBookMarkDao.getFoodList());
+		return "foodtruck/showTotalFoodTruck";
+	}
 
 }

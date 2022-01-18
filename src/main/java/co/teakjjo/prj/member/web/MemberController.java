@@ -273,9 +273,16 @@ public class MemberController {
 	 
 	 @RequestMapping("/updateInfo.do")
 	 public String updateInfo(MemberVO vo,HttpSession session) {
+		 memberDao.updateMember(vo);
 		 session.setAttribute("memberinfo", vo);
 		 return "redirect:home.do";
 	 }
+	 @RequestMapping("/updateInfoAdmin.do")
+	 public String updateInfoAdmin(MemberVO vo,HttpSession session) {
+		 memberDao.updateMember(vo);		 
+		 return "redirect:Admin.do";
+	 }
+	 
 	 //영화 내용의 사진 내용도 들고와야함 조인 해야함
 	 @RequestMapping("/getresertaionMember.do")
 	 @ResponseBody
@@ -292,5 +299,14 @@ public class MemberController {
 		 model.addAttribute("getMemberList", memberDao.getMembers());
 		 return "member/showTotalMember";
 	 }
+	 
+	 @RequestMapping("/updateMember.do")
+	 public String updateMember(@RequestParam("id") String id, Model model) {
+		 System.out.println(id);
+		 MemberVO vo = memberDao.getMember(id);
+		 model.addAttribute("userInfo", vo);
+		 return "member/showUser";
+	 }
+	 
 
 }

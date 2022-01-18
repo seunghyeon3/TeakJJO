@@ -22,6 +22,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +32,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+import co.teakjjo.prj.movie.service.MovieService;
 import co.teakjjo.prj.movie.service.MovieVO;
 @Controller
 public class MovieController {
+	
+	@Autowired
+	private MovieService movieDao;
+	
 	
 	@RequestMapping("/movieMain.do")
 	public String movie() {
@@ -184,6 +190,12 @@ public class MovieController {
 			e.printStackTrace();
 		}
 		return gson;
+	}
+	
+	@RequestMapping("/showTotalMovie.do")
+	public String showTotalMovie(Model model) {
+		model.addAttribute("movieList", movieDao.movieList());	
+		return "movie/showTotalMovie";
 	}
 }
 
