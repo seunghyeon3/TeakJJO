@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,21 +28,41 @@
 
 			<div class="collapse navbar-collapse" id="">
 				<ul class="navbar-nav" style="padding-left:240px;">
-					<li class="nav-item active"><a href="showTotalMember.do" class="nav-link">회원 조회</a></li>
-					<li class="nav-item"><a href="showAccKeyWord.do" class="nav-link">누적 키워드</a></li>
-					<li class="nav-item"><a href="agent.html" class="nav-link">영화 정보</a></li>
-					<li class="nav-item"><a href="services.html" class="nav-link">뉴스</a></li>
-					<li class="nav-item"><a href="properties.html" class="nav-link">푸드트럭</a></li>
-					<li class="nav-item"><a href="blog.html" class="nav-link">사전</a></li>
-					<li class="nav-item"><a href="contact.html" class="nav-link">번역</a></li>
+									<li class="nav-item"><a href="showTotalMember.do" class="nav-link">회원 조회</a></li>
+					<li class="nav-item active"><a href="showTotalAccKeyWord.do" class="nav-link">누적 키워드</a></li>
+					<li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li>
+					<li class="nav-item"><a href="showTotalNews.do" class="nav-link">뉴스</a></li>
+					<li class="nav-item"><a href="showTotalFoodTruck.do" class="nav-link">푸드트럭</a></li>
+					<li class="nav-item"><a href="showTotalDictionary.do" class="nav-link">사전</a></li>
 					<li class="nav-item"><a href="home.do" class="nav-link">메인으로</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	</nav>
-	
-	${keyword }
-	
-</body>
-</html>
+	<div class="row block-9 justify-content-center mb-5">
+			<div class="col-md-8 mb-md-5">
+				<div class="bg-light p-5 contact-form">	
+				<table class="table">
+						<thead>
+							<tr>
+								<th>키 워 드</th>
+								<th>조 회 수</th>
+								<th>회 원 명</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:forEach items="${keyword }" var="key">
+						<tr>
+						<td>${key.searchKeyword }</td>
+						<td>${key.searchHit }</td>
+						<td>${key.member_Id }</td>
+						</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>	

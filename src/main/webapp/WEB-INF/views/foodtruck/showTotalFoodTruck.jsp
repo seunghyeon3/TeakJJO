@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,18 +43,41 @@
 					<li class="nav-item"><a href="showTotalAccKeyWord.do" class="nav-link">누적 키워드</a></li>
 					<li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li>
 					<li class="nav-item"><a href="showTotalNews.do" class="nav-link">뉴스</a></li>
-					<li class="nav-item"><a href="showTotalFoodTruck.do" class="nav-link">푸드트럭</a></li>
+					<li class="nav-item active"><a href="showTotalFoodTruck.do" class="nav-link">푸드트럭</a></li>
 					<li class="nav-item"><a href="showTotalDictionary.do" class="nav-link">사전</a></li>
-					<li class="nav-item"><a href="home.do" class="nav-link">메인으로</a></li>
+					<li class="nav-item"><a href="home.do" class="nav-link">메인으로</a></li> 
 				</ul>
 			</div>
 		</div>
 	</nav>
 	</nav>
+		<div class="row block-9 justify-content-center mb-5">
+			<div class="col-md-8 mb-md-5">
+				<div class="bg-light p-5 contact-form">	
+				<table class="table">
+						<thead>
+							<tr>
+								<th>푸드 북마크</th>
+								<th>푸드 rsr</th>
+								<th>회 원 명</th>
+								<th>북마크 날짜</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:forEach items="${foodtruckMark }" var="key">
+						<tr>
+						<td>${key.bookmark_id }</td>
+						<td>${key.foodtruck_rsr }</td>
+						<td>${key.member_id }</td>
+						<td>${key.bookmark_date }</td>
+						</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 </body>
-
-
-
 <script src="resources/js/jquery.min.js"></script>
 	<script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="resources/js/popper.min.js"></script>

@@ -30,6 +30,12 @@ public class DictionaryServiceImpl implements DictionaryService{
 	public int dictionaryDelete(DictionaryVO dictionary) {
 		return map.dictionaryDelete(dictionary);
 	}
+
+
+	@Override
+	public List<DictionaryVO> getdictionaryList() {
+		return map.getdictionaryList();
+	}
 	
 	
 }

@@ -20,4 +20,6 @@ public interface FoodService {
 	
 	//즐겨찾기 전체 개수
 	int foodSelectListCnt(FoodBookMarkVO foodMark);
+	
+	public List<FoodBookMarkVO> getFoodList();
 }
