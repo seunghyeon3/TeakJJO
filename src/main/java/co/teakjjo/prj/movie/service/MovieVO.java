@@ -21,7 +21,6 @@ public class MovieVO {
 	
 	String img;
 	String rank;
-
 	private String movie_id;
 	private String movie_title ;
 	private String movie_open;
