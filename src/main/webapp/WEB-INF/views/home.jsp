@@ -232,6 +232,7 @@
 	</c:if>
 </div>
 	 <div id="light3" class="white_content text-left" style="height: 320px; width: 350px; ">
+	 <button class="btn btn-primary" onclick="document.getElementById('light3').style.display='none'">close</button>
 	</div>
 	 <div id="light4" class="white_content text-left" style="height: 320px; width: 350px; ">
 	</div>
@@ -283,6 +284,41 @@
 
 		}
 
+		$('#clickKeyword').click(function(){
+			showKeyword();
+		});
+
+		function showKeyword(){
+			$.ajax({
+				type:'get',
+				url:"memberAcckeyword.do",
+				success:function(result){
+					$('#light3').empty();
+					for(var field of result){
+						$('#light3').append(
+						$('<div>').text(("검색어 : "+field.searchKeyword + ", 조회수 : " + field.searchHit)).css('display', 'inline-block').attr("id", field.searchKeyword).append(
+							$('<a>').attr(
+								'onclick','deleteKeyWord()').text(" x").css({
+									'font-size':'20px',
+									'color' : 'red',
+									'cursor':'pointer'
+							})
+						),
+						$('<br>')
+						);
+					}
+					$('#light3').prepend($('<h2>').text('누적 키워드 수')).append(
+						$('<button>').attr({
+							'class' : 'btn btn-primary',
+							'onclick' : "document.getElementById('light3').style.display='none'"
+							}).text("close").append($('<br>'))
+					)
+				},error:function(error){
+					console.log(error);
+				}
+
+			})
+		}
 		function insertUrl() {
 			var urls = $('#urls').val();
 			var urlname = $('#urlMarkName').val();
@@ -325,42 +361,7 @@
 		}
 	
 
-		$('#clickKeyword').click(function(){
-			showKeyword();
-		});
-
-		function showKeyword(){
-			$.ajax({
-				type:'get',
-				url:"memberAcckeyword.do",
-				success:function(result){
-					$('#light3').empty();
-					for(var field of result){
-						$('#light3').append(
-						$('<div>').text(("검색어 : "+field.searchKeyword + ", 조회수 : " + field.searchHit)).css('display', 'inline-block').attr("id", field.searchKeyword).append(
-							$('<a>').attr(
-								'onclick','deleteKeyWord()').text(" x").css({
-									'font-size':'20px',
-									'color' : 'red',
-									'cursor':'pointer'
-							})
-						),
-						$('<br>')
-						);
-					}
-					$('#light3').prepend($('<h2>').text('누적 키워드 수')).append(
-						$('<button>').attr({
-							'class' : 'btn btn-primary',
-							'onclick' : "document.getElementById('light3').style.display='none'"
-							}).text("close").append($('<br>'))
-					)
-				},error:function(error){
-					console.log(error);
-				}
-
-			})
-		}
-
+	
 		function deleteKeyWord(){
 			var delTarget = this.event.path[1];
 			$.ajax({

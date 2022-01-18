@@ -1,16 +1,16 @@
+<%@page import="co.teakjjo.prj.searchKeyword.service.SearchKeywordVO"%>
+<%@page import="java.util.List"%>
+<%@page import="co.teakjjo.prj.member.service.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- Custom fonts for this template-->
-
-
-<!-- Custom styles for this template-->
+	<title>양택조</title>
+	<meta charset="UTF-8">
 	<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
 		rel="stylesheet">
@@ -19,13 +19,9 @@
 	<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="resources/css/style.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
 	<link rel="stylesheet" href="resources/css/animate.css">
 	<link rel="stylesheet" href="resources/css/ionicons.min.css">
-	<link rel="stylesheet" href="resources/css/style.css?after">
-	<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-<script type="text/javascript"
-	src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<!-- <link rel="stylesheet" href="resources/css/bootstrap.min.css"> -->
 </head>
 <style>
 @font-face {
@@ -36,7 +32,7 @@
 	font-weight: normal;
 	font-style: normal;
 }
-.black_overlay {
+	.black_overlay {
 		display: none;
 		position: absolute;
 		top: 0%;
@@ -49,7 +45,8 @@
 		opacity: .80;
 		filter: alpha(opacity=80);
 	}
-		.white_content {
+
+	.white_content {
 		display: none;
 		position: absolute;
 		top: 0%;
@@ -62,9 +59,12 @@
 		z-index: 1002;
 		overflow: auto;
 	}
+
 </style>
+</head>
+
 <body>
-<!-- 양택조 color=pink (#ff0037) -->
+	<!-- 양택조 color=pink (#ff0037) -->
 	<nav
 		class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
 
@@ -87,7 +87,7 @@
 		<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 			<div class="input-group">
 				<input type="text" id="keyword" class="form-control" placeholder="Search for category"
-					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage()">
+					aria-label="Search" aria-describedby="basic-addon2"  onkeypress="javascript:press(searchPage())">
 				<div class="input-group-append">
 					<button class="btn btn-primary" type="button" onclick="searchPage()">
 						<i class="fas fa-search fa-sm"></i>
@@ -119,6 +119,7 @@
 		<!-- Topbar Navbar -->
 		<ul class="navbar-nav">
 			<!-- Nav Item - User Information -->
+
 			<c:if test="${memberinfo ne null }">
 			
 				<!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -158,6 +159,7 @@
 							style="font-size: 15px;"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							로그아웃
 						</a>
+						
 					</div>
 				</li>
 			</c:if>
@@ -168,8 +170,11 @@
 		</ul>
 
 	</nav>
-
-	<!-- Bootstrap core JavaScript-->
+	 <div id="light3" class="white_content text-left" style="height: 320px; width: 350px; ">
+	 <button class="btn btn-primary" onclick="document.getElementById('light3').style.display='none'">close</button>
+	</div>
+	 <div id="light4" class="white_content text-left" style="height: 320px; width: 350px; ">
+	</div>
 	<script src="resources/vendor/jquery/jquery.min.js"></script>
 	<script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -179,8 +184,9 @@
 	<!-- Custom scripts for all pages-->
 	<script src="resources/js/sb-admin-2.min.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-	<script type="text/javascript">
-	function searchPage() {
+	<script>
+	<%	MemberVO vo = (MemberVO) session.getAttribute("memberinfo");%>
+		function searchPage() {
 			var keyword = $('#keyword').val();
 			console.log(keyword);
 			if (keyword == '유튜브') {
@@ -203,20 +209,172 @@
 			}
 			return;
 		}
-	function login() {
-		$.ajax({
-			url: 'geturi.do',
-			type: 'get',
-			async: false,
-			dataType: 'text',
-			success: function (res) {
-				location.href = res;
+
+		function login() {
+			$.ajax({
+				url: 'geturi.do',
+				type: 'get',
+				async: false,
+				dataType: 'text',
+				success: function (res) {
+					location.href = res;
+				}
+			});
+
+		}
+
+		function insertUrl() {
+			var urls = $('#urls').val();
+			var urlname = $('#urlMarkName').val();
+			if(urls == $('#'+urls).text()){
+				window.alert("이미 등록된 url 입니다.");
+			}else{
+					$.ajax({
+					type: "get",
+					url: "insertUrl.do",
+					data: {
+						url: urls,
+						urlname: urlname
+					},
+					success: function () {
+						window.location.reload();
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				});
 			}
+		
+		}
+		//url 삭제 추가
+		function deleteUrl() {
+			let temp = this.event.path[1];
+			$.ajax({
+				method:'get',
+				url:'deleteUrl.do',
+				data:{
+					urlName : this.event.path[1].children[0].id
+				},
+				success:function(){
+					window.alert("정상삭제");
+					temp.remove();
+				},error:function(error){
+					console.log(error);
+				}
+			})
+		}
+	
+
+		$('#clickKeyword').click(function(){
+			showKeyword();
 		});
 
-	}
+		function showKeyword(){
+			$.ajax({
+				type:'get',
+				url:"memberAcckeyword.do",
+				success:function(result){
+					$('#light3').empty();
+					for(var field of result){
+						$('#light3').append(
+						$('<div>').text(("검색어 : "+field.searchKeyword + ", 조회수 : " + field.searchHit)).css('display', 'inline-block').attr("id", field.searchKeyword).append(
+							$('<a>').attr(
+								'onclick','deleteKeyWord()').text(" x").css({
+									'font-size':'20px',
+									'color' : 'red',
+									'cursor':'pointer'
+							})
+						),
+						$('<br>')
+						);
+					}
+					$('#light3').prepend($('<h2>').text('누적 키워드 수')).append(
+						$('<button>').attr({
+							'class' : 'btn btn-primary',
+							'onclick' : "document.getElementById('light3').style.display='none'"
+							}).text("close").append($('<br>'))
+					)
+				},error:function(error){
+					console.log(error);
+				}
+
+			})
+		}
+
+		function deleteKeyWord(){
+			var delTarget = this.event.path[1];
+			$.ajax({
+				type:'get',
+				url :'deleteKeyword.do',
+				data : {
+					delKeyword : delTarget.id
+				},
+				success:function(){
+					delTarget.remove();
+					window.alert('정상적으로 삭제 되었습니다.');
+				},error:function(){
+					console.log(error);
+				}
+			})
+		}
+		
+		
+		
+	
+		<%if (vo == null) {
+
+		} else if (vo.getMember_Id() != null) {	%>
+			$(document).ready(function () {
+				$.ajax({
+					type: "get",
+					url: "getUrl.do",
+					success: function (result) {
+						for (var fields of result) {
+							$('#addUrl').append($('<div>').css({
+								'display': 'inline-block',
+								'margin-right' : '5px'
+							})
+								.append($('<button>').attr({
+									'class': 'btn btn-primary',
+									'onclick': "location.href='https://" + fields.urlMark + //여기 수정해야함
+										"'",
+									'id': fields.urlMarkName
+								}).text(
+									fields.urlMarkName),
+									$('<a>').attr('onclick', 'deleteUrl()').text('삭제').css({
+										'cursor':'pointer',
+										'color':'red',
+										'margin-left':'10px',
+										'margin-right':'10px',
+										'font-size':'1px'
+										})									
+							));
+							$('#light').css('display', 'none');
+							$('#fade').css('display', 'none');
+							$('#urls').text('');
+							$('#urlMarkName').text('');
+						}
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				})
+
+			})
+	
+			<%} %>
+			
+		
 	</script>
 	<script type="text/javascript">
+		function searchResult(){
+			if($('#keywords').val() == ""){
+				alert("검색어를 입력하세요.");
+				return false;
+			}else{
+				return true;
+			}
+		}
 	
 		$("#check_module").click(function () {
 			var IMP = window.IMP; // 생략가능
@@ -263,4 +421,5 @@
 		});
 	</script>
 </body>
+
 </html>

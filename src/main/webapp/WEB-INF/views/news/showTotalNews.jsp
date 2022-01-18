@@ -30,7 +30,7 @@
 				<ul class="navbar-nav" style="padding-left:240px;">
 									<li class="nav-item"><a href="showTotalMember.do" class="nav-link">회원 조회</a></li>
 					<li class="nav-item"><a href="showTotalAccKeyWord.do" class="nav-link">누적 키워드</a></li>
-					<li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li>
+					<!-- <li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li> -->
 					<li class="nav-item active"><a href="showTotalNews.do" class="nav-link">뉴스</a></li>
 					<li class="nav-item"><a href="showTotalFoodTruck.do" class="nav-link">푸드트럭</a></li>
 					<li class="nav-item"><a href="showTotalDictionary.do" class="nav-link">사전</a></li>
@@ -56,15 +56,12 @@
 						</thead>
 						<tbody>
 						<c:forEach items="${newsList }" var="news">
-						
 						<tr>
-						<a href="newsDetail.do?newsboard_id=${news.newsboard_id}" style="cursor: pointer;">
 						<td>${news.newsboard_id }</td>
-						<td>${news.newsboard_title }</td>
+						<td><a href="newsDetail.do?newsboard_id=${news.newsboard_id}" style="cursor: pointer;">${news.newsboard_title }</a></td>
 						<td>${news.member_name }</td>
 						<td>${news.newsboard_genre }</td>
 						<td>${news.newsboard_hit }</td>
-						</a>
 						</tr>
 						</c:forEach>
 						</tbody>

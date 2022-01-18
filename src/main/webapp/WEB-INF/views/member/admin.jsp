@@ -40,7 +40,7 @@
 				<ul class="navbar-nav" style="padding-left:240px;">
 					<li class="nav-item"><a href="showTotalMember.do" class="nav-link">회원 조회</a></li>
 					<li class="nav-item"><a href="showTotalAccKeyWord.do" class="nav-link">누적 키워드</a></li>
-					<li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li>
+					<!-- <li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li> -->
 					<li class="nav-item"><a href="showTotalNews.do" class="nav-link">뉴스</a></li>
 					<li class="nav-item"><a href="showTotalFoodTruck.do" class="nav-link">푸드트럭</a></li>
 					<li class="nav-item"><a href="showTotalDictionary.do" class="nav-link">사전</a></li>

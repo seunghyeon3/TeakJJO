@@ -41,7 +41,7 @@
 				<ul class="navbar-nav" style="padding-left:240px;">
 					<li class="nav-item"><a href="showTotalMember.do" class="nav-link">회원 조회</a></li>
 					<li class="nav-item"><a href="showTotalAccKeyWord.do" class="nav-link">누적 키워드</a></li>
-					<li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li>
+					<!-- <li class="nav-item"><a href="showTotalMovie.do" class="nav-link">영화 정보</a></li> -->
 					<li class="nav-item"><a href="showTotalNews.do" class="nav-link">뉴스</a></li>
 					<li class="nav-item active"><a href="showTotalFoodTruck.do" class="nav-link">푸드트럭</a></li>
 					<li class="nav-item"><a href="showTotalDictionary.do" class="nav-link">사전</a></li>
@@ -57,8 +57,7 @@
 				<table class="table">
 						<thead>
 							<tr>
-								<th>푸드 북마크</th>
-								<th>푸드 rsr</th>
+								<th>북마크 명</th>
 								<th>회 원 명</th>
 								<th>북마크 날짜</th>
 							</tr>
@@ -67,7 +66,6 @@
 						<c:forEach items="${foodtruckMark }" var="key">
 						<tr>
 						<td>${key.bookmark_id }</td>
-						<td>${key.foodtruck_rsr }</td>
 						<td>${key.member_id }</td>
 						<td>${key.bookmark_date }</td>
 						</tr>

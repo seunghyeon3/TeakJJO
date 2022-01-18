@@ -280,7 +280,7 @@ public class MemberController {
 	 @RequestMapping("/updateInfoAdmin.do")
 	 public String updateInfoAdmin(MemberVO vo,HttpSession session) {
 		 memberDao.updateMember(vo);		 
-		 return "redirect:Admin.do";
+		 return "redirect:showTotalMember.do";
 	 }
 	 
 	 //영화 내용의 사진 내용도 들고와야함 조인 해야함
@@ -302,7 +302,6 @@ public class MemberController {
 	 
 	 @RequestMapping("/updateMember.do")
 	 public String updateMember(@RequestParam("id") String id, Model model) {
-		 System.out.println(id);
 		 MemberVO vo = memberDao.getMember(id);
 		 model.addAttribute("userInfo", vo);
 		 return "member/showUser";
