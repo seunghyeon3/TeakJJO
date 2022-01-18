@@ -66,7 +66,7 @@
 	          </div>
 	        
 	          
-	          <c:if test="${memberinfo.member_Id eq detail.member_id }">
+	          <c:if test="${memberinfo.member_Id eq detail.member_id || fn:contains(memberinfo.member_Author, 'A')}">
 	          <br><br>
 	            <a class= "btn btn-primary py-3 px-5" href="newsDelete.do?newsboard_id=${detail.newsboard_id}" style="float:right;">삭제</a>
 	          <a class= "btn btn-primary py-3 px-5" href="newsUpdateForm.do?newsboard_id=${detail.newsboard_id}" style="float:right; margin-right:10px;">수정</a>
@@ -101,7 +101,7 @@
                     <div class="meta">${comment.boardcomment_date } 작성</div>
                     <p>${comment.boardcomment_content }</p>
                   </div>
-                  <c:if test="${memberinfo.member_Id eq comment.member_id }">
+                  <c:if test="${memberinfo.member_Id eq detail.member_id || fn:contains(memberinfo.member_Author, 'A')}">
                   <a class= "btn btn-primary py-3 px-5" href="boardCommentDelete.do?boardComment_id=${comment.boardcomment_id}" style="float:right;">삭제</a>
 	          <a class= "btn btn-primary py-3 px-5" onclick="boardCommentUpdate(this,${comment.boardcomment_id })" style="float:right; margin-right:10px;">수정</a>
 	          </c:if>
@@ -170,7 +170,6 @@
         	//console.log(e.parentNode.parentNode.parentNode.parentNode.parentNode.children[0]);
         }
         
-      
         </script>
         
 <!--  <script>
