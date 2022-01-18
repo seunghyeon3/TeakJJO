@@ -9,15 +9,18 @@ import lombok.ToString;
 @ToString
 public class MovieVO {
 	
-	public MovieVO(String rank, String movieAge, String movieTitle, String movieOpenDate, int seq) {
+	public MovieVO(String rank, String movieAge, String movieTitle, String movieOpenDate) {
 		this.rank = rank;
 		this.movie_grade = movieAge;
 		this.movie_title = movieTitle;
 		this.movie_open = movieOpenDate;
-		this.seq = seq;
 	}
+	public MovieVO(String img) {
+		this.img = img;
+	}
+	
+	String img;
 	String rank;
-	int seq;
 	private String movie_id;
 	private String movie_title ;
 	private String movie_open;

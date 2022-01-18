@@ -140,17 +140,11 @@ public class MovieController {
 		try {
 		
 			 doc = Jsoup.connect("http://www.cgv.co.kr/movies/").get();
-			/* Elements */
+
 			 Elements ranks = doc.select(".rank");
-	
-			 Elements movieAges = doc.select(".ico-grade");
-			/* logger.info("ico-grade" + movieAges); */
-			 
+			 Elements movieAges = doc.select(".ico-grade");			 
 			 Elements movieTitles = doc.select("div.box-contents strong.title");
-			/* logger.info("titles" + movieTitles); */
-			 
 			 Elements movieOpenDates = doc.select(".txt-info strong");
-			/* logger.info("percents" + movieOpenDates); */
 			
 			 List<MovieVO> list = new ArrayList<MovieVO>();
 			 
@@ -160,19 +154,41 @@ public class MovieController {
 				 String movieAge = movieAges.get(i).text();
 				 String movieTitle = movieTitles.get(i).text();
 				 String movieOpenDate = movieOpenDates.get(i).text();
-	
-				 int seq = i;
-				 MovieVO movieVO = new MovieVO(rank, movieAge, movieTitle, movieOpenDate, seq);
-				 
+				 MovieVO movieVO = new MovieVO(rank, movieAge, movieTitle, movieOpenDate);
 				 list.add(movieVO);
 			 }
-			 	gson = new Gson().toJson(list);
-			 
+			 	gson = new Gson().toJson(list);			 
 		} catch (IOException e) {
-		
 			e.printStackTrace();
 		}
+		return gson;
+	}
+	@ResponseBody
+	@RequestMapping(value = "boxOffice.do", method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "text/plain;charset=UTF-8")
+	public String getBoxoffice() {
+		logger.info("크롤리잉투투투" + new Date());
+		Document doc;
+		String gson = "";
 
+		try {
+			doc = Jsoup.connect("https://movie.daum.net/ranking/boxoffice/weekly").get();
+			Elements imgs = doc.select(".img_thumb");
+
+			List<MovieVO> list = new ArrayList<MovieVO>();
+
+			for (int i = 0; i < 8; i++) {
+
+				String img = imgs.get(i).attr("src");
+				MovieVO movieVO = new MovieVO(img);
+				System.out.println(movieVO.toString());
+				list.add(movieVO);
+			}
+			gson = new Gson().toJson(list);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return gson;
 	}
 	
