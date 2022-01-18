@@ -286,4 +286,11 @@ public class MemberController {
 		 List<ReserveVO> list =  reserveDao.getReserveMember(Rvo);
 		 return list;
 	 }
+	 
+	 @RequestMapping("/showTotalMember.do")
+	 public String showTotalMember(Model model) {
+		 model.addAttribute("getMemberList", memberDao.getMembers());
+		 return "member/showTotalMember";
+	 }
+
 }

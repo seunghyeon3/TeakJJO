@@ -137,9 +137,15 @@
 						aria-labelledby="userDropdown">
 						<a class="dropdown-item" href="updateInfoForm.do" style="font-size: 15px;"> <i
 								class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 개인정보수정
-						</a> <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
+						</a>
+						<c:if test="${fn:contains(memberinfo.member_Author , 'A')}">
+						<a class="dropdown-item" href="Admin.do" style="font-size: 15px;"> <i
+								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 관리자 전용
+						</a>
+						</c:if>
+						<!--  <a class="dropdown-item" href="resertaionInfo.do" style="font-size: 15px;"> <i
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400" style="font-size: 15px;"></i> 예매 현황
-						</a> 
+						</a> --> 
 						<c:if test="${fn:contains(memberinfo.member_Author , 'N')}">
 						<a class="dropdown-item" href="#" id="check_module" style="font-size: 15px;"> <i
 								class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> 결제

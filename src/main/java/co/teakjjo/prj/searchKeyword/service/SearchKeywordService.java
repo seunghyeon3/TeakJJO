@@ -16,4 +16,6 @@ public interface SearchKeywordService {
 	
 	public void deleteKeyword(String id);
 	
+	public List<SearchKeywordVO> getKeywords();
+	
 }

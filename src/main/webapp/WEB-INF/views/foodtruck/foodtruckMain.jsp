@@ -9,7 +9,17 @@
 <title>맵 테스트</title>
 <script type="text/javascript"
 	src="/prj/resources/js/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="resources/css/style.css">
+<link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap"
+		rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="resources/css/style.css">
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<link rel="stylesheet" href="resources/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="resources/css/animate.css">
+	<link rel="stylesheet" href="resources/css/ionicons.min.css">
 	
 <style type="text/css">
 @font-face {
@@ -120,7 +130,7 @@ a.page-link {
 <body>
 <!-- 타이틀 출력 -->
 			<div class="row justify-content-center" style="margin-top:46px; margin-right: 50px; ">
-				<div class="col-md-12 heading-section text-center mb-5">
+				<div class="col-md-12 heading-section text-center ftco-animate mb-5">
 					<span class="subheading">양택조와 함께하는</span>
 					<h2 class="mb-2">푸드트럭 위치찾기</h2>
 				</div>
@@ -785,4 +795,19 @@ a.page-link {
 			
 	</script>
 </body>
+<script src="resources/js/jquery.min.js"></script>
+	<script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="resources/js/popper.min.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.easing.1.3.js"></script>
+	<script src="resources/js/jquery.waypoints.min.js"></script>
+	<script src="resources/js/jquery.stellar.min.js"></script>
+	<script src="resources/js/owl.carousel.min.js"></script>
+	<script src="resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="resources/js/aos.js"></script>
+	<script src="resources/js/jquery.animateNumber.min.js"></script>
+	<script src="resources/js/bootstrap-datepicker.js"></script>
+	<script src="resources/js/jquery.timepicker.min.js"></script>
+	<script src="resources/js/scrollax.min.js"></script>
+	<script src="resources/js/main.js"></script>
 </html>

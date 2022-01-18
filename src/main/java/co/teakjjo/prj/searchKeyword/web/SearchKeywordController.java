@@ -31,7 +31,7 @@ public class SearchKeywordController {
 	private SearchKeywordService SearchKeywordDao;
 
 
-	@RequestMapping("searchKeyword.do")
+	@RequestMapping("/searchKeyword.do")
 	public String searchKeyword(@RequestParam("keywords") String keywords, Model model,HttpSession session) {
 		try {
 			
@@ -84,7 +84,7 @@ public class SearchKeywordController {
 		}
 	 
 
-	 @RequestMapping("acckeyword.do")
+	 @RequestMapping("/memberAcckeyword.do")
 	 @ResponseBody
 	 public List<SearchKeywordVO> acckeyword(HttpSession session ) {
 		 MemberVO vo = (MemberVO)session.getAttribute("memberinfo");
@@ -92,11 +92,16 @@ public class SearchKeywordController {
 		 return list;
 	 }
 	 
-	 @RequestMapping("deleteKeyword.do")
+	 @RequestMapping("/deleteKeyword.do")
 	 @ResponseBody
 	 public void deleteKeyword(@RequestParam("delKeyword") String delKeyword) {
 		 SearchKeywordDao.deleteKeyword(delKeyword);
 	 }
 	
+	 @RequestMapping("/showTotalAccKeyWord.do")
+	 public String showTotalAccKeyWord(Model model) {
+		 model.addAttribute("keyword", SearchKeywordDao.getKeywords());
+		 return "member/keyword";
+	 }
 	
 }

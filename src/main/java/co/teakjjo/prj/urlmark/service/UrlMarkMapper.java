@@ -12,4 +12,5 @@ public interface UrlMarkMapper {
 	// geturl
 	public List<UrlMarkVO> getUrl(String id);
 	public boolean checkKeyword(UrlMarkVO vo);
+	
 }

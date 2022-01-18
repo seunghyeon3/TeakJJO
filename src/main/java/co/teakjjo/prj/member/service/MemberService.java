@@ -1,5 +1,7 @@
 package co.teakjjo.prj.member.service;
 
+import java.util.List;
+
 public interface MemberService {
 
 	// insert
@@ -18,6 +20,8 @@ public interface MemberService {
 	
 	//select
 	public MemberVO getMember(String id);
+	
+	public List<MemberVO> getMembers();
 	
 	
 }

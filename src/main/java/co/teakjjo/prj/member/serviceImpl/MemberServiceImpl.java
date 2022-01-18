@@ -1,5 +1,7 @@
 package co.teakjjo.prj.member.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,6 +43,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void updateAuthor(String id) {
 		map.updateAuthor(id);
+	}
+
+	@Override
+	public List<MemberVO> getMembers() {
+		return map.getMembers();
 	}
 	
 	

@@ -42,4 +42,9 @@ public class SearchKeywordImpl implements SearchKeywordService {
 		map.deleteKeyword(id);
 	}
 
+	@Override
+	public List<SearchKeywordVO> getKeywords() {
+		return map.getKeywords();
+	}
+
 }

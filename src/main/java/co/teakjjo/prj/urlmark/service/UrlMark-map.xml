@@ -18,17 +18,8 @@
 	</insert>
 
 	<delete id="deleteUrl">
-		DELETE FROM URLMARK WHERE
-
-		<if test="member_Id != null">
-			MEMBER_ID = #{member_Id}
-		</if>
-		<if test="urlMark != null">
-			AND URLMARK = #{urlMark}
-		</if>
-		<if test="urlMark_Date != null">
-			AND URLMARK_DATE = #{urlMark_Date}
-		</if>
+		DELETE FROM URLMARK WHERE MEMBER_ID = #{member_Id} AND URLMARKNAME = #{urlMarkName}
+		
 	</delete>
 
 	<select id="getUrl"	resultType="co.teakjjo.prj.urlmark.service.UrlMarkVO">
@@ -39,9 +30,4 @@
 	SELECT CASE WHEN COUNT(*) >= 1 THEN 0 ELSE 1 END AS ID
 		FROM URLMARK WHERE  MEMBER_ID= #{member_Id} AND URLMARK = #{urlMark}
 	</select>
-
-
-
-
-
 </mapper>
